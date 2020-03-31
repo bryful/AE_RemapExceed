@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>AE_Remap Exceed</value>
+  </data>
+  <data name="ScriptLayer" xml:space="preserve">
+    <value>//JavaScript
+//******************************************************************
+//最初の行は"//JavaScript"としてヘッダとする。
+//クリップボードから読み込んだ時の識別用。
+//******************************************************************
+var &lt;RX&gt; = new Object;
+//******************************************************************
+//変数の定義
+&lt;RX&gt;.enabled	= false;
+&lt;RX&gt;.frameCount	= &lt;frameCount&gt;;	//フレーム数
+&lt;RX&gt;.frameRate	= &lt;frameRate&gt;;	//フレームレート
+&lt;RX&gt;.caption	= &lt;caption&gt;;
+&lt;RX&gt;.cellData	= new Array;	//セル番号
+/*
+	object.frame フレーム番号（0スタート）
+	object.num セル番号（0スタート。-1は空セル）
+*/
+//&lt;RX&gt;.usedBlind		= &lt;usedBlind&gt;;
+
+&lt;RX&gt;.blindData		= new Array;	//ブラインドエフェクト用の配列
+/*
+	object.frame フレーム番号（0スタート）
+	object.blind 透明フラグ（0が不透明、100が透明）
+*/
+
+&lt;RX&gt;.inF		= 0;			//レイヤのin点(フレーム)
+&lt;RX&gt;.outF		= &lt;frameCount&gt;;	//レイヤのout点(フレーム)
+
+&lt;RX&gt;.memoData		= new Array;	//ブラインドエフェクト用の配列
+
+
+&lt;RX&gt;.targetComp		= null;
+&lt;RX&gt;.targetLayers	= null;
+&lt;RX&gt;.frameRateComp	= &lt;frameRate&gt;;
+&lt;RX&gt;.errMes = "";
+
+//******************************************************************
+&lt;RX&gt;.init  =function()
+{
+	this.enabled	= false;
+	this.targetComp = null;
+	this.targetLayers = null;
+	this.targetFrameRate	= &lt;frameRate&gt;;
+	var cmp = app.project.activeItem;
+	if ( ( cmp != null)&amp;&amp; ( cmp instanceof CompItem ) ){
+		this.targetLayers = app.project.activeItem.selectedLayers;
+		if ( (this.targetLayers != null)&amp;&amp;( this.targetLayers.length&gt;0)) {
+			this.targetComp = cmp;
+			this.frameRateComp = cmp.frameRate;
+
+			if ( this.frameRateComp != this.frameRate ){
+				this.errMes += "illegal frameRate!\n";
+			}else{
+				this.enabled = true;
+			}
+		}
+	}
+}
+//******************************************************************
+&lt;RX&gt;.setKeyData = function(frm,num)
+{
+	var ret = new Object;
+	ret.frame = frm;
+	ret.num = num -1;//セルは１スタートなので0にする
+	this.cellData.push(ret);
+}
+//&lt;RX&gt;.setKeyData(frm,num);
+&lt;cellData&gt;
+
+//******************************************************************
+&lt;RX&gt;.setMemo = function(frm,memo)
+{
+	if ( memo != "" ){
+		var ret = new Object;
+		ret.frame = frm;
+		ret.memo = memo;
+		this.memoData.push(ret);
+	}
+}
+//&lt;RX&gt;.setMemo(frm,memo);
+&lt;memoData&gt;
+//******************************************************************
+//ブラインドエフェクト用の配列を作成
+if ( &lt;RX&gt;.cellData.length &gt; 1){
+	var o = new Object;
+	o.frame = &lt;RX&gt;.cellData[0].frame;
+	if (&lt;RX&gt;.cellData[0].num&gt;=0) {
+		o.blind = 0;
+	}else{
+		o.blind = 100;
+	}
+	&lt;RX&gt;.blindData.push(o);
+	var mae = o.blind;
+	for (var i=1; i&lt; &lt;RX&gt;.cellData.length; i++){
+		if (&lt;RX&gt;.cellData[i].num&gt;=0) {
+			var ima = 0;
+		}else{
+			var ima = 100;
+		}
+		if (mae != ima) {
+			var o = new Object;
+			o.frame = &lt;RX&gt;.cellData[i].frame;
+			o.blind = ima;
+			&lt;RX&gt;.blindData.push(o);
+			mae = ima;
+		}
+	}
+	//
+	if ( &lt;RX&gt;.blindData.length == 1) {
+		if ( &lt;RX&gt;.blindData[0].blind == 0) &lt;RX&gt;.blindData = new Array;
+	}
+}
+//******************************************************************
+//レイヤのin点/out点を求める
+if ( ( &lt;RX&gt;.cellData != null)&amp;&amp;(&lt;RX&gt;.cellData.length&gt;0) ) {
+	var cnt = &lt;RX&gt;.cellData.length;
+	for( var i=0; i&lt; cnt; i++)
+	{
+		if ( &lt;RX&gt;.cellData[i].num &gt;= 0 ) {
+			&lt;RX&gt;.inF = &lt;RX&gt;.cellData[i].frame;
+			break;
+		}
+	}
+	if ( &lt;RX&gt;.cellData[cnt-1].num &lt; 0)
+	{
+		&lt;RX&gt;.outF = &lt;RX&gt;.cellData[cnt-1].frame;
+	}
+}
+//******************************************************************
+&lt;RX&gt;.blindSetup = function()
+{
+	if ( app.language == Language.ENGLISH){
+		this.effect_str	= "Effects";
+		this.effect_Name = "Venetian Blinds";
+		this.effect_PName = "ransition Completion";
+	}else{
+		this.effect_str	= "エフェクト";
+		this.effect_Name = "ブラインド";
+		this.effect_PName = "変換終了";
+	}
+}
+//******************************************************************
+&lt;RX&gt;.fineBlindEffect = function(lyr)
+{
+	this.blindSetup();
+	var fxg = lyr.property(this.effect_str);
+	var fx = fxg.property(this.effect_Name);
+	if (fx == null) {
+		if (fxg.canAddProperty(this.effect_Name)) {
+			fx = fxg.addProperty(this.effect_Name);
+		}
+	}
+	if ( fx!= null) {
+		return fx.property(this.effect_PName);
+	}else{
+		return "";
+	}
+}
+//******************************************************************
+&lt;RX&gt;.removeBlindEffect = function(lyr)
+{
+	this.blindSetup();
+	var fxg = lyr.property(this.effect_str);
+	if (fxg != null) {
+		var fx = fxg.property(this.effect_Name);
+		if (fx!= null) {
+			fx.remove();
+		}
+	}
+}
+//******************************************************************
+&lt;RX&gt;.remapSet = function(lyr)
+{
+	if ( lyr == null) {
+		return;
+	}
+	
+	var myRemap = lyr.timeRemap;
+	var empty = lyr.source.duration;
+	lyr.timeRemapEnabled = true;
+	//余計なキーフレームを削除
+	if (myRemap.numKeys&gt;=2) {
+		for (var i=myRemap.numKeys; i&gt;=2; i--){
+			myRemap.removeKey(i);
+		}
+	}
+	for (var i=0; i&lt;this.cellData.length; i++){
+		if (this.cellData[i].num&lt;0)
+		{
+			myRemap.setValueAtTime(this.cellData[i].frame / this.frameRate, empty);
+		}else{
+			myRemap.setValueAtTime(this.cellData[i].frame / this.frameRate, this.cellData[i].num / this.frameRate);
+		}
+	}
+	//キーフレームを停止させる
+	for (var i=1 ; i&lt;=myRemap.numKeys ; i++){
+		myRemap.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
+	}
+
+	//ブラインドエフェクトの処理
+	if (this.blindData.length&gt;0){
+		var bld = this.fineBlindEffect(lyr);
+		for (var i=0; i&lt;this.blindData.length; i++){
+			bld.setValueAtTime(this.blindData[i].frame / this.frameRate, this.blindData[i].blind);
+		}
+		//キーフレームを停止させる
+		for (var i=1 ; i&lt;=bld.numKeys ; i++){
+			bld.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
+		}
+	}else{
+		this.removeBlindEffect(lyr);
+	}
+	//
+	
+	var markerProperty = lyr.property("Marker");
+	//コメントがあれば削除
+	var header = "!_";
+	if ( markerProperty.numKeys&gt;0) {
+		for ( var i=markerProperty.numKeys ; i&gt;=1; i--){
+			var cmt = markerProperty.keyValue(i).comment;
+			if ( cmt.indexOf(header) == 0) {
+				markerProperty.removeKey(i); // コメントには必ずheaderを入れておく。それを目安に削除する
+			}
+		}
+	
+	}
+	if ( this.memoData.length&gt;0){
+		for ( var i=0; i&lt;this.memoData.length; i++){
+			markerProperty.setValueAtTime(this.memoData[i].frame / this.frameRate , new MarkerValue(header+this.memoData[i].memo) );
+		}
+	
+	}
+	
+	
+	lyr.inPoint = this.inF / this.frameRate;
+	lyr.outPoint = this.outF / this.frameRate;
+}
+
+
+//******************************************************************
+&lt;RX&gt;.run = function()
+{
+	this.init();
+	if ( this.enabled == false) {
+		alert("レイヤを選択してください。");
+		return;
+	}
+	if (this.frameRate != this.targetFrameRate)
+	{
+		alert("フレームレートが一致しません");
+		return;
+	}
+
+	if ( this.targetComp.duration != (this.frameCount / this.frameRate) ){
+		this.targetComp.duration = (this.frameCount / this.frameRate);
+	}
+
+	for ( var i=0; i&lt;this.targetLayers.length; i++)
+	{
+		this.remapSet(this.targetLayers[i]);
+	}
+}
+//******************************************************************
+
+app.beginUndoGroup("AE_Remap Exceed");
+&lt;RX&gt;.run();
+app.endUndoGroup();</value>
+  </data>
+  <data name="ScriptLayerAll" xml:space="preserve">
+    <value>//JavaScript
+//最初の行は"//JavaScript"としてヘッダとする。
+//クリップボードから読み込んだ時の識別用。
+//---------------------------------------------------------------
+var &lt;RX&gt; = new Object;
+//---------------------------------------------------------------
+//変数の定義
+&lt;RX&gt;.enabled	= true;
+&lt;RX&gt;.cellIndex	= &lt;cellIndex&gt;;	//選択されているレイヤ
+&lt;RX&gt;.cellCount	= &lt;cellCount&gt;;	//セルレイヤ数
+&lt;RX&gt;.frameCount	= &lt;frameCount&gt;;	//フレーム数
+&lt;RX&gt;.frameRate	= &lt;frameRate&gt;;	//フレームレート
+
+&lt;RX&gt;.cellCaption	= [&lt;RX&gt;.cellCount];	//セル名の配列
+&lt;RX&gt;.cellData		= [&lt;RX&gt;.cellCount];	//セルデータの配列
+// object.frame	フレーム数
+// object.num	セル番号。0スタート　空セルはマイナス値
+
+&lt;RX&gt;.usedBlind		= &lt;usedBlind&gt;;
+/*
+	object.frame フレーム番号（0スタート）
+	object.blind 透明フラグ（0が不透明、100が透明）
+*/
+&lt;RX&gt;.keyCount 		= [&lt;RX&gt;.cellCount];	//各セルのキーフレームデータの要素数の
+&lt;RX&gt;.cellRange		= [&lt;RX&gt;.cellCount];	//各セルのin点/out点の配列
+// object.start
+// object.last
+&lt;RX&gt;.memoData		= new Array;	//メモの配列
+/*
+	object.frame フレーム番号（0スタート）
+	object.memo 
+*/
+
+
+//---------------------------------------------------------------
+//キャプション作成
+&lt;RX&gt;.setCaption = function(idx,cap)
+{
+	&lt;RX&gt;.cellCaption[idx] = cap;
+};
+//&lt;RX&gt;.setCaption(idx,cap);
+&lt;cellCaptionData&gt;
+
+
+//---------------------------------------------------------------
+//セルデータを作成
+//cellCount分の配列を作成
+for (var i = 0; i&lt;&lt;RX&gt;.cellCount; i++){
+	&lt;RX&gt;.cellData[i] = new Array;
+}
+function setKeyData (idx,frm,num)
+{
+	if ( (idx&lt;0)||(idx&gt;=&lt;RX&gt;.cellCount) ) return;
+	var ret = new Object;
+	ret.frame = frm;
+	ret.num = num - 1;
+	&lt;RX&gt;.cellData[idx].push(ret);
+}
+&lt;cellData&gt;
+
+//-------------------------------------------------------
+//セルデータの要素数をリストアップ
+for (var i = 0; i&lt;&lt;RX&gt;.cellCount; i++){
+	if ( &lt;RX&gt;.cellData[idx] == null) {
+		&lt;RX&gt;.keyCount[i] = 0;
+	}else{
+		&lt;RX&gt;.keyCount[i] = &lt;RX&gt;.cellData[i].length;
+	}
+}
+
+//---------------------------------------------------------------
+//レイヤのin点/out点を求める
+function getCellRange(idx)
+{
+	var ret = new Object;
+	ret.start = 0;
+	ret.last = -1;
+	if ( (idx&lt;0)||(idx&gt;=&lt;RX&gt;.cellCount) ) return ret;
+	if ( ( &lt;RX&gt;.cellData[idx] == null)||(&lt;RX&gt;.cellData[idx].length&lt;=0) ) return ret;
+	var cnt = &lt;RX&gt;.cellData[idx].length;
+	for( var i=0; i&lt; cnt; i++)
+	{
+		if ( &lt;RX&gt;.cellData[idx][i].num &gt;= 0 ) {
+			ret.start = &lt;RX&gt;.cellData[idx][i].frame;
+			break;
+		}
+	}
+	if ( &lt;RX&gt;.cellData[idx][cnt-1].num &lt; 0)
+	{
+		ret.last = &lt;RX&gt;.cellData[idx][cnt-1].frame;
+	}else{
+		ret.last = &lt;RX&gt;.frameCount;
+	}
+	return ret;
+}
+for (var i = 0; i&lt; &lt;RX&gt;.cellCount; i++){
+{
+	&lt;RX&gt;.cellRange[i] = getCellRange(i);
+}
+//******************************************************************
+&lt;RX&gt;.makeBlindData = function(idx)
+{
+	//ブラインドエフェクト用の配列を作成
+	var blind = new Array;
+
+	if ( ( &lt;RX&gt;.cellData[idx].length &gt; 1)&amp;&amp;(&lt;RX&gt;.usedBlind == true) ){
+		var o = new Object;
+		o.frame = &lt;RX&gt;.cellData[idx][0].frame;
+		if (&lt;RX&gt;.cellData[idx][0].num&gt;=0) {
+			o.blind = 0;
+		}else{
+			o.blind = 100;
+		}
+		blind.push(o);
+		var mae = o.blind;
+		for (var i=1; i&lt; &lt;RX&gt;.cellData[idx].length; i++){
+			if (&lt;RX&gt;.cellData[idx][i].num&gt;=0) {
+				var ima = 0;
+			}else{
+				var ima = 100;
+			}
+			if (mae != ima) {
+				var o = new Object;
+				o.frame = &lt;RX&gt;.cellData[idx][i].frame;
+				o.blind = ima;
+				blind.push(o);
+				mae = ima;
+			}
+		}
+		//
+		if ( blind.length == 1) {
+			if ( blind[0].blind == 0) blind = new Array;
+		}
+	}
+	return blind;
+
+}
+//******************************************************************
+&lt;RX&gt;.setMemo = function(frm,memo)
+{
+	if ( memo != "" ){
+		var ret = new Object;
+		ret.frame = frm;
+		ret.memo = memo;
+		this.memoData.push(ret);
+	}
+}
+//&lt;RX&gt;.setMemo(frm,memo);
+&lt;memoData&gt;
+
+//******************************************************************</value>
+  </data>
+  <data name="VersionStr" xml:space="preserve">
+    <value>FinalBeta lastest</value>
+  </data>
+</root>

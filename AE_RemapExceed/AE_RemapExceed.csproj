@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{731C86AD-012F-475D-9AE4-DCAE8A665CC1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AE_RemapExceed</RootNamespace>
+    <AssemblyName>AE_RemapExceed</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <Win32Resource>AE_RemapExceedIcon.res</Win32Resource>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <ManifestCertificateThumbprint>8BA5AE54CF42DEF90255866EDA8E35B6B8B6A90E</ManifestCertificateThumbprint>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <TargetZone>LocalIntranet</TargetZone>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <SignManifests>false</SignManifests>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>C:\Bin\ae_remap\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialog\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\AutoInputDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\AutoInputDlg.Designer.cs">
+      <DependentUpon>AutoInputDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustumCtrl\FloatEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumCtrl\IntEditD.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumClass\ExtentionSetup.cs" />
+    <Compile Include="CustumClass\TSHistory.cs" />
+    <Compile Include="DynamicJson.cs" />
+    <Compile Include="UserCtrl\CmtAlign.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserCtrl\CmtAlign.Designer.cs">
+      <DependentUpon>CmtAlign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PictureView\NavBtn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PictureView\PictureFileList.cs" />
+    <Compile Include="PictureView\PictureViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PictureView\PictureViewForm.Designer.cs">
+      <DependentUpon>PictureViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Key\KeyDataBtn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Key\KeyDataDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Key\KeyDataDialog.Designer.cs">
+      <DependentUpon>KeyDataDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Key\KeySettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Key\KeySettings.Designer.cs">
+      <DependentUpon>KeySettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\RemapSettingDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\RemapSettingDlg.Designer.cs">
+      <DependentUpon>RemapSettingDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\LayerInsertDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\LayerInsertDlg.Designer.cs">
+      <DependentUpon>LayerInsertDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\LayerRenameDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\LayerRenameDlg.Designer.cs">
+      <DependentUpon>LayerRenameDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustumCtrl\TSInfo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Dialog\SystemSettingDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\SystemSettingDlg.Designer.cs">
+      <DependentUpon>SystemSettingDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PictureView\PictureView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PictureView\Targa.cs" />
+    <Compile Include="CustumClass\TSPrint.cs" />
+    <Compile Include="Dialog\PrintSettingDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\PrintSettingDlg.Designer.cs">
+      <DependentUpon>PrintSettingDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserCtrl\CapIntEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserCtrl\CapIntEdit.Designer.cs">
+      <DependentUpon>CapIntEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserCtrl\ColorCaption.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserCtrl\ColorCaption.Designer.cs">
+      <DependentUpon>ColorCaption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustumCtrl\IntEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Dialog\LayoutSetteings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\LayoutSetteings.Designer.cs">
+      <DependentUpon>LayoutSetteings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\TimeSheetSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\TimeSheetSetting.Designer.cs">
+      <DependentUpon>TimeSheetSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustumClass\TSPref.cs" />
+    <Compile Include="CustumClass\TSScript.cs" />
+    <Compile Include="CustumClass\TSSaveFile.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\MemoEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\MemoEdit.Designer.cs">
+      <DependentUpon>MemoEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog\OKDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\OKDialog.Designer.cs">
+      <DependentUpon>OKDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dialog\ValueEditDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\ValueEditDlg.Designer.cs">
+      <DependentUpon>ValueEditDlg.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CustumCtrl\TSGrid.resx">
+      <DependentUpon>TSGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\AutoInputDlg.resx">
+      <DependentUpon>AutoInputDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserCtrl\CmtAlign.resx">
+      <DependentUpon>CmtAlign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PictureView\PictureViewForm.resx">
+      <DependentUpon>PictureViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Key\KeyDataDialog.resx">
+      <DependentUpon>KeyDataDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Key\KeySettings.resx">
+      <DependentUpon>KeySettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\RemapSettingDlg.resx">
+      <DependentUpon>RemapSettingDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\LayerInsertDlg.resx">
+      <DependentUpon>LayerInsertDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\LayerRenameDlg.resx">
+      <DependentUpon>LayerRenameDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\SystemSettingDlg.resx">
+      <DependentUpon>SystemSettingDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\PrintSettingDlg.resx">
+      <DependentUpon>PrintSettingDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserCtrl\CapIntEdit.resx">
+      <DependentUpon>CapIntEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserCtrl\ColorCaption.resx">
+      <DependentUpon>ColorCaption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\LayoutSetteings.resx">
+      <DependentUpon>LayoutSetteings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\MemoEdit.resx">
+      <DependentUpon>MemoEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\OKDialog.resx">
+      <DependentUpon>OKDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\TimeSheetSetting.resx">
+      <DependentUpon>TimeSheetSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog\ColorSetting.resx">
+      <DependentUpon>ColorSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Key\KeyBind.resx">
+      <DependentUpon>KeyBind.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Dialog\ValueEditDlg.resx">
+      <DependentUpon>ValueEditDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="CustumClass\TSAfterFX.cs" />
+    <Compile Include="CustumCtrl\TSCellCaption.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumClass\TSColors.cs" />
+    <Compile Include="Dialog\ColorSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\ColorSetting.Designer.cs">
+      <DependentUpon>ColorSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustumClass\TSData.cs" />
+    <Compile Include="CustumCtrl\TSFrame.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumCtrl\TSGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumCtrl\TSInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumClass\TSFunctions.cs" />
+    <Compile Include="CustumCtrl\TSMemo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumCtrl\TSNav.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustumClass\TSSelection.cs" />
+    <Compile Include="Key\KeyBind.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Key\KeyBind.Designer.cs">
+      <DependentUpon>KeyBind.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 および x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows インストーラー 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exd_Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AE_RemapExceed_TemporaryKey.pfx" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Resources\Exd_IconDoc.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
