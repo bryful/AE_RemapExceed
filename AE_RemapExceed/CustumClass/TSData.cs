@@ -332,9 +332,61 @@ namespace AE_RemapExceed
         RightBottom,
         Count
     }
-	//**************************************************************
-	//タイムシートの基本データのクラス
-	public class TSData
+    //**************************************************************
+    public class CellItem
+    {
+        public double Time =0;
+        public double Num = 0;
+
+        public object ToJson()
+        {
+            var ret = new object[2];
+            ret[0] = Time;
+            ret[1] = Num;
+            return ret;
+        }
+    }
+    //**************************************************************
+    public class CellItems
+    {
+        public List<CellItem> Items = new List<CellItem>();
+        public string Caption = "";
+        public object [] ToJson()
+        {
+            var ret = new object[2];
+            ret[0] = Times();
+            ret[1] = Values();
+            return (object[])ret;
+        }
+        public double[] Times()
+        {
+            double[] ret = new double[Items.Count];
+            if (Items.Count > 0)
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    ret[i] = Items[i].Time;
+                }
+            }
+            return ret;
+        }
+        public double[] Values()
+        {
+            double[] ret = new double[Items.Count];
+            if (Items.Count > 0)
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    ret[i] = Items[i].Num;
+                }
+            }
+            return ret;
+        }
+
+    }
+    //**************************************************************
+    //タイムシートの基本データのクラス
+    public class TSData
 	{
 		//ARD 用
 		//private bool m_LoadFlag = false;
@@ -1589,7 +1641,49 @@ namespace AE_RemapExceed
 			}
 		}
         //**************************************************************
-        public string ToJson()
+        public CellItems GetCellItems(int c)
+        {
+            CellItems ret = new CellItems();
+            if ((c < 0) || (c >= m_CellCount)) return ret;
+
+            int[] dat = new int[m_FrameCount];
+
+            dat[0] = cellData[c][0];
+            dat[m_FrameCount - 1] = cellData[c][m_FrameCount - 1];
+            for ( int i=1; i < m_FrameCount-1; i++)
+            {
+                if (cellData[c][i-1] == cellData[c][i])
+                {
+                    dat[i] = -1;
+                }
+                else
+                {
+                    dat[i] = cellData[c][i];
+                }
+            }
+            for (int i = 0; i < m_FrameCount; i++)
+            {
+                if (dat[i] >= 0)
+                {
+                    CellItem ci = new CellItem();
+                    ci.Time = (double)i / (double)m_FrameRate;
+                    ci.Num = (double)dat[i];
+                    ret.Items.Add(ci);
+                }
+            }
+            if (ret.Items.Count == 2)
+            {
+                if ((ret.Items[0].Num== ret.Items[1].Num)&& (ret.Items[0].Num == 0))
+                {
+                    ret.Items.Clear();
+                }
+            }
+            if (ret.Items.Count > 0) ret.Caption = cellCaption[c];
+
+            return ret;
+        }
+        //**************************************************************
+            public string ToJson()
         {
             string ret = "";
             dynamic json = new DynamicJson();
@@ -1597,33 +1691,29 @@ namespace AE_RemapExceed
             json["CellCount"] = m_CellCount;
             json["FrameCount"] = m_FrameCount;
 
-            json["Caption"] = cellCaption;
-
-            var cells = new object[m_CellCount];
-            var cellEnables = new bool[m_CellCount];
-            for ( int j=0; j< m_CellCount;j++)
+            List< CellItems > dd = new List<CellItems>();
+            for ( int i=0; i<m_CellCount;i++)
             {
-                double[] cell = new double[m_FrameCount];
-                bool flag = false;
-                for (int i = 0; i < m_FrameCount; i++)
+                CellItems cis = GetCellItems(i);
+                if (cis.Items.Count>0)
                 {
-                    if (cellData[j][i] > 0) flag = true;
-                    cell[i] = (double)cellData[j][i];
+                    dd.Add(cis);
                 }
-                cells[j] = cell;
-                cellEnables[j] = flag;
             }
 
-            json["CellData"] = cells;
-            json["CellEnables"] = cellEnables;
-
-            double[] times = new double[m_FrameCount]; 
-            for (int i = 0; i < m_FrameCount; i++)
+            if (dd.Count > 0)
             {
-                times[i] = (double)i / (double)m_FrameRate;
+                var ddd = new object[dd.Count];
+                List<string> ddc = new List<string>();
+                for ( int i=0; i<dd.Count;i++)
+                {
+                    ddd[i] = (object)dd[i].ToJson();
+                    ddc.Add(dd[i].Caption);
+                }
+                json["Caption"] = ddc.ToArray();
+                json["Cells"] = (object [])ddd;
             }
-            json["Times"] = times;
-            //ret = DynamicJson.Serialize(json);
+
             ret = json.ToString();
             return ret;
         }
