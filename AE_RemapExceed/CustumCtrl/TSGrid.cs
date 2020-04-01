@@ -1151,11 +1151,16 @@ namespace AE_RemapExceed
 				tsInfo.Invalidate();
 			}
 		}
-		//****************************************************************************************
-		//機能追加
-		//****************************************************************************************
-		//----------------------------------------------------------------------------------------
-		public void GetStatus()
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            this.Invalidate();
+        }
+        //****************************************************************************************
+        //機能追加
+        //****************************************************************************************
+        //----------------------------------------------------------------------------------------
+        public void GetStatus()
 		{
 			//OffsetYMaxの値を計算
 			this.m_OffsetYMax = tsd.heightMax - this.Height;
@@ -1288,7 +1293,8 @@ namespace AE_RemapExceed
 			if (sv.SaveToFile(path) == true)
 			{
 				m_FileName = path;
-				m_SaveFlag = false;
+                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(m_FileName);
+                m_SaveFlag = false;
 				OnFileLoaded(new EventArgs());
 				return true;
 			}
@@ -1359,7 +1365,7 @@ namespace AE_RemapExceed
 				m_SaveFlag = false;
 				if (w != tsd.widthMax) { base.OnSizeChanged(new EventArgs()); }
 				OnFileLoaded(new EventArgs());
-
+                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(m_FileName);
 				Sync();
 				return true;
 			}

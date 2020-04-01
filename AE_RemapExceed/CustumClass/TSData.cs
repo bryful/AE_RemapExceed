@@ -421,6 +421,7 @@ namespace AE_RemapExceed
         public bool IsPrintComment = true;
         public bool IsPrintMemo = true;
 
+        public string SheetName = "untitled_sheet";
 		//-------------------------------
 		//CellNameブロック
 		private string[] cellCaption = new string[TSdef.CellCount];
@@ -1641,6 +1642,9 @@ namespace AE_RemapExceed
 			}
 		}
         //**************************************************************
+        //**************************************************************
+        //**************************************************************
+        //**************************************************************
         public CellItems GetCellItems(int c)
         {
             CellItems ret = new CellItems();
@@ -1667,29 +1671,44 @@ namespace AE_RemapExceed
                 {
                     CellItem ci = new CellItem();
                     ci.Time = (double)i / (double)m_FrameRate;
-                    ci.Num = (double)dat[i];
+                    ci.Num = ((double)dat[i]-1) / (double)m_FrameRate;
                     ret.Items.Add(ci);
                 }
             }
             if (ret.Items.Count == 2)
             {
-                if ((ret.Items[0].Num== ret.Items[1].Num)&& (ret.Items[0].Num == 0))
+                if ((ret.Items[0].Num== ret.Items[1].Num)&& (ret.Items[0].Num < 0))
                 {
                     ret.Items.Clear();
                 }
             }
-            if (ret.Items.Count > 0) ret.Caption = cellCaption[c];
+            if (ret.Items.Count > 0)
+            {
+                ret.Caption = cellCaption[c];
+
+
+            }
 
             return ret;
         }
         //**************************************************************
             public string ToJson()
         {
+            /*{"caption": ["A","B","C","D","E","F","G","H","I","J","K","L","M"],
+             * "cellCount": 13,"
+             * cells": [[[0,1],[4,2],[8,0]],[[0,1],[3,2],[6,3],[9,4],[12,5],[15,6],[18,7],[21,8],[24,9],[27,10],[30,11],[33,12],[36,13],[39,14],[42,15],[45,16],[48,17],[51,18],[54,19],[57,0]],[[0,0]],[[0,1]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]]],
+             * "frameCount": 342,
+             * "frameRate": 24,
+             * "sheetName": "test"}*/
             string ret = "";
             dynamic json = new DynamicJson();
 
-            json["CellCount"] = m_CellCount;
-            json["FrameCount"] = m_FrameCount;
+            json["header"] = "ardjV2";
+            //json["memo"] = "clip data for AE. setValuesAtTimesに合わせたパラメータになってます。保存用ではありません";
+            json["sheetName"] = SheetName;
+            json["cellCount"] = (double)m_CellCount;
+            json["frameCount"] = (double)m_FrameCount;
+            json["frameRate"] = (double)m_FrameRate;
 
             List< CellItems > dd = new List<CellItems>();
             for ( int i=0; i<m_CellCount;i++)
@@ -1710,8 +1729,8 @@ namespace AE_RemapExceed
                     ddd[i] = (object)dd[i].ToJson();
                     ddc.Add(dd[i].Caption);
                 }
-                json["Caption"] = ddc.ToArray();
-                json["Cells"] = (object [])ddd;
+                json["caption"] = ddc.ToArray();
+                json["cells"] = (object [])ddd;
             }
 
             ret = json.ToString();

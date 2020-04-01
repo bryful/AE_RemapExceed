@@ -29,6 +29,10 @@
 		private void InitializeComponent( )
 		{
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.edCmpAspect = new AE_RemapExceed.FloatEdit();
+            this.edSrcAspect = new AE_RemapExceed.FloatEdit();
+            this.edSrcHeight = new AE_RemapExceed.IntEdit();
+            this.edSrcWidth = new AE_RemapExceed.IntEdit();
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -38,16 +42,12 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbIsLoadScriptFile = new System.Windows.Forms.CheckBox();
+            this.edLastFrame = new AE_RemapExceed.IntEdit();
             this.label8 = new System.Windows.Forms.Label();
             this.cmbEmptyCell = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.edLastFrame = new AE_RemapExceed.IntEdit();
-            this.edCmpAspect = new AE_RemapExceed.FloatEdit();
-            this.edSrcAspect = new AE_RemapExceed.FloatEdit();
-            this.edSrcHeight = new AE_RemapExceed.IntEdit();
-            this.edSrcWidth = new AE_RemapExceed.IntEdit();
-            this.cbIsLoadScriptFile = new System.Windows.Forms.CheckBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +70,42 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "After Effects";
+            // 
+            // edCmpAspect
+            // 
+            this.edCmpAspect.Location = new System.Drawing.Point(156, 137);
+            this.edCmpAspect.Name = "edCmpAspect";
+            this.edCmpAspect.Size = new System.Drawing.Size(100, 19);
+            this.edCmpAspect.TabIndex = 3;
+            this.edCmpAspect.Text = "0";
+            this.edCmpAspect.Value = 0F;
+            // 
+            // edSrcAspect
+            // 
+            this.edSrcAspect.Location = new System.Drawing.Point(156, 112);
+            this.edSrcAspect.Name = "edSrcAspect";
+            this.edSrcAspect.Size = new System.Drawing.Size(100, 19);
+            this.edSrcAspect.TabIndex = 2;
+            this.edSrcAspect.Text = "0";
+            this.edSrcAspect.Value = 0F;
+            // 
+            // edSrcHeight
+            // 
+            this.edSrcHeight.Location = new System.Drawing.Point(156, 87);
+            this.edSrcHeight.Name = "edSrcHeight";
+            this.edSrcHeight.Size = new System.Drawing.Size(100, 19);
+            this.edSrcHeight.TabIndex = 1;
+            this.edSrcHeight.Text = "0";
+            this.edSrcHeight.Value = 0;
+            // 
+            // edSrcWidth
+            // 
+            this.edSrcWidth.Location = new System.Drawing.Point(156, 62);
+            this.edSrcWidth.Name = "edSrcWidth";
+            this.edSrcWidth.Size = new System.Drawing.Size(100, 19);
+            this.edSrcWidth.TabIndex = 0;
+            this.edSrcWidth.Text = "0";
+            this.edSrcWidth.Value = 0;
             // 
             // label1
             // 
@@ -157,12 +193,42 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.cmbEmptyCell);
             this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(13, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(235, 208);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Remap Clipboard";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(33, 143);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(141, 12);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "！この設定は保存されません";
+            // 
+            // cbIsLoadScriptFile
+            // 
+            this.cbIsLoadScriptFile.AutoSize = true;
+            this.cbIsLoadScriptFile.Location = new System.Drawing.Point(21, 124);
+            this.cbIsLoadScriptFile.Name = "cbIsLoadScriptFile";
+            this.cbIsLoadScriptFile.Size = new System.Drawing.Size(204, 16);
+            this.cbIsLoadScriptFile.TabIndex = 4;
+            this.cbIsLoadScriptFile.Text = "実行時Scriptsフォルダを読み込まない";
+            this.cbIsLoadScriptFile.UseVisualStyleBackColor = true;
+            // 
+            // edLastFrame
+            // 
+            this.edLastFrame.Enabled = false;
+            this.edLastFrame.Location = new System.Drawing.Point(128, 83);
+            this.edLastFrame.Name = "edLastFrame";
+            this.edLastFrame.Size = new System.Drawing.Size(84, 19);
+            this.edLastFrame.TabIndex = 3;
+            this.edLastFrame.Text = "0";
+            this.edLastFrame.Value = 0;
             // 
             // label8
             // 
@@ -196,71 +262,6 @@
             this.label7.Size = new System.Drawing.Size(69, 12);
             this.label7.TabIndex = 0;
             this.label7.Text = "空セルの扱い";
-            // 
-            // edLastFrame
-            // 
-            this.edLastFrame.Enabled = false;
-            this.edLastFrame.Location = new System.Drawing.Point(128, 83);
-            this.edLastFrame.Name = "edLastFrame";
-            this.edLastFrame.Size = new System.Drawing.Size(84, 19);
-            this.edLastFrame.TabIndex = 3;
-            this.edLastFrame.Text = "0";
-            this.edLastFrame.Value = 0;
-            // 
-            // edCmpAspect
-            // 
-            this.edCmpAspect.Location = new System.Drawing.Point(156, 137);
-            this.edCmpAspect.Name = "edCmpAspect";
-            this.edCmpAspect.Size = new System.Drawing.Size(100, 19);
-            this.edCmpAspect.TabIndex = 3;
-            this.edCmpAspect.Text = "0";
-            this.edCmpAspect.Value = 0F;
-            // 
-            // edSrcAspect
-            // 
-            this.edSrcAspect.Location = new System.Drawing.Point(156, 112);
-            this.edSrcAspect.Name = "edSrcAspect";
-            this.edSrcAspect.Size = new System.Drawing.Size(100, 19);
-            this.edSrcAspect.TabIndex = 2;
-            this.edSrcAspect.Text = "0";
-            this.edSrcAspect.Value = 0F;
-            // 
-            // edSrcHeight
-            // 
-            this.edSrcHeight.Location = new System.Drawing.Point(156, 87);
-            this.edSrcHeight.Name = "edSrcHeight";
-            this.edSrcHeight.Size = new System.Drawing.Size(100, 19);
-            this.edSrcHeight.TabIndex = 1;
-            this.edSrcHeight.Text = "0";
-            this.edSrcHeight.Value = 0;
-            // 
-            // edSrcWidth
-            // 
-            this.edSrcWidth.Location = new System.Drawing.Point(156, 62);
-            this.edSrcWidth.Name = "edSrcWidth";
-            this.edSrcWidth.Size = new System.Drawing.Size(100, 19);
-            this.edSrcWidth.TabIndex = 0;
-            this.edSrcWidth.Text = "0";
-            this.edSrcWidth.Value = 0;
-            // 
-            // cbIsLoadScriptFile
-            // 
-            this.cbIsLoadScriptFile.AutoSize = true;
-            this.cbIsLoadScriptFile.Location = new System.Drawing.Point(21, 124);
-            this.cbIsLoadScriptFile.Name = "cbIsLoadScriptFile";
-            this.cbIsLoadScriptFile.Size = new System.Drawing.Size(204, 16);
-            this.cbIsLoadScriptFile.TabIndex = 4;
-            this.cbIsLoadScriptFile.Text = "実行時Scriptsフォルダを読み込まない";
-            this.cbIsLoadScriptFile.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(33, 143);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(141, 12);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "！この設定は保存されません";
             // 
             // RemapSettingDlg
             // 

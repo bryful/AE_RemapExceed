@@ -286,7 +286,7 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.FrameDelete, Keys.None, Keys.None);
 
 			setKeyTable(funcCmd.AutoInput, Keys.Control | Keys.J, Keys.None);
-			setKeyTable(funcCmd.ScriptToClipLayer, Keys.Alt | Keys.None, Keys.None);
+			setKeyTable(funcCmd.ScriptToClipLayer, Keys.None | Keys.None, Keys.None);
             setKeyTable(funcCmd.ScriptToClipAll, Keys.None, Keys.None);
             setKeyTable(funcCmd.ScriptToFile, Keys.None, Keys.None);
             setKeyTable(funcCmd.ScriptToFileAll, Keys.None, Keys.None);

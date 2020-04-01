@@ -1,0 +1,45 @@
+#TimeSheetGrid SheetData
+
+*Comment
+
+*ParamStart
+LayerCount	10
+FrameCount	144
+CmpFps	24
+SrcWidth	1280
+SrcHeight	720
+PageSec	6
+SrcAspect	1
+CmpAspect	1
+EmptyCell	3
+remaping	False
+CREATE_USER	
+UPDATE_USER	
+CREATE_TIME	2020/04/01 12:09:36
+UPDATE_TIME	2020/04/01 12:09:36
+TITLE	
+SUB_TITLE	
+OPUS	
+SCECNE	
+CUT	
+CAMPANY_NAME	
+
+*CellName
+0	A
+1	B
+2	C
+3	D
+4	E
+5	F
+6	G
+7	H
+8	I
+9	J
+
+*Memo
+
+*FrameEnabled
+1	0
+
+*CellDataStart
+*End

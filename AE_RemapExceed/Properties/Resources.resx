@@ -543,6 +543,6 @@ for (var i = 0; i&lt; &lt;RX&gt;.cellCount; i++){
 //******************************************************************</value>
   </data>
   <data name="VersionStr" xml:space="preserve">
-    <value>FinalBeta lastest</value>
+    <value>V2.00</value>
   </data>
 </root>

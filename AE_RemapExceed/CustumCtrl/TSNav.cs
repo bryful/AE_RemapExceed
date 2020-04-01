@@ -259,6 +259,10 @@ namespace AE_RemapExceed
 		{
 			return true;
 		}
-		//-------------------------------------------------------------------------
-	}
+        //-------------------------------------------------------------------------
+        protected override void OnResize(EventArgs e)
+        {
+            this.Invalidate();
+        }
+    }
 }

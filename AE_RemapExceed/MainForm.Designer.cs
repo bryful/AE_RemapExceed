@@ -43,9 +43,6 @@
             this.FilePrintPreview = new System.Windows.Forms.ToolStripMenuItem();
             this.FilePageSetup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.scriptAllToFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.ScriptToFileLayer = new System.Windows.Forms.ToolStripMenuItem();
-            this.ScriptAllToClip = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuSepa4 = new System.Windows.Forms.ToolStripSeparator();
             this.FileQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.EditMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,12 +61,11 @@
             this.DirectInput = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.cmLayer = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cellToClip = new System.Windows.Forms.ToolStripMenuItem();
-            this.scriptToClipLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuSepa6 = new System.Windows.Forms.ToolStripSeparator();
             this.layerInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.layerRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.LayerRename = new System.Windows.Forms.ToolStripMenuItem();
+            this.jsonToClipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.FrameMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.cmFrame = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.FrameDisp = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,8 +75,6 @@
             this.cmFrameDisp_PageSecFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.cmFrameDisp_SecFrame = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuSepa7 = new System.Windows.Forms.ToolStripSeparator();
-            this.frameEnabledON = new System.Windows.Forms.ToolStripMenuItem();
-            this.frameEnabledOFF = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuSepa8 = new System.Windows.Forms.ToolStripSeparator();
             this.frameInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.frameDelete = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +94,6 @@
             this.tsInfo1 = new AE_RemapExceed.TSInfo();
             this.tsInput1 = new AE_RemapExceed.TSInput();
             this.tsMemo1 = new AE_RemapExceed.TSMemo();
-            this.jsonToClipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.cmSettings.SuspendLayout();
             this.cmLayer.SuspendLayout();
@@ -140,9 +133,6 @@
             this.FilePrintPreview,
             this.FilePageSetup,
             this.toolStripSeparator1,
-            this.scriptAllToFile,
-            this.ScriptToFileLayer,
-            this.ScriptAllToClip,
             this.MenuSepa4,
             this.FileQuit});
             this.FileMenu.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -154,33 +144,33 @@
             // FileNew
             // 
             this.FileNew.Name = "FileNew";
-            this.FileNew.Size = new System.Drawing.Size(174, 22);
+            this.FileNew.Size = new System.Drawing.Size(146, 22);
             this.FileNew.Text = "シート設定";
             this.FileNew.Click += new System.EventHandler(this.menu_Click);
             // 
             // MenuSepa1
             // 
             this.MenuSepa1.Name = "MenuSepa1";
-            this.MenuSepa1.Size = new System.Drawing.Size(171, 6);
+            this.MenuSepa1.Size = new System.Drawing.Size(143, 6);
             // 
             // FileOpen
             // 
             this.FileOpen.Name = "FileOpen";
-            this.FileOpen.Size = new System.Drawing.Size(174, 22);
+            this.FileOpen.Size = new System.Drawing.Size(146, 22);
             this.FileOpen.Text = "開く";
             this.FileOpen.Click += new System.EventHandler(this.menu_Click);
             // 
             // FileSave
             // 
             this.FileSave.Name = "FileSave";
-            this.FileSave.Size = new System.Drawing.Size(174, 22);
+            this.FileSave.Size = new System.Drawing.Size(146, 22);
             this.FileSave.Text = "保存";
             this.FileSave.Click += new System.EventHandler(this.menu_Click);
             // 
             // FileSaveAs
             // 
             this.FileSaveAs.Name = "FileSaveAs";
-            this.FileSaveAs.Size = new System.Drawing.Size(174, 22);
+            this.FileSaveAs.Size = new System.Drawing.Size(146, 22);
             this.FileSaveAs.Text = "別名で保存";
             this.FileSaveAs.Click += new System.EventHandler(this.menu_Click);
             // 
@@ -188,71 +178,50 @@
             // 
             this.FileSaveToClip.Enabled = false;
             this.FileSaveToClip.Name = "FileSaveToClip";
-            this.FileSaveToClip.Size = new System.Drawing.Size(174, 22);
+            this.FileSaveToClip.Size = new System.Drawing.Size(146, 22);
             this.FileSaveToClip.Text = "SaveToClip";
             this.FileSaveToClip.Click += new System.EventHandler(this.menu_Click);
             // 
             // MenuSepa2
             // 
             this.MenuSepa2.Name = "MenuSepa2";
-            this.MenuSepa2.Size = new System.Drawing.Size(171, 6);
+            this.MenuSepa2.Size = new System.Drawing.Size(143, 6);
             // 
             // FilePrint
             // 
             this.FilePrint.Name = "FilePrint";
-            this.FilePrint.Size = new System.Drawing.Size(174, 22);
+            this.FilePrint.Size = new System.Drawing.Size(146, 22);
             this.FilePrint.Text = "Print";
             this.FilePrint.Click += new System.EventHandler(this.menu_Click);
             // 
             // FilePrintPreview
             // 
             this.FilePrintPreview.Name = "FilePrintPreview";
-            this.FilePrintPreview.Size = new System.Drawing.Size(174, 22);
+            this.FilePrintPreview.Size = new System.Drawing.Size(146, 22);
             this.FilePrintPreview.Text = "PrintPreview";
             this.FilePrintPreview.Click += new System.EventHandler(this.menu_Click);
             // 
             // FilePageSetup
             // 
             this.FilePageSetup.Name = "FilePageSetup";
-            this.FilePageSetup.Size = new System.Drawing.Size(174, 22);
+            this.FilePageSetup.Size = new System.Drawing.Size(146, 22);
             this.FilePageSetup.Text = "ページ設定";
             this.FilePageSetup.Click += new System.EventHandler(this.menu_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
-            // 
-            // scriptAllToFile
-            // 
-            this.scriptAllToFile.Name = "scriptAllToFile";
-            this.scriptAllToFile.Size = new System.Drawing.Size(174, 22);
-            this.scriptAllToFile.Text = "ScriptAllToFile";
-            this.scriptAllToFile.Click += new System.EventHandler(this.menu_Click);
-            // 
-            // ScriptToFileLayer
-            // 
-            this.ScriptToFileLayer.Name = "ScriptToFileLayer";
-            this.ScriptToFileLayer.Size = new System.Drawing.Size(174, 22);
-            this.ScriptToFileLayer.Text = "ScriptToFileLayer";
-            this.ScriptToFileLayer.Click += new System.EventHandler(this.menu_Click);
-            // 
-            // ScriptAllToClip
-            // 
-            this.ScriptAllToClip.Name = "ScriptAllToClip";
-            this.ScriptAllToClip.Size = new System.Drawing.Size(174, 22);
-            this.ScriptAllToClip.Text = "ScriptAllToClip";
-            this.ScriptAllToClip.Click += new System.EventHandler(this.menu_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // MenuSepa4
             // 
             this.MenuSepa4.Name = "MenuSepa4";
-            this.MenuSepa4.Size = new System.Drawing.Size(171, 6);
+            this.MenuSepa4.Size = new System.Drawing.Size(143, 6);
             // 
             // FileQuit
             // 
             this.FileQuit.Name = "FileQuit";
-            this.FileQuit.Size = new System.Drawing.Size(174, 22);
+            this.FileQuit.Size = new System.Drawing.Size(146, 22);
             this.FileQuit.Text = "終了";
             this.FileQuit.Click += new System.EventHandler(this.menu_Click);
             // 
@@ -314,7 +283,6 @@
             this.ColorSettingDlg,
             this.PrintSettings});
             this.cmSettings.Name = "cmSettings";
-            this.cmSettings.OwnerItem = this.SettingMenu;
             this.cmSettings.Size = new System.Drawing.Size(162, 136);
             // 
             // KeySettingDlg
@@ -377,30 +345,14 @@
             // cmLayer
             // 
             this.cmLayer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cellToClip,
-            this.scriptToClipLayer,
+            this.jsonToClipToolStripMenuItem,
             this.MenuSepa6,
             this.layerInsert,
             this.layerRemove,
-            this.LayerRename,
-            this.jsonToClipToolStripMenuItem});
+            this.LayerRename});
             this.cmLayer.Name = "cmLayer";
             this.cmLayer.OwnerItem = this.LayerMenu;
-            this.cmLayer.Size = new System.Drawing.Size(181, 164);
-            // 
-            // cellToClip
-            // 
-            this.cellToClip.Name = "cellToClip";
-            this.cellToClip.Size = new System.Drawing.Size(180, 22);
-            this.cellToClip.Text = "CellToClip";
-            this.cellToClip.Click += new System.EventHandler(this.menu_Click);
-            // 
-            // scriptToClipLayer
-            // 
-            this.scriptToClipLayer.Name = "scriptToClipLayer";
-            this.scriptToClipLayer.Size = new System.Drawing.Size(180, 22);
-            this.scriptToClipLayer.Text = "ScriptToClipLayer";
-            this.scriptToClipLayer.Click += new System.EventHandler(this.menu_Click);
+            this.cmLayer.Size = new System.Drawing.Size(181, 120);
             // 
             // MenuSepa6
             // 
@@ -428,6 +380,13 @@
             this.LayerRename.Text = "LayerRename";
             this.LayerRename.Click += new System.EventHandler(this.menu_Click);
             // 
+            // jsonToClipToolStripMenuItem
+            // 
+            this.jsonToClipToolStripMenuItem.Name = "jsonToClipToolStripMenuItem";
+            this.jsonToClipToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.jsonToClipToolStripMenuItem.Text = "JsonToClip";
+            this.jsonToClipToolStripMenuItem.Click += new System.EventHandler(this.menu_Click);
+            // 
             // FrameMenu
             // 
             this.FrameMenu.DropDown = this.cmFrame;
@@ -440,22 +399,19 @@
             this.cmFrame.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FrameDisp,
             this.MenuSepa7,
-            this.frameEnabledON,
-            this.frameEnabledOFF,
             this.MenuSepa8,
             this.frameInsert,
             this.frameDelete,
             this.autoInput,
             this.valueEdit});
             this.cmFrame.Name = "contextMenuStrip1";
-            this.cmFrame.OwnerItem = this.FrameMenu;
-            this.cmFrame.Size = new System.Drawing.Size(169, 170);
+            this.cmFrame.Size = new System.Drawing.Size(139, 126);
             // 
             // FrameDisp
             // 
             this.FrameDisp.DropDown = this.cmFrameDisp;
             this.FrameDisp.Name = "FrameDisp";
-            this.FrameDisp.Size = new System.Drawing.Size(168, 22);
+            this.FrameDisp.Size = new System.Drawing.Size(138, 22);
             this.FrameDisp.Text = "フレーム表示";
             // 
             // cmFrameDisp
@@ -500,52 +456,38 @@
             // MenuSepa7
             // 
             this.MenuSepa7.Name = "MenuSepa7";
-            this.MenuSepa7.Size = new System.Drawing.Size(165, 6);
-            // 
-            // frameEnabledON
-            // 
-            this.frameEnabledON.Name = "frameEnabledON";
-            this.frameEnabledON.Size = new System.Drawing.Size(168, 22);
-            this.frameEnabledON.Text = "FrameEnabledON";
-            this.frameEnabledON.Click += new System.EventHandler(this.frameEnabledONToolStripMenuItem_Click);
-            // 
-            // frameEnabledOFF
-            // 
-            this.frameEnabledOFF.Name = "frameEnabledOFF";
-            this.frameEnabledOFF.Size = new System.Drawing.Size(168, 22);
-            this.frameEnabledOFF.Text = "FrameEnabledOFF";
-            this.frameEnabledOFF.Click += new System.EventHandler(this.frameEnabledOFFToolStripMenuItem_Click);
+            this.MenuSepa7.Size = new System.Drawing.Size(135, 6);
             // 
             // MenuSepa8
             // 
             this.MenuSepa8.Name = "MenuSepa8";
-            this.MenuSepa8.Size = new System.Drawing.Size(165, 6);
+            this.MenuSepa8.Size = new System.Drawing.Size(135, 6);
             // 
             // frameInsert
             // 
             this.frameInsert.Name = "frameInsert";
-            this.frameInsert.Size = new System.Drawing.Size(168, 22);
+            this.frameInsert.Size = new System.Drawing.Size(138, 22);
             this.frameInsert.Text = "FrameInsert";
             this.frameInsert.Click += new System.EventHandler(this.menu_Click);
             // 
             // frameDelete
             // 
             this.frameDelete.Name = "frameDelete";
-            this.frameDelete.Size = new System.Drawing.Size(168, 22);
+            this.frameDelete.Size = new System.Drawing.Size(138, 22);
             this.frameDelete.Text = "FrameDelete";
             this.frameDelete.Click += new System.EventHandler(this.menu_Click);
             // 
             // autoInput
             // 
             this.autoInput.Name = "autoInput";
-            this.autoInput.Size = new System.Drawing.Size(168, 22);
+            this.autoInput.Size = new System.Drawing.Size(138, 22);
             this.autoInput.Text = "AutoInput";
             this.autoInput.Click += new System.EventHandler(this.menu_Click);
             // 
             // valueEdit
             // 
             this.valueEdit.Name = "valueEdit";
-            this.valueEdit.Size = new System.Drawing.Size(168, 22);
+            this.valueEdit.Size = new System.Drawing.Size(138, 22);
             this.valueEdit.Text = "valueEdit";
             this.valueEdit.Click += new System.EventHandler(this.menu_Click);
             // 
@@ -705,13 +647,6 @@
             this.tsMemo1.TSGrid = this.tsGrid1;
             this.tsMemo1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tsMemo1_MouseDoubleClick);
             // 
-            // jsonToClipToolStripMenuItem
-            // 
-            this.jsonToClipToolStripMenuItem.Name = "jsonToClipToolStripMenuItem";
-            this.jsonToClipToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.jsonToClipToolStripMenuItem.Text = "JsonToClip";
-            this.jsonToClipToolStripMenuItem.Click += new System.EventHandler(this.menu_Click);
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -782,8 +717,6 @@
 		private System.Windows.Forms.ToolStripSeparator MenuSepa1;
 		private System.Windows.Forms.ContextMenuStrip cmFrame;
 		private System.Windows.Forms.ToolStripSeparator MenuSepa7;
-		private System.Windows.Forms.ToolStripMenuItem frameEnabledON;
-		private System.Windows.Forms.ToolStripMenuItem frameEnabledOFF;
 		private System.Windows.Forms.ContextMenuStrip cmSettings;
 		private System.Windows.Forms.ToolStripMenuItem ColorSettingDlg;
 		private System.Windows.Forms.ToolStripMenuItem LayoutSettingDlg;
@@ -792,7 +725,6 @@
 		private System.Windows.Forms.ToolStripMenuItem FileSaveToClip;
 		private System.Windows.Forms.ToolStripMenuItem RemapSettingDlg;
 		private System.Windows.Forms.ContextMenuStrip cmLayer;
-		private System.Windows.Forms.ToolStripMenuItem cellToClip;
 		private System.Windows.Forms.ToolStripMenuItem layerInsert;
 		private System.Windows.Forms.ToolStripMenuItem layerRemove;
 		private System.Windows.Forms.ToolStripMenuItem LayerRename;
@@ -804,8 +736,6 @@
 		private System.Windows.Forms.ToolStripSeparator MenuSepa4;
 		private System.Windows.Forms.ToolStripSeparator MenuSepa6;
 		private System.Windows.Forms.ToolStripSeparator MenuSepa2;
-		private System.Windows.Forms.ToolStripMenuItem scriptAllToFile;
-		private System.Windows.Forms.ToolStripMenuItem ScriptAllToClip;
 		private System.Windows.Forms.ToolStripMenuItem ScriptToClipMenu;
 		private System.Windows.Forms.ContextMenuStrip cmFrameDisp;
 		private System.Windows.Forms.ToolStripMenuItem cmFrameDisp_Frame;
@@ -814,8 +744,6 @@
 		private System.Windows.Forms.ToolStripMenuItem cmFrameDisp_SecFrame;
 		private System.Windows.Forms.ToolStripMenuItem FrameDisp;
 		private System.Windows.Forms.ToolStripMenuItem SystemSettingDlg;
-        private System.Windows.Forms.ToolStripMenuItem scriptToClipLayer;
-        private System.Windows.Forms.ToolStripMenuItem ScriptToFileLayer;
         private System.Windows.Forms.ToolStripMenuItem valueEdit;
         private System.Windows.Forms.ToolStripMenuItem WindowMenu;
         private System.Windows.Forms.ToolStripMenuItem PreviewDlg;

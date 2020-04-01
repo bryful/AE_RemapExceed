@@ -198,8 +198,12 @@ namespace AE_RemapExceed
 			}
 			base.OnPreviewKeyDown(e);
 		}
-		//----------------------------------------------------------------------------------------
-		protected override bool IsInputKey(Keys keyData)
+        protected override void OnResize(EventArgs e)
+        {
+            this.Invalidate();
+        }
+        //----------------------------------------------------------------------------------------
+        protected override bool IsInputKey(Keys keyData)
 		{
 			return true;
 		}

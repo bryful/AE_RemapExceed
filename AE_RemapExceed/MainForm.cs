@@ -14,8 +14,17 @@ namespace AE_RemapExceed
 	{
 		public bool m_LayoutFlag = true;
         public PictureViewForm pvf = null;
-		//--------------------------------------------------------------------------------------
-		public MainForm()
+        private NavBar m_NavBar = new NavBar();
+        //-------------------------------------------------------------
+        private void NavBarSetup()
+        {
+            m_NavBar.Form = this;
+            m_NavBar.SizeSet();
+            m_NavBar.LocSet();
+            m_NavBar.Show();
+
+        }//--------------------------------------------------------------------------------------
+        public MainForm()
 		{
 			InitializeComponent();
 			this.Text = AE_RemapExceed.Properties.Resources.AppName + " " + AE_RemapExceed.Properties.Resources.VersionStr;
@@ -73,8 +82,8 @@ namespace AE_RemapExceed
 				}
 			}
             //tsGrid1.Refresh();
-
-		}
+            NavBarSetup();
+        }
 		//--------------------------------------------------------------------------------------
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -285,9 +294,9 @@ namespace AE_RemapExceed
                 setMenuItem(FilePrintPreview, funcCmd.PrintPreview);
                 setMenuItem(FilePrint, funcCmd.Print);
                 setMenuItem(FilePageSetup, funcCmd.PageSetup);
-                setMenuItem(ScriptAllToClip, funcCmd.ScriptToClipAll);
-				setMenuItem(scriptAllToFile, funcCmd.ScriptToFileAll);
-				setMenuItem(ScriptToFileLayer, funcCmd.ScriptToFile);
+                //setMenuItem(ScriptAllToClip, funcCmd.ScriptToClipAll);
+				//setMenuItem(scriptAllToFile, funcCmd.ScriptToFileAll);
+				//setMenuItem(ScriptToFileLayer, funcCmd.ScriptToFile);
                 setMenuItem(FileQuit, funcCmd.Quit);
 
  
@@ -303,8 +312,8 @@ namespace AE_RemapExceed
 				setMenuItem(PrintSettings, funcCmd.PrintSetting);
 
 				//Layer
-				setMenuItem(cellToClip, funcCmd.LayerDataToClipboard);
-				setMenuItem(scriptToClipLayer, funcCmd.ScriptToClipLayer);
+				//setMenuItem(cellToClip, funcCmd.LayerDataToClipboard);
+				//setMenuItem(scriptToClipLayer, funcCmd.ScriptToClipLayer);
                 setMenuItem(layerInsert, funcCmd.LayerInsert);
 				setMenuItem(layerRemove, funcCmd.LayerRemove);
 				setMenuItem(LayerRename, funcCmd.LayerRename);
