@@ -84,8 +84,45 @@ namespace AE_RemapExceed
             //tsGrid1.Refresh();
             NavBarSetup();
         }
-		//--------------------------------------------------------------------------------------
-		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        //-------------------------------------------------------------
+        /// <summary>
+        /// ダミー関数
+        /// </summary>
+        /// <param name="cmd"></param>
+        public void GetCommand(string[] cmd)
+        {
+            /*
+             *  /export <path> セルデータを指定されたパスに保存
+             *  
+             *  /import <path> セルデータを読み込む。デフォルト
+             *  
+             *  
+             *  /timeScale パラメータがsetValuesAtTimes形式に
+             *  
+             *  
+             *  /layerIndex <index> 対象となるレイヤーをインデックスで指定
+             *  /layerCaption <caption>  対象となるレイヤーをキャプションで指定
+             *  /layerが指定されたら１レイヤのみの動作となる
+             */
+            string s = "";
+            if (cmd.Length > 0)
+            {
+                for(int i=0; i<cmd.Length;i++)
+                {
+                    if (s != "") s += "//";
+                    s += cmd[i];
+                }
+                if (s != "")
+                {
+                    MessageBox.Show(s);
+                    this.Activate();
+                    this.TopMost = true;
+                    this.TopMost = false;
+                }
+            }
+        }       
+        //--------------------------------------------------------------------------------------
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (tsGrid1.SaveFlag)
 			{
