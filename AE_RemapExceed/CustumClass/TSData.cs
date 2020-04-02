@@ -1,293 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 
 using Codeplex.Data;
     
 namespace AE_RemapExceed
 {
-    //**************************************************************
-    public enum ValueEditMode
-    {
-        direct = 0,
-        add,
-        dec,
-        Count
-    }
-	//**************************************************************
-	public class TSParams
-	{
-		public enum N
-		{
-			Left = 0,
-			Top,
-			Height,
-			CellCount,
-			FrameCount,
-			CellWidth,
-			CellHeight,
-			FrameWidth,
-			MemoWidth,
-			CaptionHeight,
-			FrameOffset,
-			ZeroStart,
-			FrameDisp,
-			SrcWidth,
-			SrcHeight,
-			PageSec,
-			FrameRate,
-			SrcAspect,
-			CmpAspect,
-			AE_Vaersion,
-			EmptyCell,
-			remaping,
-			AutoInputStart,
-			AutoInputLast,
-			AutoInputKoma,
-			SecInputMode,
-			LastFrame,
-			IsPrintTITLE,
-			IsPrintSUB_TITLE,
-			IsPrintOPUS,
-			IsPrintSCECNE,
-			IsPrintCUT,
-			IsPrintCREATE_USER,
-			IsPrintUPDATE_USER,
-			IsPrintCAMPANY_NAME,
-			IsPrintComment,
-            IsPrintMemo,
-            CommentAlign,
-            Count
-		}
-		//----------------------------------------------
-		public TSParams()
-		{
-		}
-		//----------------------------------------------
-		public int Count
-		{
-			get { return (int)N.Count; }
-		}
-		//----------------------------------------------
-		public string[] Tags = new string [(int)N.Count]
-		{
-		"Left",
-		"Top",
-		"Height",
-		"CellCount",
-		"FrameCount",
-		"CellWidth",
-		"CellHeight",
-		"FrameWidth",
-		"MemoWidth",
-		"CaptionHeight",
-		"FrameOffset",
-		"ZeroStart",
-		"FrameDisp",
-		"SrcWidth",
-		"SrcHeight",
-		"PageSec",
-		"FrameRate",
-		"SrcAspect",
-		"CmpAspect",
-		"AE_Version",
-		"EmptyCell",
-		"remaping",
-		"AutoInputStart",
-		"AutoInputLast",
-		"AutoInputKoma",
-		"SecInputMode",
-		"LastFrame",
-		"IsPrintTITLE",
-		"IsPrintSUB_TITLE",
-		"IsPrintOPUS",
-		"IsPrintSCECNE",
-		"IsPrintCUT",
-		"IsPrintCREATE_USER",
-		"IsPrintUPDATE_USER",
-		"IsPrintCAMPANY_NAME",
-		"IsPrintComment",
-		"IsPrintMemo",
-        "CommentAlign"
-
-		};
-		public string Tag(N tt)
-		{
-			return Tags[(int)tt];
-		}
-	}
-
-	//**************************************************************
-	//各パラメータの初期値
-	public class TSdef
-	{
-		public const int none = 0;
-		public const int CellCount = 10;
-		public const int FrameCount = 144;
-		public const int CellWidth = 28;
-		public const int CellHeight = 16;
-		public const int FrameWidth = 80;
-		public const int MemoWidth = 80;
-		public const int CaptionHeight = 20;
-		public const int FrameOffset = 0;
-		public const bool ZeroStart = false;
-		public const int SrcWidth = 1280;
-		public const int SrcHeight = 720;
-		public const TSPageSec PageSec = TSPageSec.sec6;
-		public const TSFps FrameRate = TSFps.fps24;
-		public const int HorLine = 6;
-		public const float SrcAspect = 1.0f;
-		public const float CmpAspect = 1.0f;
-		public const TSFrameDisp FrameDisp = TSFrameDisp.pageFrame;
-
-		public const int AE_Version = 65;
-		public const EmptyCell EmptyCellDef = EmptyCell.LastFrame;
-		public const bool remaping = false;
-
-		public const int AutoInputStart = 1;
-		public const int AutoInputLast = 10;
-		public const int AutoInputKoma = 3;
-		public const bool SecInputMode = false;
-		public const int LastFrame = 1440;
-
-	}
-	//**************************************************************
-		
-
-	//**************************************************************
-	//FrameRateの定数
-	public enum TSFps
-	{
-		fps12 = 12,
-		fps15 = 15,
-		fps24 = 24,
-		fps30 = 30
-	}
-	//**************************************************************
-	//１ページのフレーム数
-	public enum TSPageSec
-	{
-		sec3 = 3,
-		sec6 = 6
-	}
-	public enum TSFrameDisp
-	{
-		frame = 0,
-		pageFrame,
-		paseSecFrame,
-		SecFrame,
-		Count
-	}
-	//---------------------------------------------
-	public class ard_prms
-	{
-		private string tag ="";
-		private string value = "";
-		public ard_prms()
-		{
-		}
-		public ard_prms(string t, string v )
-		{
-			tag = t;
-			value = v;
-		}
-		public string Value
-		{
-			get { return value; }
-			set { value = this.value; }
-		}
-		public String Tag
-		{
-			get { return tag; }
-			set { SetTag(value); }
-		}
-		public void SetTag(string s)
-		{
-			string ss = s.Trim();
-			if (ss!="")
-			{
-				if (ss[0] =='*')
-				{
-					ss = ss.Substring(1).Trim();
-				}
-			}
-			tag = ss;
-		}
-		public bool CompareTag(string s)
-		{
-			return (string.Compare(s, this.tag, true) ==0);
-		}
-		public bool CompareTag(TSParams.N n)
-		{
-			TSParams p = new TSParams();
-
-			return (string.Compare(p.Tag(n), this.tag, true) == 0);
-		}
-		public int GetValueInt(int def)
-		{
-			int v;
-
-			if (Int32.TryParse(value, out v))
-			{
-
-				return v;
-			}
-			else
-			{
-				return def;
-			}
-		}
-		public float GetValueFloat(float def)
-		{
-			float v;
-
-			if (float.TryParse(value, out v))
-			{
-
-				return v;
-			}
-			else
-			{
-				return def;
-			}
-		}
-		public bool GetValueBool(bool def)
-		{
-			bool v;
-
-			if (bool.TryParse(value, out v))
-			{
-
-				return v;
-			}
-			else
-			{
-				return def;
-			}
-			
-		}
-		public EmptyCell GetValueEmptyCell( )
-		{
-			int v = GetValueInt((int)EmptyCell.BlindsJpn);
-			EmptyCell Ret = EmptyCell.BlindsJpn;
-			switch (v)
-			{
-				case (int)EmptyCell.BlindsJpn:
-					Ret = EmptyCell.BlindsJpn;
-					break;
-				case (int)EmptyCell.BlindsEng:
-					Ret = EmptyCell.BlindsEng;
-					break;
-				case (int)EmptyCell.LastFrame:
-					Ret = EmptyCell.LastFrame;
-					break;
-				case (int)EmptyCell.Opacity:
-					Ret = EmptyCell.Opacity;
-					break;
-			}
-
-			return Ret;
-		}
-	}
+	
 	//**************************************************************
 	public class memoData
 	{
@@ -305,33 +27,7 @@ namespace AE_RemapExceed
 			Memo = mm.Trim();
 		}
 	}
-	//**************************************************************
-	public enum SheetInfo
-	{
-		TITLE = 0,
-		SUB_TITLE,
-		OPUS,
-		SCECNE,
-		CUT,
-		CREATE_USER,
-		UPDATE_USER,
-		CAMPANY_NAME,
-		Count,
-	}
-	//**************************************************************
-    public enum CmtAligns
-    {
-        LeftTop=0,
-        CenterTop,
-        RightTop,
-        LeftCenter,
-        CenterCenter,
-        RightCenter,
-        LeftBottom,
-        CenterBottom,
-        RightBottom,
-        Count
-    }
+
     //**************************************************************
     public class CellItem
     {
@@ -388,8 +84,6 @@ namespace AE_RemapExceed
     //タイムシートの基本データのクラス
     public class TSData
 	{
-		//ARD 用
-		//private bool m_LoadFlag = false;
 
 		//=====================================================
 		// ARDファイル用データ
@@ -398,18 +92,13 @@ namespace AE_RemapExceed
 		public List<string> Comment = new List<string>();
 
 		//Paramブロック
-		public List<ard_prms> Params = new List<ard_prms>();
+		public List<Ard_prms> Params = new List<Ard_prms>();
 
 		private int m_CellCount = TSdef.CellCount;
 		private int m_FrameCount = TSdef.FrameCount;
 		private int m_FrameCountTrue = TSdef.FrameCount;	//これはSaveDataには含まれない
 		private TSFps m_FrameRate = TSFps.fps24;
-		public int SrcWidth = TSdef.SrcWidth;
-		public int SrcHeight = TSdef.SrcHeight;
 		public TSPageSec PageSec = TSdef.PageSec;
-		public float SrcAspect = TSdef.SrcAspect;
-		public float CmpAspect = TSdef.CmpAspect;
-		public EmptyCell EmptyCell = TSdef.EmptyCellDef;
 		public bool remaping = TSdef.remaping;
 		public int AE_Vaersion = TSdef.AE_Version;
 
@@ -1190,7 +879,7 @@ namespace AE_RemapExceed
 		//Save
 		//**************************************************************
 		//----------------------------------------------------------
-		public int FindArd_prms(List<ard_prms> prms, string tag)
+		public int FindArd_prms(List<Ard_prms> prms, string tag)
 		{
 			int ret = -1;
 			if ((prms.Count <= 0) || (tag == "")) { return ret; }
@@ -1222,30 +911,30 @@ namespace AE_RemapExceed
 				{
 					SetFrameRate((TSFps)Params[i].GetValueInt((int)TSdef.FrameRate));
 				}
-				else if (String.Compare(tag, TSSaveFile.D_SrcWidth, true) == 0)
-				{
-					SrcWidth = Params[i].GetValueInt(TSdef.SrcWidth);
-				}
-				else if (String.Compare(tag, TSSaveFile.D_SrcHeight, true) == 0)
-				{
-					SrcHeight = Params[i].GetValueInt(TSdef.SrcHeight);
-				}
+				//else if (String.Compare(tag, TSSaveFile.D_SrcWidth, true) == 0)
+				//{
+				//	SrcWidth = Params[i].GetValueInt(TSdef.SrcWidth);
+				//}
+				//else if (String.Compare(tag, TSSaveFile.D_SrcHeight, true) == 0)
+				//{
+				//	SrcHeight = Params[i].GetValueInt(TSdef.SrcHeight);
+				//}
 				else if (String.Compare(tag, TSSaveFile.D_PageSec, true) == 0)
 				{
 					PageSec = (TSPageSec)Params[i].GetValueInt((int)TSdef.PageSec);
 				}
-				else if (String.Compare(tag, TSSaveFile.D_SrcAspect, true) == 0)
-				{
-					SrcAspect = Params[i].GetValueFloat(TSdef.SrcAspect);
-				}
-				else if (String.Compare(tag, TSSaveFile.D_CmpAspect, true) == 0)
-				{
-					CmpAspect = Params[i].GetValueFloat(TSdef.CmpAspect);
-				}
-				else if (String.Compare(tag, TSSaveFile.D_EmptyCell, true) == 0)
-				{
-					EmptyCell = (EmptyCell)Params[i].GetValueInt((int)TSdef.EmptyCellDef);
-				}
+				//else if (String.Compare(tag, TSSaveFile.D_SrcAspect, true) == 0)
+				//{
+				//	SrcAspect = Params[i].GetValueFloat(TSdef.SrcAspect);
+				//}
+				//else if (String.Compare(tag, TSSaveFile.D_CmpAspect, true) == 0)
+				//{
+				//	CmpAspect = Params[i].GetValueFloat(TSdef.CmpAspect);
+				//}
+				///else if (String.Compare(tag, TSSaveFile.D_EmptyCell, true) == 0)
+				//{
+				//	EmptyCell = (EmptyCell)Params[i].GetValueInt((int)TSdef.EmptyCellDef);
+				//}
 				else if (String.Compare(tag, TSSaveFile.D_remaping, true) == 0)
 				{
 					remaping = Params[i].GetValueBool(TSdef.remaping);
@@ -1305,7 +994,7 @@ namespace AE_RemapExceed
 		private void toParam(string t, string s)
 		{
 			int idx = FindArd_prms(Params, t);
-			ard_prms prm = new ard_prms(t, s);
+			Ard_prms prm = new Ard_prms(t, s);
 			if (idx >= 0) { Params[idx] = prm; } else { Params.Add(prm); }
 		}
 		//----------------------------------------------------------
@@ -1314,12 +1003,12 @@ namespace AE_RemapExceed
 			toParam(TSSaveFile.D_LayerCount, m_CellCount.ToString());
 			toParam(TSSaveFile.D_FrameCount, m_FrameCount.ToString());
 			toParam(TSSaveFile.D_CmpFps, ((int)m_FrameRate).ToString());
-			toParam(TSSaveFile.D_SrcWidth, SrcWidth.ToString());
-			toParam(TSSaveFile.D_SrcHeight, SrcHeight.ToString());
+			//toParam(TSSaveFile.D_SrcWidth, SrcWidth.ToString());
+			//toParam(TSSaveFile.D_SrcHeight, SrcHeight.ToString());
 			toParam(TSSaveFile.D_PageSec, ((int)PageSec).ToString());
-			toParam(TSSaveFile.D_SrcAspect, (SrcAspect).ToString());
-			toParam(TSSaveFile.D_CmpAspect, (CmpAspect).ToString());
-			toParam(TSSaveFile.D_EmptyCell, ((int)EmptyCell).ToString());
+			//toParam(TSSaveFile.D_SrcAspect, (SrcAspect).ToString());
+			//toParam(TSSaveFile.D_CmpAspect, (CmpAspect).ToString());
+			//toParam(TSSaveFile.D_EmptyCell, ((int)EmptyCell).ToString());
 			toParam(TSSaveFile.D_remaping, remaping.ToString());
 			toParam(TSSaveFile.D_CREATE_USER, CREATE_USER);
 			toParam(TSSaveFile.D_UPDATE_USER, UPDATE_USER);
@@ -1642,101 +1331,7 @@ namespace AE_RemapExceed
 			}
 		}
         //**************************************************************
-        //**************************************************************
-        //**************************************************************
-        //**************************************************************
-        public CellItems GetCellItems(int c)
-        {
-            CellItems ret = new CellItems();
-            if ((c < 0) || (c >= m_CellCount)) return ret;
-
-            int[] dat = new int[m_FrameCount];
-
-            dat[0] = cellData[c][0];
-            dat[m_FrameCount - 1] = cellData[c][m_FrameCount - 1];
-            for ( int i=1; i < m_FrameCount-1; i++)
-            {
-                if (cellData[c][i-1] == cellData[c][i])
-                {
-                    dat[i] = -1;
-                }
-                else
-                {
-                    dat[i] = cellData[c][i];
-                }
-            }
-            for (int i = 0; i < m_FrameCount; i++)
-            {
-                if (dat[i] >= 0)
-                {
-                    CellItem ci = new CellItem();
-                    ci.Time = (double)i / (double)m_FrameRate;
-                    ci.Num = ((double)dat[i]-1) / (double)m_FrameRate;
-                    ret.Items.Add(ci);
-                }
-            }
-            if (ret.Items.Count == 2)
-            {
-                if ((ret.Items[0].Num== ret.Items[1].Num)&& (ret.Items[0].Num < 0))
-                {
-                    ret.Items.Clear();
-                }
-            }
-            if (ret.Items.Count > 0)
-            {
-                ret.Caption = cellCaption[c];
-
-
-            }
-
-            return ret;
-        }
-        //**************************************************************
-            public string ToJson()
-        {
-            /*{"caption": ["A","B","C","D","E","F","G","H","I","J","K","L","M"],
-             * "cellCount": 13,"
-             * cells": [[[0,1],[4,2],[8,0]],[[0,1],[3,2],[6,3],[9,4],[12,5],[15,6],[18,7],[21,8],[24,9],[27,10],[30,11],[33,12],[36,13],[39,14],[42,15],[45,16],[48,17],[51,18],[54,19],[57,0]],[[0,0]],[[0,1]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]]],
-             * "frameCount": 342,
-             * "frameRate": 24,
-             * "sheetName": "test"}*/
-            string ret = "";
-            dynamic json = new DynamicJson();
-
-            json["header"] = "ardjV2";
-            //json["memo"] = "clip data for AE. setValuesAtTimesに合わせたパラメータになってます。保存用ではありません";
-            json["sheetName"] = SheetName;
-            json["cellCount"] = (double)m_CellCount;
-            json["frameCount"] = (double)m_FrameCount;
-            json["frameRate"] = (double)m_FrameRate;
-
-            List< CellItems > dd = new List<CellItems>();
-            for ( int i=0; i<m_CellCount;i++)
-            {
-                CellItems cis = GetCellItems(i);
-                if (cis.Items.Count>0)
-                {
-                    dd.Add(cis);
-                }
-            }
-
-            if (dd.Count > 0)
-            {
-                var ddd = new object[dd.Count];
-                List<string> ddc = new List<string>();
-                for ( int i=0; i<dd.Count;i++)
-                {
-                    ddd[i] = (object)dd[i].ToJson();
-                    ddc.Add(dd[i].Caption);
-                }
-                json["caption"] = ddc.ToArray();
-                json["cells"] = (object [])ddd;
-            }
-
-            ret = json.ToString();
-            return ret;
-        }
-		//**************************************************************
+ 
         public void CalcValue(TSSelection sel, int v, ValueEditMode md)
         {
             int idx  = sel.Index;
@@ -1774,6 +1369,101 @@ namespace AE_RemapExceed
                     break;
             }
         }
-	}
-	//**************************************************************
+        //**************************************************************
+        //**************************************************************
+        //**************************************************************
+        public CellItems GetCellItems(int c)
+        {
+            CellItems ret = new CellItems();
+            if ((c < 0) || (c >= m_CellCount)) return ret;
+
+            int[] dat = new int[m_FrameCount];
+
+            dat[0] = cellData[c][0];
+            dat[m_FrameCount - 1] = cellData[c][m_FrameCount - 1];
+            for (int i = 1; i < m_FrameCount - 1; i++)
+            {
+                if (cellData[c][i - 1] == cellData[c][i])
+                {
+                    dat[i] = -1;
+                }
+                else
+                {
+                    dat[i] = cellData[c][i];
+                }
+            }
+            for (int i = 0; i < m_FrameCount; i++)
+            {
+                if (dat[i] >= 0)
+                {
+                    CellItem ci = new CellItem();
+                    ci.Time = (double)i / (double)m_FrameRate;
+                    ci.Num = ((double)dat[i] - 1) / (double)m_FrameRate;
+                    ret.Items.Add(ci);
+                }
+            }
+            if (ret.Items.Count == 2)
+            {
+                if ((ret.Items[0].Num == ret.Items[1].Num) && (ret.Items[0].Num < 0))
+                {
+                    ret.Items.Clear();
+                }
+            }
+            if (ret.Items.Count > 0)
+            {
+                ret.Caption = cellCaption[c];
+
+
+            }
+
+            return ret;
+        }
+        //**************************************************************
+        public string ToJson()
+        {
+            /*{"caption": ["A","B","C","D","E","F","G","H","I","J","K","L","M"],
+             * "cellCount": 13,"
+             * cells": [[[0,1],[4,2],[8,0]],[[0,1],[3,2],[6,3],[9,4],[12,5],[15,6],[18,7],[21,8],[24,9],[27,10],[30,11],[33,12],[36,13],[39,14],[42,15],[45,16],[48,17],[51,18],[54,19],[57,0]],[[0,0]],[[0,1]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]]],
+             * "frameCount": 342,
+             * "frameRate": 24,
+             * "sheetName": "test"}*/
+            string ret = "";
+            dynamic json = new DynamicJson();
+
+            json["header"] = "ardjV2";
+            //json["memo"] = "clip data for AE. setValuesAtTimesに合わせたパラメータになってます。保存用ではありません";
+            json["sheetName"] = SheetName;
+            json["cellCount"] = (double)m_CellCount;
+            json["frameCount"] = (double)m_FrameCount;
+            json["frameRate"] = (double)m_FrameRate;
+
+            List<CellItems> dd = new List<CellItems>();
+            for (int i = 0; i < m_CellCount; i++)
+            {
+                CellItems cis = GetCellItems(i);
+                if (cis.Items.Count > 0)
+                {
+                    dd.Add(cis);
+                }
+            }
+
+            if (dd.Count > 0)
+            {
+                var ddd = new object[dd.Count];
+                List<string> ddc = new List<string>();
+                for (int i = 0; i < dd.Count; i++)
+                {
+                    ddd[i] = (object)dd[i].ToJson();
+                    ddc.Add(dd[i].Caption);
+                }
+                json["caption"] = ddc.ToArray();
+                json["cells"] = (object[])ddd;
+            }
+
+            ret = json.ToString();
+            return ret;
+        }
+        //**************************************************************
+    }
+    //**************************************************************
 }

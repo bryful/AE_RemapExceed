@@ -131,6 +131,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustumClass\Ard_prms.cs" />
     <Compile Include="Dialog\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,7 +150,6 @@
     <Compile Include="CustumCtrl\IntEditD.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustumClass\ExtentionSetup.cs" />
     <Compile Include="CustumClass\TSHistory.cs" />
     <Compile Include="DynamicJson.cs" />
     <Compile Include="NavBar.cs">
@@ -158,6 +158,8 @@
     <Compile Include="NavBar.designer.cs">
       <DependentUpon>NavBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustumClass\TSdef.cs" />
+    <Compile Include="CustumClass\TSParams.cs" />
     <Compile Include="UserCtrl\CmtAlign.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -189,12 +191,6 @@
     <Compile Include="Key\KeySettings.Designer.cs">
       <DependentUpon>KeySettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialog\RemapSettingDlg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialog\RemapSettingDlg.Designer.cs">
-      <DependentUpon>RemapSettingDlg.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialog\LayerInsertDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,12 +205,6 @@
     </Compile>
     <Compile Include="CustumCtrl\TSInfo.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Dialog\SystemSettingDlg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialog\SystemSettingDlg.Designer.cs">
-      <DependentUpon>SystemSettingDlg.cs</DependentUpon>
     </Compile>
     <Compile Include="PictureView\PictureView.cs">
       <SubType>Component</SubType>
@@ -255,7 +245,6 @@
       <DependentUpon>TimeSheetSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="CustumClass\TSPref.cs" />
-    <Compile Include="CustumClass\TSScript.cs" />
     <Compile Include="CustumClass\TSSaveFile.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -307,17 +296,11 @@
     <EmbeddedResource Include="Key\KeySettings.resx">
       <DependentUpon>KeySettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialog\RemapSettingDlg.resx">
-      <DependentUpon>RemapSettingDlg.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialog\LayerInsertDlg.resx">
       <DependentUpon>LayerInsertDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\LayerRenameDlg.resx">
       <DependentUpon>LayerRenameDlg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialog\SystemSettingDlg.resx">
-      <DependentUpon>SystemSettingDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\PrintSettingDlg.resx">
       <DependentUpon>PrintSettingDlg.cs</DependentUpon>
@@ -363,7 +346,6 @@
       <DependentUpon>ValueEditDlg.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -373,7 +355,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="CustumClass\TSAfterFX.cs" />
     <Compile Include="CustumCtrl\TSCellCaption.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -450,7 +431,6 @@
     <None Include="Resources\Exd_Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AE_RemapExceed_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Resources\Exd_IconDoc.ico" />
   </ItemGroup>

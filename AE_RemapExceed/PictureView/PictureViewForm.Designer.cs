@@ -353,7 +353,6 @@
             this.cbDirectInput.TabIndex = 35;
             this.cbDirectInput.Text = "直接数字を打ち込む";
             this.cbDirectInput.UseVisualStyleBackColor = true;
-            this.cbDirectInput.Click += new System.EventHandler(this.cbDirectInput_Click);
             this.cbDirectInput.Enter += new System.EventHandler(this.cntrol_Enter);
             this.cbDirectInput.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.setExec);
             // 

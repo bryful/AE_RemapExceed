@@ -70,53 +70,7 @@ namespace AE_RemapExceed.Properties {
         }
         
         /// <summary>
-        ///   //JavaScript
-        /////******************************************************************
-        /////最初の行は&quot;//JavaScript&quot;としてヘッダとする。
-        /////クリップボードから読み込んだ時の識別用。
-        /////******************************************************************
-        ///var &lt;RX&gt; = new Object;
-        /////******************************************************************
-        /////変数の定義
-        ///&lt;RX&gt;.enabled	= false;
-        ///&lt;RX&gt;.frameCount	= &lt;frameCount&gt;;	//フレーム数
-        ///&lt;RX&gt;.frameRate	= &lt;frameRate&gt;;	//フレームレート
-        ///&lt;RX&gt;.caption	= &lt;caption&gt;;
-        ///&lt;RX&gt;.cellData	= new Array;	//セル番号
-        ////*
-        ///	object.frame フレーム番号（0スタート） [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ScriptLayer {
-            get {
-                return ResourceManager.GetString("ScriptLayer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   //JavaScript
-        /////最初の行は&quot;//JavaScript&quot;としてヘッダとする。
-        /////クリップボードから読み込んだ時の識別用。
-        /////---------------------------------------------------------------
-        ///var &lt;RX&gt; = new Object;
-        /////---------------------------------------------------------------
-        /////変数の定義
-        ///&lt;RX&gt;.enabled	= true;
-        ///&lt;RX&gt;.cellIndex	= &lt;cellIndex&gt;;	//選択されているレイヤ
-        ///&lt;RX&gt;.cellCount	= &lt;cellCount&gt;;	//セルレイヤ数
-        ///&lt;RX&gt;.frameCount	= &lt;frameCount&gt;;	//フレーム数
-        ///&lt;RX&gt;.frameRate	= &lt;frameRate&gt;;	//フレームレート
-        ///
-        ///&lt;RX&gt;.cellCaption	= [&lt;RX&gt;.cellCount];	//セル名の配列
-        ///&lt;RX&gt;.cellData		= [&lt;RX&gt;.cellCount];	// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string ScriptLayerAll {
-            get {
-                return ResourceManager.GetString("ScriptLayerAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   V2.00 に類似しているローカライズされた文字列を検索します。
+        ///   v2.00 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string VersionStr {
             get {

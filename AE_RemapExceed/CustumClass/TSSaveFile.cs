@@ -228,7 +228,7 @@ namespace AE_RemapExceed
 			return new Lines(start, last);
 		}
 		//----------------------------------------------------------
-		private int FindArd_prms(List<ard_prms> prms, string tag)
+		private int FindArd_prms(List<Ard_prms> prms, string tag)
 		{
 			int ret = -1;
 			if ((prms.Count <= 0) || (tag == "")) { return ret; }
@@ -281,7 +281,7 @@ namespace AE_RemapExceed
 			//---------
 			//パラメータブロックを読み取る
 			ln = FindBlock(rd, D_Param);
-			List<ard_prms> prms = new List<ard_prms>();
+			List<Ard_prms> prms = new List<Ard_prms>();
 			if ((ln.start >= 2) && (ln.start <= ln.end))
 			{
 				for (int i = ln.start; i <= ln.end; i++)
@@ -292,7 +292,7 @@ namespace AE_RemapExceed
 					{
 						if ((sa[0] != "") && (sa[1] != ""))
 						{
-							prms.Add(new ard_prms(sa[0], sa[1]));
+							prms.Add(new Ard_prms(sa[0], sa[1]));
 						}
 					}
 				}
@@ -480,7 +480,7 @@ namespace AE_RemapExceed
 				data.Comment.Add(s);
 			}
 			data.Params.Clear();
-			foreach (ard_prms s in prms)
+			foreach (Ard_prms s in prms)
 			{
 				data.Params.Add(s);
 			}
@@ -523,7 +523,7 @@ namespace AE_RemapExceed
 			data.ChkTimes();
 			lines.Add(D_Param);
 			data.ToParams();
-			foreach (ard_prms p in data.Params)
+			foreach (Ard_prms p in data.Params)
 			{
 				lines.Add(p.Tag + TAB + p.Value);
 			}

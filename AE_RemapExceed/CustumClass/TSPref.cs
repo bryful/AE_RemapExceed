@@ -95,7 +95,7 @@ namespace AE_RemapExceed
 			}
 		}
 		//----------------------------------------------------------------------
-		public void ToData(List<ard_prms> lines)
+		public void ToData(List<Ard_prms> lines)
 		{
 			if (lines.Count <= 0) { return; }
 			if (tsg == null) { return; }
@@ -155,14 +155,14 @@ namespace AE_RemapExceed
 				{
 					tsg.tsd.FrameDisp = (TSFrameDisp)lines[i].GetValueInt((int)TSdef.FrameDisp);
 				}
-				else if (lines[i].CompareTag(TSParams.N.SrcWidth))
-				{
-					tsg.tsd.SrcWidth = lines[i].GetValueInt((int)TSdef.SrcWidth);
-				}
-				else if (lines[i].CompareTag(TSParams.N.SrcHeight))
-				{
-					tsg.tsd.SrcHeight = lines[i].GetValueInt((int)TSdef.SrcHeight);
-				}
+				//else if (lines[i].CompareTag(TSParams.N.SrcWidth))
+				//{
+				//	tsg.tsd.SrcWidth = lines[i].GetValueInt((int)TSdef.SrcWidth);
+				//}
+				//else if (lines[i].CompareTag(TSParams.N.SrcHeight))
+				//{
+				//	tsg.tsd.SrcHeight = lines[i].GetValueInt((int)TSdef.SrcHeight);
+				//}
 				else if (lines[i].CompareTag(TSParams.N.PageSec))
 				{
 					tsg.tsd.PageSec = (TSPageSec)(lines[i].GetValueInt((int)TSdef.PageSec));
@@ -171,18 +171,18 @@ namespace AE_RemapExceed
 				{
 					tsg.tsd.FrameRate = (TSFps)(lines[i].GetValueInt((int)TSdef.FrameRate));
 				}
-				else if (lines[i].CompareTag(TSParams.N.SrcAspect))
-				{
-					tsg.tsd.SrcAspect = lines[i].GetValueFloat((int)TSdef.SrcAspect);
-				}
-				else if (lines[i].CompareTag(TSParams.N.CmpAspect))
-				{
-					tsg.tsd.CmpAspect = lines[i].GetValueFloat((int)TSdef.CmpAspect);
-				}
-				else if (lines[i].CompareTag(TSParams.N.EmptyCell))
-				{
-					tsg.tsd.EmptyCell = (EmptyCell)lines[i].GetValueInt((int)TSdef.EmptyCellDef);
-				}
+				//else if (lines[i].CompareTag(TSParams.N.SrcAspect))
+				//{
+				//	tsg.tsd.SrcAspect = lines[i].GetValueFloat((int)TSdef.SrcAspect);
+				//}
+				//else if (lines[i].CompareTag(TSParams.N.CmpAspect))
+				//{
+				//	tsg.tsd.CmpAspect = lines[i].GetValueFloat((int)TSdef.CmpAspect);
+				//}
+				//else if (lines[i].CompareTag(TSParams.N.EmptyCell))
+				//{
+				//	tsg.tsd.EmptyCell = (EmptyCell)lines[i].GetValueInt((int)TSdef.EmptyCellDef);
+				//}
 				else if (lines[i].CompareTag(TSParams.N.remaping))
 				{
 					tsg.tsd.remaping = lines[i].GetValueBool(TSdef.remaping);
@@ -263,7 +263,7 @@ namespace AE_RemapExceed
 			if ((tsg == null) || (path == "")) { return false; }
 			if (File.Exists(path) == false) { return false; }
 
-			List<ard_prms> lines = new List<ard_prms>();
+			List<Ard_prms> lines = new List<Ard_prms>();
 
 			string[] rd = System.IO.File.ReadAllLines(path, Encoding.GetEncoding("utf-8"));
 			if (rd.Length <= 0) return false;
@@ -273,7 +273,7 @@ namespace AE_RemapExceed
 				string[] sa = rd[i].Split('=');
 				if (sa.Length >= 2)
 				{
-					lines.Add(new ard_prms(sa[0].Trim(), sa[1].Trim()));
+					lines.Add(new Ard_prms(sa[0].Trim(), sa[1].Trim()));
 				}
 			}
 			if (lines.Count <= 0) { return false; }
@@ -301,14 +301,10 @@ namespace AE_RemapExceed
 			s += p.Tag(TSParams.N.FrameOffset) + " = " + tsg.tsd.FrameOffset.ToString() + "\n";
 			s += p.Tag(TSParams.N.ZeroStart) + " = " + tsg.tsd.ZeroStart.ToString() + "\n";
 			s += p.Tag(TSParams.N.FrameDisp) + " = " + ((int)tsg.tsd.FrameDisp).ToString() + "\n";
-			s += p.Tag(TSParams.N.SrcWidth) + " = " + tsg.tsd.SrcWidth.ToString() + "\n";
-			s += p.Tag(TSParams.N.SrcHeight) + " = " + tsg.tsd.SrcHeight.ToString() + "\n";
 			s += p.Tag(TSParams.N.PageSec) + " = " + ((int)tsg.tsd.PageSec).ToString() + "\n";
 			s += p.Tag(TSParams.N.FrameRate) + " = " + ((int)tsg.tsd.FrameRate).ToString() + "\n";
-			s += p.Tag(TSParams.N.SrcAspect) + " = " + tsg.tsd.SrcAspect.ToString() + "\n";
-			s += p.Tag(TSParams.N.CmpAspect) + " = " + tsg.tsd.CmpAspect.ToString() + "\n";
 			s += p.Tag(TSParams.N.AE_Vaersion) + " = " + tsg.tsd.AE_Vaersion.ToString() + "\n";
-			s += p.Tag(TSParams.N.EmptyCell) + " = " + ((int)tsg.tsd.EmptyCell).ToString() + "\n";
+			//s += p.Tag(TSParams.N.EmptyCell) + " = " + ((int)tsg.tsd.EmptyCell).ToString() + "\n";
 			s += p.Tag(TSParams.N.remaping) + " = " + tsg.tsd.remaping.ToString() + "\n";
 			s += p.Tag(TSParams.N.AutoInputStart) + " = " + tsg.tsd.AutoInputStart.ToString() + "\n";
 			s += p.Tag(TSParams.N.AutoInputLast) + " = " + tsg.tsd.AutoInputLast.ToString() + "\n";

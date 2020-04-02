@@ -10,8 +10,18 @@ using System.IO;
 
 namespace AE_RemapExceed
 {
-	public partial class MainForm : Form
+    public enum EXEC_MODE
+    {
+        NONE = 0,
+        EXPORT,
+        IMPORT,
+        EXPORT_LAYER,
+        IMPORT_LAYER,
+        QUIT
+    }
+    public partial class MainForm : Form
 	{
+
 		public bool m_LayoutFlag = true;
         public PictureViewForm pvf = null;
         private NavBar m_NavBar = new NavBar();
@@ -23,10 +33,13 @@ namespace AE_RemapExceed
             m_NavBar.LocSet();
             m_NavBar.Show();
 
-        }//--------------------------------------------------------------------------------------
+        }
+        private bool fristboot = false;
+        //--------------------------------------------------------------------------------------
         public MainForm()
 		{
-			InitializeComponent();
+ 
+            InitializeComponent();
 			this.Text = AE_RemapExceed.Properties.Resources.AppName + " " + AE_RemapExceed.Properties.Resources.VersionStr;
             tsGrid1.MainForm = this;
 			this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.m_MouseWheel);
@@ -52,75 +65,129 @@ namespace AE_RemapExceed
 			toolStripStatusLabel1.Text = tsGrid1.SelInfo;
 			ShortCutPre();
 
-			string[] cmds;
-			cmds = System.Environment.GetCommandLineArgs();
-			//MessageBox.Show(System.Environment.CommandLine);
-			//コマンドライン引数の表示
-			if (cmds.Length > 1)
-			{
-				for (int i = 1; i < cmds.Length; i++)
-				{
-					string cmd = cmds[i];
-					if ((cmd != "") && (cmd[0] != '-') && (cmd[0] != '/'))
-					{
-						string s = cmd;
-						string e = Path.GetExtension(s);
-						if (e == "") s += ".ard";
-						if (File.Exists(s))
-						{
-							if (tsGrid1.LoadFromFile(s))
-							{
-								//MessageBox.Show("OK:" + s);
-								break;
-							}
-							else
-							{
-								//MessageBox.Show("NG:" + s);
-							}
-						}
-					}
-				}
-			}
-            //tsGrid1.Refresh();
+           
             NavBarSetup();
+            m_NavBar.LocSet();
+
+            string[] cmds;
+            cmds = System.Environment.GetCommandLineArgs();
+            GetCommand(cmds, "init");
+            fristboot = true;
         }
         //-------------------------------------------------------------
         /// <summary>
         /// ダミー関数
         /// </summary>
         /// <param name="cmd"></param>
-        public void GetCommand(string[] cmd)
+        public void GetCommand(string[] cmd,string cp="")
         {
             /*
              *  /export <path> セルデータを指定されたパスに保存
+             *  /save <path> セルデータを指定されたパスに保存
              *  
-             *  /import <path> セルデータを読み込む。デフォルト
+             *  /import <path> セルデータを読み込む。
+             *  /load <path> セルデータを読み込む。
              *  
              *  
-             *  /timeScale パラメータがsetValuesAtTimes形式に
              *  
-             *  
-             *  /layerIndex <index> 対象となるレイヤーをインデックスで指定
-             *  /layerCaption <caption>  対象となるレイヤーをキャプションで指定
-             *  /layerが指定されたら１レイヤのみの動作となる
-             */
-            string s = "";
-            if (cmd.Length > 0)
+             *  /layer
+                */
+            if (fristboot) return;
+            EXEC_MODE mode = EXEC_MODE.NONE;
+            bool layer = false;
+            string filename = "";
+
+            if (cmd.Length > 1)
             {
-                for(int i=0; i<cmd.Length;i++)
+                for(int i=1; i<cmd.Length;i++)
                 {
-                    if (s != "") s += "//";
-                    s += cmd[i];
+                    string s = cmd[i];
+                    if ((s[0]=='/')|| (s[0] == '-')) //option
+                    {
+                        string s2 = s.Substring(1).ToLower();
+                        switch(s2)
+                        {
+                            case "export":
+                            case "save":
+                            case "output":
+                                if (mode == EXEC_MODE.NONE)
+                                {
+                                    mode = EXEC_MODE.EXPORT;
+                                }
+                                break;
+                            case "import":
+                            case "load":
+                            case "open":
+                                if (mode == EXEC_MODE.NONE)
+                                {
+                                    mode = EXEC_MODE.IMPORT;
+                                }
+                                break;
+                            case "layer":
+                            case "cell":
+                                layer = true; ;
+                                break;
+                            case "quit":
+                            case "exit":
+                            case "close":
+                                if (mode == EXEC_MODE.NONE)
+                                {
+                                    mode = EXEC_MODE.QUIT;
+                                    filename = "";
+                                    break;
+                                }
+                                break;
+                        }
+
+                    }
+                    else
+                    {
+                        s = s.Trim();
+                        if (s.Length >= 2)
+                        {
+                            if ((s[0]=='"')&& (s[s.Length-1] == '"'))
+                            {
+                                s = s.Substring(1, s.Length - 2);
+                            }
+                        }
+                        s = s.Trim();
+                        if (s != "")
+                        {
+                            if (filename == "") filename = s;
+                        }
+
+                    }
                 }
-                if (s != "")
+                if (mode != EXEC_MODE.QUIT)
                 {
-                    MessageBox.Show(s);
-                    this.Activate();
-                    this.TopMost = true;
-                    this.TopMost = false;
+                    if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.IMPORT))
+                    {
+                        if (filename == "") mode = EXEC_MODE.NONE;
+                    }
+                    if (filename != "") mode = EXEC_MODE.IMPORT;
+                    if (layer == true)
+                    {
+                        if (mode == EXEC_MODE.EXPORT) mode = EXEC_MODE.EXPORT_LAYER;
+                        else if (mode == EXEC_MODE.IMPORT) mode = EXEC_MODE.IMPORT_LAYER;
+                    }
+                }
+                else
+                {
+                    filename = "";
                 }
             }
-        }       
+            this.BringToFront();
+            this.TopMost = true;
+
+            string[] modes = new string[] { "NONE", "EXPORT", "IMPORT", "EXPORT_LAYER", "IMPORT_LAYER", "QUIT" };
+            MessageBox.Show(String.Format("mode:{0} filename:{1} op:{2}", modes[(int)mode], filename,cp));
+            this.TopMost = false;
+            if (mode == EXEC_MODE.QUIT)
+            {
+                this.Close();
+                Application.Exit();
+            }
+        }
         //--------------------------------------------------------------------------------------
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -266,7 +333,6 @@ namespace AE_RemapExceed
 		private void fileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FileSave.Enabled = tsGrid1.SaveFlag;
-			FileSaveToClip.Enabled = tsGrid1.SaveFlag;
 		}
 		//**********************************************************************************
 		//Editメニュー
@@ -274,7 +340,6 @@ namespace AE_RemapExceed
 		private void EditMenu_Click(object sender, EventArgs e)
 		{
 			EditPasteMenu.Enabled = tsGrid1.ClipEnabled;
-            DirectInput.Checked = tsGrid1.DirectInput;
 		}
 		//**********************************************************************************
 		//ページ
@@ -327,13 +392,9 @@ namespace AE_RemapExceed
 				setMenuItem(FileOpen, funcCmd.Open);
 				setMenuItem(FileSave, funcCmd.Save);
 				setMenuItem(FileSaveAs, funcCmd.SaveAs);
-				setMenuItem(FileSaveToClip, funcCmd.SaveToClip);
                 setMenuItem(FilePrintPreview, funcCmd.PrintPreview);
                 setMenuItem(FilePrint, funcCmd.Print);
                 setMenuItem(FilePageSetup, funcCmd.PageSetup);
-                //setMenuItem(ScriptAllToClip, funcCmd.ScriptToClipAll);
-				//setMenuItem(scriptAllToFile, funcCmd.ScriptToFileAll);
-				//setMenuItem(ScriptToFileLayer, funcCmd.ScriptToFile);
                 setMenuItem(FileQuit, funcCmd.Quit);
 
  
@@ -344,13 +405,9 @@ namespace AE_RemapExceed
 				setMenuItem(ColorSettingDlg, funcCmd.ColorSetting);
 				setMenuItem(LayoutSettingDlg, funcCmd.LayoutSetting);
 				setMenuItem(KeySettingDlg, funcCmd.KeySetting);
-				setMenuItem(RemapSettingDlg, funcCmd.RemapSetting);
-				setMenuItem(SystemSettingDlg, funcCmd.SystemSetting);
 				setMenuItem(PrintSettings, funcCmd.PrintSetting);
 
 				//Layer
-				//setMenuItem(cellToClip, funcCmd.LayerDataToClipboard);
-				//setMenuItem(scriptToClipLayer, funcCmd.ScriptToClipLayer);
                 setMenuItem(layerInsert, funcCmd.LayerInsert);
 				setMenuItem(layerRemove, funcCmd.LayerRemove);
 				setMenuItem(LayerRename, funcCmd.LayerRename);
@@ -514,23 +571,12 @@ namespace AE_RemapExceed
         private void DirectInput_Click(object sender, EventArgs e)
         {
             tsGrid1.DirectInput = !tsGrid1.DirectInput;
-            DirectInput.Checked = tsGrid1.DirectInput;
             if (pvf != null)
             {
                 pvf.DirectInput = tsGrid1.DirectInput;
             }
         }
-        //----------------------------------------------------------------------------------
-        public bool DireitInput
-        {
-            get { return tsGrid1.DirectInput; }
-            set
-            {
-                tsGrid1.DirectInput = value;
-                DirectInput.Checked = tsGrid1.DirectInput;
-            }
-        }
-
+      
         //----------------------------------------------------------------------------------
         private void tsInput1_DoubleClick(object sender, EventArgs e)
         {

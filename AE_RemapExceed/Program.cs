@@ -16,14 +16,14 @@ namespace AE_RemapExceed
             this.EnableVisualStyles = true;
             this.IsSingleInstance = true;
             this.MainForm = new MainForm();//スタートアップフォームを設定
-            this.StartupNextInstance += new StartupNextInstanceEventHandler(MyApplication_StartupNextInstance);
+            //this.StartupNextInstance += new StartupNextInstanceEventHandler(MyApplication_StartupNextInstance);
         }
         public void MyApplication_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
         {
             //ここに二重起動されたときの処理を書く
             //e.CommandLineでコマンドライン引数を取得出来る
-            MainForm f = (MainForm)this.MainForm;
-            f.GetCommand(e.CommandLine.ToArray<string>());
+           // MainForm f = (MainForm)this.MainForm;
+           //f.GetCommand(e.CommandLine.ToArray<string>(),"Program.cs");
         }
     }
     static class Program
@@ -37,7 +37,7 @@ namespace AE_RemapExceed
             //下の3行を復活させれば多重起動ができる
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            //Application.Run(new MainForm());
 
             MyApp winAppBase = new MyApp();
             winAppBase.Run(args);

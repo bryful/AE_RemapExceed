@@ -584,14 +584,6 @@ namespace AE_RemapExceed
             }
         }
 
-        private void cbDirectInput_Click(object sender, EventArgs e)
-        {
-            if (reFlag == true) return;
-            if (mf != null)
-            {
-                mf.DireitInput = cbDirectInput.Checked;
-            }
-        }
 
 		private void ModeMenu_Click(object sender, EventArgs e)
 		{

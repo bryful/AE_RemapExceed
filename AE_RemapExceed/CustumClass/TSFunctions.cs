@@ -14,7 +14,6 @@ namespace AE_RemapExceed
 		Open,
 		Save,
 		SaveAs,
-		SaveToClip,
 		Quit,
 		//Edit
 		Copy,
@@ -23,7 +22,6 @@ namespace AE_RemapExceed
 		ColorSetting,
 		LayoutSetting,
 		KeySetting,
-		RemapSetting,
 
 		//10Key
 		ValueInput,
@@ -56,11 +54,6 @@ namespace AE_RemapExceed
 
 		AutoInput,
 
-		ScriptToClipAll,
-		ScriptToClipLayer,
-		ScriptToFile,
-        ScriptToFileAll,
-        SystemSetting,
         ValueEdit,
         Selecton1,
         Selecton2,
@@ -106,7 +99,6 @@ namespace AE_RemapExceed
 			{"Open","読み込み"},
 			{"Save","保存"},
 			{"SaveAs","別名で保存"},
-			{"SaveToClip","クリップボードへ複写"},
 			{"Quit","終了"},
 
 			{"Copy","コピー"},
@@ -116,7 +108,6 @@ namespace AE_RemapExceed
 			{"ColorSetting","カラー設定"},
 			{"LayoutSetting","グリッドサイズ設定"},
 			{"KeySetting","キーボード設定"},
-			{"RemapSetting","リマップ設定"},
 
 
 			{"ValueInput","セル番号入力"},
@@ -145,11 +136,6 @@ namespace AE_RemapExceed
 			{"FrameInsert","フレームを挿入"},
 			{"FrameDelete","フレームを削除"},
 			{"AutoInput","セルのリピート入力"},
-			{"ScriptToClip","ScriptをClipboardへ"},
-			{"ScriptToClipLayer","ScriptをClipboardへ(ターゲットのみ)"},
-			{"ScriptToFile","Scriptを書き出し(ターゲットのみ)"},
-			{"ScriptToFileAll","Scriptを書き出し"},
-			{"SystemSetting","システム設定"},
 			{"ValueEdit","値の編集"},
 
 			{"Selection1","選択範囲1k"},
@@ -240,7 +226,6 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.Open, Keys.Control | Keys.O, Keys.None);
 			setKeyTable(funcCmd.Save, Keys.Control | Keys.S, Keys.None);
 			setKeyTable(funcCmd.SaveAs, Keys.Control | Keys.Shift | Keys.S, Keys.None);
-			setKeyTable(funcCmd.SaveToClip, Keys.None, Keys.None);
 			setKeyTable(funcCmd.Quit, Keys.Control | Keys.Q, Keys.None);
 			//Edit
 			setKeyTable(funcCmd.Copy, Keys.Control | Keys.C, Keys.None);
@@ -249,7 +234,6 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.ColorSetting, Keys.Control | Keys.Alt | Keys.L, Keys.None);
 			setKeyTable(funcCmd.LayoutSetting, Keys.Control | Keys.Alt | Keys.G, Keys.None);
 			setKeyTable(funcCmd.KeySetting, Keys.Control | Keys.Alt | Keys.K, Keys.None);
-			setKeyTable(funcCmd.RemapSetting, Keys.None, Keys.None);
 
 			//Layer
 			setKeyTable(funcCmd.LayerDataToClipboard, Keys.Control | Keys.None, Keys.None);
@@ -286,11 +270,6 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.FrameDelete, Keys.None, Keys.None);
 
 			setKeyTable(funcCmd.AutoInput, Keys.Control | Keys.J, Keys.None);
-			setKeyTable(funcCmd.ScriptToClipLayer, Keys.None | Keys.None, Keys.None);
-            setKeyTable(funcCmd.ScriptToClipAll, Keys.None, Keys.None);
-            setKeyTable(funcCmd.ScriptToFile, Keys.None, Keys.None);
-            setKeyTable(funcCmd.ScriptToFileAll, Keys.None, Keys.None);
-            setKeyTable(funcCmd.SystemSetting, Keys.None, Keys.None);
 			setKeyTable(funcCmd.ValueEdit, Keys.Control | Keys.Y, Keys.None);
 
             setKeyTable(funcCmd.Selecton1, Keys.Control | Keys.D1, Keys.F1);

@@ -86,7 +86,6 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.Open, Load);
 			funcs.setFunc(funcCmd.Save, Save);
 			funcs.setFunc(funcCmd.SaveAs, SaveAs);
-			funcs.setFunc(funcCmd.SaveToClip,SaveToClip);
 			funcs.setFunc(funcCmd.Quit, Quit);
 			funcs.setFunc(funcCmd.Copy, Copy);
 			funcs.setFunc(funcCmd.Cut, Cut);
@@ -94,7 +93,6 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.ColorSetting, ColorSetting);
 			funcs.setFunc(funcCmd.LayoutSetting, LayoutSetting);
 			funcs.setFunc(funcCmd.KeySetting, KeySetting);
-			funcs.setFunc(funcCmd.RemapSetting, RemapSetting);
 
 			funcs.setFunc(funcCmd.ValueInput, ValueEnter);
 			funcs.setFunc(funcCmd.ValueAutoInc, ValueAutoInc);
@@ -108,7 +106,6 @@ namespace AE_RemapExceed
 
 			funcs.setFunc(funcCmd.LayerMoveToLeft, LayerMoveToLeft);
 			funcs.setFunc(funcCmd.LayerMoveToRight, LayerMoveToRight);
-			funcs.setFunc(funcCmd.LayerDataToClipboard, LayerDataToClipboard);
 
 			funcs.setFunc(funcCmd.PageUp, PageUp);
 			funcs.setFunc(funcCmd.PageDown, PageDown);
@@ -127,13 +124,7 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.FrameInsert, FrameInsert);
 			funcs.setFunc(funcCmd.FrameDelete, FrameDelete);
 			funcs.setFunc(funcCmd.AutoInput, AutoInput);
-            funcs.setFunc(funcCmd.ScriptToClipLayer, ScriptToClipLayer);
-            funcs.setFunc(funcCmd.ScriptToClipAll, ScriptToClipAll);
 
-            funcs.setFunc(funcCmd.ScriptToFile, ScriptLayerToFile);
-            funcs.setFunc(funcCmd.ScriptToFileAll, ScriptLayerAllToFile);
-
-			funcs.setFunc(funcCmd.SystemSetting, SystemSetting);
 
             funcs.setFunc(funcCmd.ValueEdit, ValueEdit);
 
@@ -1568,36 +1559,7 @@ namespace AE_RemapExceed
 				d.Dispose();
 			}
 		}
-		//----------------------------------------------------------------------------------------
-		//
-		public void RemapSetting()
-		{
-            RemapSettingDlg d = new RemapSettingDlg();
-			try
-			{
-				d.SrcWidth = tsd.SrcWidth;
-				d.SrcHeight = tsd.SrcHeight;
-				d.SrcAspect = tsd.SrcAspect;
-				d.CmpAspect = tsd.CmpAspect;
-				d.EmptyCell = tsd.EmptyCell;
-				d.LastFrame = tsd.LastFrame;
-                d.IsLoadScriptFile = tsd.IsLoadScriptFile;
-                if (d.ShowDialog() == DialogResult.OK)
-				{
-					tsd.SrcWidth = d.SrcWidth;
-					tsd.SrcHeight = d.SrcHeight;
-					tsd.SrcAspect = d.SrcAspect;
-					tsd.CmpAspect = d.CmpAspect;
-					tsd.EmptyCell = d.EmptyCell;
-					tsd.LastFrame = d.LastFrame;
-                    tsd.IsLoadScriptFile = d.IsLoadScriptFile;
-                }
-			}
-			finally
-			{
-				d.Dispose();
-			}
-		}
+		
 		//****************************************************************************************
 		public void LayerRemove()
 		{
@@ -1726,126 +1688,9 @@ namespace AE_RemapExceed
                 ok.Dispose();
             }
         }
-        //----------------------------------------------------------------------------------------
-        public void LayerDataToClipboard()
-        {
-            bool okFlag = false;
-            int[] data = tsd.GetLayerData(sel.Index);
-            if (data.Length > 0)
-            {
-                AE_KeyFrameData ak = new AE_KeyFrameData(data);
-                ak.EmpyMode = tsd.EmptyCell;
-                ak.LastFrame = tsd.LastFrame;
-                string s = ak.MakeKeyFrameData();
-                if (s != string.Empty)
-                {
-                    Clipboard.SetText(s);
-                    okFlag = true;
-                }
-            }
-            if (okFlag == true)
-            {
-                string s = "Layer\"";
-                s += tsd.CellCaption(sel.Index) + "\"のCell番号をCopyしました。";
-                showOK(s, 120);
-            }
-            else
-            {
-                showOK("何も入力されていません", 240);
-            }
-        }
-        //****************************************************************************************
-		public void ScriptToClipAll()
-		{
-            TSScript sp = new TSScript(this);
-            if (sp.layerAllToClipboard())
-            {
-                showOK("ScriptをClipboardへコピーしました。", 120);
-            }
-            else
-            {
-                showOK("Error! ", 240);
-            }
-		}
-        //****************************************************************************************
-        public void ScriptToClipLayer()
-        {
-            TSScript sp = new TSScript(this);
-            if (sp.layerToClipboard())
-            {
-                string s = "Layer\"";
-                s += tsd.CellCaption(sel.Index) + "\"のスクリプトをCopyしました。";
-                showOK(s, 120);
-            }
-            else
-            {
-                showOK("Error! ", 240);
-            }
+ 
 
-
-        }
-        //****************************************************************************************
-        public void ScriptLayerToFile()
-		{
-			if (tsd.IsCellDataEmpty(sel.Index) == true)
-			{
-				showOK("データがありません", 240);
-				return;
-			}
-            TSScript sp = new TSScript(this);
-            SaveFileDialog sv = new SaveFileDialog();
-            try
-            {
-                sv.DefaultExt = "jsx";
-                sv.Filter = "jsx files(*.jsx)|*.jsx|all files(*.*)|*.*";
-                sv.FilterIndex = 1;
-                sv.Title = "jsxファイルを保存します。";
-                if (sv.ShowDialog() == DialogResult.OK)
-                {
-                    sp.layerSaveToFile(sv.FileName);
-                }
-            }
-            finally
-            {
-                sv.Dispose();
-            }
-
-		}
-		
-        //****************************************************************************************
-        public void ScriptLayerAllToFile()
-        {
-            TSScript sp = new TSScript(this);
-            SaveFileDialog sv = new SaveFileDialog();
-            try
-            {
-                sv.DefaultExt = "jsx";
-                sv.Filter = "jsx files(*.jsx)|*.jsx|all files(*.*)|*.*";
-                sv.FilterIndex = 1;
-                sv.Title = "jsxファイルを保存します。";
-                if (sv.ShowDialog() == DialogResult.OK)
-                {
-                    sp.layerAllSaveToFile(sv.FileName);
-                }
-            }
-            finally
-            {
-                sv.Dispose();
-            }
-        }
-        //****************************************************************************************
-		public void SystemSetting( )
-		{
-            SystemSettingDlg ss = new SystemSettingDlg();
-			try
-			{
-				ss.ShowDialog();
-			}
-			finally
-			{
-				ss.Dispose();
-			}
-		}
+       
         //****************************************************************************************
         public void ValueEdit()
         {
