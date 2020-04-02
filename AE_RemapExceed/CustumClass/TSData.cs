@@ -99,8 +99,6 @@ namespace AE_RemapExceed
 		private int m_FrameCountTrue = TSdef.FrameCount;	//これはSaveDataには含まれない
 		private TSFps m_FrameRate = TSFps.fps24;
 		public TSPageSec PageSec = TSdef.PageSec;
-		public bool remaping = TSdef.remaping;
-		public int AE_Vaersion = TSdef.AE_Version;
 
 		public DateTime CREATE_TIME = new DateTime(1963, 9, 9);
 		public DateTime UPDATE_TIME = new DateTime(1963, 9, 9);
@@ -134,7 +132,7 @@ namespace AE_RemapExceed
 		public int CellWidth = TSdef.CellWidth;
 		public int CellHeight = TSdef.CellHeight;
 		public int FrameWidth = TSdef.FrameWidth;
-		public int MemoWidth = TSdef.MemoWidth;
+		//public int MemoWidth = TSdef.MemoWidth;
 		public int CaptionHeight = TSdef.CaptionHeight;
 		public int FrameOffset = TSdef.FrameOffset;
 		public TSFrameDisp FrameDisp = TSdef.FrameDisp;
@@ -911,33 +909,9 @@ namespace AE_RemapExceed
 				{
 					SetFrameRate((TSFps)Params[i].GetValueInt((int)TSdef.FrameRate));
 				}
-				//else if (String.Compare(tag, TSSaveFile.D_SrcWidth, true) == 0)
-				//{
-				//	SrcWidth = Params[i].GetValueInt(TSdef.SrcWidth);
-				//}
-				//else if (String.Compare(tag, TSSaveFile.D_SrcHeight, true) == 0)
-				//{
-				//	SrcHeight = Params[i].GetValueInt(TSdef.SrcHeight);
-				//}
 				else if (String.Compare(tag, TSSaveFile.D_PageSec, true) == 0)
 				{
 					PageSec = (TSPageSec)Params[i].GetValueInt((int)TSdef.PageSec);
-				}
-				//else if (String.Compare(tag, TSSaveFile.D_SrcAspect, true) == 0)
-				//{
-				//	SrcAspect = Params[i].GetValueFloat(TSdef.SrcAspect);
-				//}
-				//else if (String.Compare(tag, TSSaveFile.D_CmpAspect, true) == 0)
-				//{
-				//	CmpAspect = Params[i].GetValueFloat(TSdef.CmpAspect);
-				//}
-				///else if (String.Compare(tag, TSSaveFile.D_EmptyCell, true) == 0)
-				//{
-				//	EmptyCell = (EmptyCell)Params[i].GetValueInt((int)TSdef.EmptyCellDef);
-				//}
-				else if (String.Compare(tag, TSSaveFile.D_remaping, true) == 0)
-				{
-					remaping = Params[i].GetValueBool(TSdef.remaping);
 				}
 				else if (String.Compare(tag, TSSaveFile.D_CREATE_USER, true) == 0)
 				{
@@ -1003,13 +977,7 @@ namespace AE_RemapExceed
 			toParam(TSSaveFile.D_LayerCount, m_CellCount.ToString());
 			toParam(TSSaveFile.D_FrameCount, m_FrameCount.ToString());
 			toParam(TSSaveFile.D_CmpFps, ((int)m_FrameRate).ToString());
-			//toParam(TSSaveFile.D_SrcWidth, SrcWidth.ToString());
-			//toParam(TSSaveFile.D_SrcHeight, SrcHeight.ToString());
 			toParam(TSSaveFile.D_PageSec, ((int)PageSec).ToString());
-			//toParam(TSSaveFile.D_SrcAspect, (SrcAspect).ToString());
-			//toParam(TSSaveFile.D_CmpAspect, (CmpAspect).ToString());
-			//toParam(TSSaveFile.D_EmptyCell, ((int)EmptyCell).ToString());
-			toParam(TSSaveFile.D_remaping, remaping.ToString());
 			toParam(TSSaveFile.D_CREATE_USER, CREATE_USER);
 			toParam(TSSaveFile.D_UPDATE_USER, UPDATE_USER);
 			toParam(TSSaveFile.D_CREATE_TIME, CREATE_TIME.ToString());

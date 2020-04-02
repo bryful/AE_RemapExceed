@@ -203,9 +203,6 @@
     <Compile Include="Dialog\LayerRenameDlg.Designer.cs">
       <DependentUpon>LayerRenameDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustumCtrl\TSInfo.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="PictureView\PictureView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -251,12 +248,6 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialog\MemoEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialog\MemoEdit.Designer.cs">
-      <DependentUpon>MemoEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialog\OKDialog.cs">
       <SubType>Form</SubType>
@@ -317,9 +308,6 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialog\MemoEdit.resx">
-      <DependentUpon>MemoEdit.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialog\OKDialog.resx">
       <DependentUpon>OKDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -376,9 +364,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CustumClass\TSFunctions.cs" />
-    <Compile Include="CustumCtrl\TSMemo.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CustumCtrl\TSNav.cs">
       <SubType>Component</SubType>
     </Compile>

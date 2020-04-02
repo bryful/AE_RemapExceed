@@ -50,7 +50,7 @@ namespace AE_RemapExceed
         public const int CellWidth = 28;
         public const int CellHeight = 16;
         public const int FrameWidth = 80;
-        public const int MemoWidth = 80;
+        //public const int MemoWidth = 80;
         public const int CaptionHeight = 20;
         public const int FrameOffset = 0;
         public const bool ZeroStart = false;
@@ -58,9 +58,6 @@ namespace AE_RemapExceed
         public const TSFps FrameRate = TSFps.fps24;
         public const int HorLine = 6;
         public const TSFrameDisp FrameDisp = TSFrameDisp.pageFrame;
-
-        public const int AE_Version = 65;
-        public const bool remaping = false;
 
         public const int AutoInputStart = 1;
         public const int AutoInputLast = 10;

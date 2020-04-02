@@ -39,21 +39,21 @@ namespace AE_RemapExceed
 				Rectangle rct = new Rectangle(0, 0, this.Width, this.Height);
 				try
 				{
-                    if (tsg.DirectInput == true)
-                    {
-                        b.Color = SystemColors.ControlLight;
-                    }
+                    //if (tsg.DirectInput == true)
+                    //{
+                    //    b.Color = SystemColors.ControlLight;
+                    //}
 					Graphics g = pe.Graphics;
 					g.FillRectangle(b, rct);
 					string s = tsg.Value.ToString();
-                    if (tsg.DirectInput == true)
-                    {
-                        b.Color = SystemColors.ControlLightLight;
-                    }
-                    else
-                    {
+                    //if (tsg.DirectInput == true)
+                    //{
+                    //    b.Color = SystemColors.ControlLightLight;
+                   // }
+                    //else
+                    //{
                         b.Color = cols.Text;
-                    }
+                    //}
 					rct.X += 1;
 					rct.Width -= 2;
 					rct.Y += 1;

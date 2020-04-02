@@ -52,7 +52,7 @@ namespace AE_RemapExceed
 			edCellHeight.Value = TSdef.CellHeight;
 			edCaptionHeight.Value = TSdef.CaptionHeight;
 			edFrameWidth.Value = TSdef.FrameWidth;
-			edMemoWidth.Value = TSdef.MemoWidth;
+			//edMemoWidth.Value = TSdef.MemoWidth;
 		}
 		//--------------------------------------------------------
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

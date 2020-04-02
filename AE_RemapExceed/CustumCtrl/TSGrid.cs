@@ -42,10 +42,8 @@ namespace AE_RemapExceed
 		//同期するコントロール
 		private TSCellCaption tsc;
 		private TSFrame tsf;
-		private TSMemo tsm;
 		private TSInput tsi;
 		private TSNav tsn;
-		private TSInfo tsInfo;
         private MainForm mf;
  
 		
@@ -183,9 +181,10 @@ namespace AE_RemapExceed
 				FileLoaded(this, e);
 			}
 		}
-		//***********************************************************************
-		//各種プロパティ
-		//***********************************************************************
+        //***********************************************************************
+        //各種プロパティ
+        //***********************************************************************
+        /*
         public bool DirectInput
         {
             get { return m_DirectInput; }
@@ -202,6 +201,7 @@ namespace AE_RemapExceed
                 }
             }
         }
+        */
 		//選択範囲の情報
 		public string SelInfo
 		{
@@ -285,12 +285,6 @@ namespace AE_RemapExceed
 			set { tsf = value; }
 		}
 		//-----------------------------------------------------------------------
-		public TSMemo TSMemo
-		{
-			get { return tsm; }
-			set { tsm = value; }
-		}
-		//-----------------------------------------------------------------------
 		public TSInput TSInput
 		{
 			get { return tsi; }
@@ -301,12 +295,6 @@ namespace AE_RemapExceed
 		{
 			get { return tsn; }
 			set { tsn = value; }
-		}
-		//-----------------------------------------------------------------------
-		public TSInfo TSInfo
-		{
-			get { return tsInfo; }
-			set { tsInfo = value; }
 		}
 		//-----------------
 		public string FileName
@@ -343,10 +331,7 @@ namespace AE_RemapExceed
 			{
 				tsc.Invalidate();
 			}
-			if (tsm != null)
-			{
-				tsm.Refresh();
-			}
+
 			if (tsn != null)
 			{
 				tsn.Refresh();
@@ -526,7 +511,7 @@ namespace AE_RemapExceed
 		//Valueに数値を追加
 		public void ValueAdd(int v)
 		{
-            if (DirectInput == false)
+            //if (DirectInput == false)
             {
                 int vv = m_Value * 10 + v;
                 if (vv < 10000)
@@ -536,6 +521,7 @@ namespace AE_RemapExceed
                         tsi.Invalidate();
                 }
             }
+            /*
             else
             {
                 m_Value = 0;
@@ -543,7 +529,7 @@ namespace AE_RemapExceed
                 SelMove(TSMove.down, sel.Length);
                 m_SaveFlag = true;
                 this.Invalidate();
-            }
+            }*/
 			
 		}
 		//----------------------------------------------------------------------------------------
@@ -1137,10 +1123,7 @@ namespace AE_RemapExceed
 		{
 			base.OnSizeChanged(e);
 			GetStatus();
-			if (tsInfo != null)
-			{
-				tsInfo.Invalidate();
-			}
+			
 		}
         protected override void OnResize(EventArgs e)
         {
@@ -1489,22 +1472,19 @@ namespace AE_RemapExceed
 				ls.CellHeight = tsd.CellHeight;
 				ls.CaptionHeight = tsd.CaptionHeight;
 				ls.FrameWidth = tsd.FrameWidth;
-				ls.MemoWidth = tsd.MemoWidth;
 				if (ls.ShowDialog() == DialogResult.OK)
 				{
 					if (
 						(tsd.CellWidth != ls.CellWidth)
 					|| (tsd.CellHeight != ls.CellHeight)
 					|| (tsd.CaptionHeight != ls.CaptionHeight)
-					|| (tsd.FrameWidth != ls.FrameWidth)
-					|| (tsd.MemoWidth != ls.MemoWidth))
+					|| (tsd.FrameWidth != ls.FrameWidth))
 					{
 
 						tsd.CellWidth = ls.CellWidth;
 						tsd.CellHeight = ls.CellHeight;
 						tsd.CaptionHeight = ls.CaptionHeight;
 						tsd.FrameWidth = ls.FrameWidth;
-						tsd.MemoWidth = ls.MemoWidth;
 						OnSizeChanged(new EventArgs());
 						Sync();
 					}

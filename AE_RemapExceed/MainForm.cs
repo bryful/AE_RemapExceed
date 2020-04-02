@@ -237,7 +237,7 @@ namespace AE_RemapExceed
 			int SP = 2;
 
 			//最大値を計算
-			int wMax = tsGrid1.tsd.widthMax + tsGrid1.tsd.FrameWidth + tsGrid1.tsd.MemoWidth + SP*5 + ww + tsNav1.Width;
+			int wMax = tsGrid1.tsd.widthMax + tsGrid1.tsd.FrameWidth /*+ tsGrid1.tsd.MemoWidth*/ + SP*5 + ww + tsNav1.Width;
 			int hMax = tsGrid1.tsd.heightMax + tsGrid1.tsd.CaptionHeight + statusStrip1.Height + menuStrip1.Height + SP * 3 + hh ;
 			int hMin = tsGrid1.tsd.CellHeight + tsGrid1.tsd.CaptionHeight + statusStrip1.Height + menuStrip1.Height + SP * 3 + hh;
 			
@@ -270,18 +270,19 @@ namespace AE_RemapExceed
 			tsFrame1.Width = tsInput1.Width;
 			tsFrame1.Height = tsGrid1.Height;
 
+            /*
 			tsMemo1.Left = tsGrid1.Left + tsGrid1.Width +SP;
 			tsMemo1.Top = tsGrid1.Top;
 			tsMemo1.Height = tsGrid1.Height;
 			tsMemo1.Width = tsGrid1.tsd.MemoWidth;
-
 			tsInfo1.Left = tsMemo1.Left;
 			tsInfo1.Top = tsCellCaption1.Top;
 			tsInfo1.Width = tsMemo1.Width;
 			tsInfo1.Height = tsCellCaption1.Height;
+            */
 
-			tsNav1.Top = tsGrid1.Top;
-			tsNav1.Left = tsMemo1.Left + tsMemo1.Width + SP;
+            tsNav1.Top = tsGrid1.Top;
+			tsNav1.Left = tsGrid1.Left + tsGrid1.Width + SP/*tsMemo1.Left + tsMemo1.Width*/ + SP;
 			tsNav1.Height = tsGrid1.Height;
 
 			tsGrid1.GetStatus();
@@ -312,20 +313,6 @@ namespace AE_RemapExceed
         private void MainForm_Enter(object sender, EventArgs e)
 		{
 			tsGrid1.Focus();
-		}
-        //--------------------------------------------------------------------------------------
-        private void tsMemo1_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			int f = (e.Y + tsGrid1.OffsetY) / tsGrid1.tsd.CellHeight;
-			MemoEdit me = new MemoEdit();
-			me.Memo = tsGrid1.tsd.Memo(f);
-			me.setFrame(tsGrid1.tsd, f);
-			if (me.ShowDialog() == DialogResult.OK)
-			{
-				tsGrid1.tsd.Memo(f, me.Memo);
-				//MessageBox.Show(me.Memo);
-				tsMemo1.Invalidate();
-			}
 		}
 		//**********************************************************************************
 		//Fileメニュー
@@ -510,7 +497,7 @@ namespace AE_RemapExceed
                 pvf = new PictureViewForm(this);
                 pvf.Show();
                 PreviewDlg.Checked = true;
-                pvf.DirectInput = tsGrid1.DirectInput;
+               // pvf.DirectInput = tsGrid1.DirectInput;
             }
             else
             {
@@ -568,6 +555,9 @@ namespace AE_RemapExceed
         }
 
         //----------------------------------------------------------------------------------
+
+
+            /*
         private void DirectInput_Click(object sender, EventArgs e)
         {
             tsGrid1.DirectInput = !tsGrid1.DirectInput;
@@ -576,7 +566,8 @@ namespace AE_RemapExceed
                 pvf.DirectInput = tsGrid1.DirectInput;
             }
         }
-      
+        */
+      /*
         //----------------------------------------------------------------------------------
         private void tsInput1_DoubleClick(object sender, EventArgs e)
         {
@@ -586,7 +577,7 @@ namespace AE_RemapExceed
                 pvf.DirectInput = tsGrid1.DirectInput;
             }
         }
-
+        */
         //----------------------------------------------------------------------------------
         private void WindowMenu_Click(object sender, EventArgs e)
 		{
