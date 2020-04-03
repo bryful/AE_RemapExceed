@@ -37,7 +37,7 @@
             this.FileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.FileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.FileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuSepa2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.FilePrint = new System.Windows.Forms.ToolStripMenuItem();
             this.FilePrintPreview = new System.Windows.Forms.ToolStripMenuItem();
             this.FilePageSetup = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,8 +87,6 @@
             this.tsCellCaption1 = new AE_RemapExceed.TSCellCaption();
             this.tsFrame1 = new AE_RemapExceed.TSFrame();
             this.tsInput1 = new AE_RemapExceed.TSInput();
-            this.ExportArdjMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.cmSettings.SuspendLayout();
             this.cmLayer.SuspendLayout();
@@ -122,8 +120,6 @@
             this.FileOpen,
             this.FileSave,
             this.FileSaveAs,
-            this.MenuSepa2,
-            this.ExportArdjMenu,
             this.toolStripMenuItem1,
             this.FilePrint,
             this.FilePrintPreview,
@@ -169,10 +165,10 @@
             this.FileSaveAs.Text = "別名で保存";
             this.FileSaveAs.Click += new System.EventHandler(this.menu_Click);
             // 
-            // MenuSepa2
+            // toolStripMenuItem1
             // 
-            this.MenuSepa2.Name = "MenuSepa2";
-            this.MenuSepa2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // FilePrint
             // 
@@ -579,18 +575,6 @@
             this.tsInput1.Text = "tsInput1";
             this.tsInput1.TSGrid = this.tsGrid1;
             // 
-            // ExportArdjMenu
-            // 
-            this.ExportArdjMenu.Name = "ExportArdjMenu";
-            this.ExportArdjMenu.Size = new System.Drawing.Size(180, 22);
-            this.ExportArdjMenu.Text = "ExportArdj";
-            this.ExportArdjMenu.Click += new System.EventHandler(this.menu_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
-            // 
             // TSForm
             // 
             this.AllowDrop = true;
@@ -674,7 +658,6 @@
 		private System.Windows.Forms.ToolStripMenuItem autoInput;
 		private System.Windows.Forms.ToolStripSeparator MenuSepa4;
 		private System.Windows.Forms.ToolStripSeparator MenuSepa6;
-		private System.Windows.Forms.ToolStripSeparator MenuSepa2;
 		private System.Windows.Forms.ToolStripMenuItem ScriptToClipMenu;
 		private System.Windows.Forms.ContextMenuStrip cmFrameDisp;
 		private System.Windows.Forms.ToolStripMenuItem cmFrameDisp_Frame;
@@ -691,7 +674,6 @@
 		private System.Windows.Forms.ToolStripMenuItem PrintSettings;
         private System.Windows.Forms.ToolStripMenuItem jsonToClipToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SettingMenu;
-        private System.Windows.Forms.ToolStripMenuItem ExportArdjMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

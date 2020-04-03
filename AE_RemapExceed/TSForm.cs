@@ -37,7 +37,6 @@ namespace AE_RemapExceed
             m_NavBar.SizeSet();
             m_NavBar.LocSet();
             m_NavBar.Show();
-
         }
         //--------------------------------------------------------------------------------------
         public TSForm()
@@ -63,8 +62,7 @@ namespace AE_RemapExceed
 
            
             NavBarSetup();
-            m_NavBar.LocSet();
-
+ 
 
             string[] cmds;
             cmds = System.Environment.GetCommandLineArgs();
@@ -171,6 +169,10 @@ namespace AE_RemapExceed
             {
                 case EXEC_MODE.EXPORT:
                     tsGrid1.SaveToJsonFile(filename);
+                    SetActive();
+                    break;
+                case EXEC_MODE.SAVE:
+                    tsGrid1.SaveToArdFile(filename);
                     SetActive();
                     break;
             }
@@ -408,7 +410,6 @@ namespace AE_RemapExceed
 				setMenuItem(FileOpen, funcCmd.Open);
 				setMenuItem(FileSave, funcCmd.Save);
 				setMenuItem(FileSaveAs, funcCmd.SaveAs);
-                setMenuItem(ExportArdjMenu, funcCmd.ExportArdj);
                 setMenuItem(FilePrintPreview, funcCmd.PrintPreview);
                 setMenuItem(FilePrint, funcCmd.Print);
                 setMenuItem(FilePageSetup, funcCmd.PageSetup);
@@ -472,18 +473,6 @@ namespace AE_RemapExceed
 					break;
 			}
 		}
-
-		//----------------------------------------------------------------------------------
-		private void frameEnabledONToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			tsGrid1.SetFrameEnabledON();
-		}
-		//----------------------------------------------------------------------------------
-		private void frameEnabledOFFToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			tsGrid1.SetFrameEnabledOFF();
-		}
-
 		//**********************************************************************************
  		//
 		//**********************************************************************************
@@ -566,7 +555,7 @@ namespace AE_RemapExceed
                 {
                     if (File.Exists(fileNames[i]) == true)
                     {
-                        tsGrid1.LoadFromFile(fileNames[i]);
+                        tsGrid1.LoadFromArdFile(fileNames[i]);
                         break;
                     }
                 }

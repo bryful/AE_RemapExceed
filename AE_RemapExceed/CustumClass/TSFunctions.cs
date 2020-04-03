@@ -18,8 +18,7 @@ namespace AE_RemapExceed
 		Open,
 		Save,
 		SaveAs,
-        ExportArdj,
-		Quit,
+        Quit,
 		//Edit
 		Copy,
 		Cut,
@@ -103,7 +102,6 @@ namespace AE_RemapExceed
 			{"Open","読み込み"},
 			{"Save","保存"},
 			{"SaveAs","別名で保存"},
-            {"ardjSave","ardj書き込み"},
             {"Quit","終了"},
 
 			{"Copy","コピー"},
@@ -259,7 +257,6 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.Open, Keys.Control | Keys.O, Keys.None);
 			setKeyTable(funcCmd.Save, Keys.Control | Keys.S, Keys.None);
 			setKeyTable(funcCmd.SaveAs, Keys.Control | Keys.Shift | Keys.S, Keys.None);
-            setKeyTable(funcCmd.ExportArdj, Keys.None | Keys.None | Keys.None, Keys.None);
             setKeyTable(funcCmd.Quit, Keys.Control | Keys.Q, Keys.None);
 			//Edit
 			setKeyTable(funcCmd.Copy, Keys.Control | Keys.C, Keys.None);

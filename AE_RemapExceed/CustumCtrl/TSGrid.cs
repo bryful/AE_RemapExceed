@@ -9,6 +9,7 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AE_RemapExceed
 {
@@ -82,8 +83,8 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.Open, Load);
 			funcs.setFunc(funcCmd.Save, Save);
 			funcs.setFunc(funcCmd.SaveAs, SaveAs);
-            funcs.setFunc(funcCmd.ExportArdj, SaveAsJson);
             funcs.setFunc(funcCmd.Quit, Quit);
+
 			funcs.setFunc(funcCmd.Copy, Copy);
 			funcs.setFunc(funcCmd.Cut, Cut);
 			funcs.setFunc(funcCmd.Paste, Paste);
@@ -182,24 +183,7 @@ namespace AE_RemapExceed
         //***********************************************************************
         //各種プロパティ
         //***********************************************************************
-        /*
-        public bool DirectInput
-        {
-            get { return m_DirectInput; }
-            set
-            {
-                m_DirectInput = value;
-                if (tsInfo != null)
-                {
-                    tsInfo.Invalidate();
-                }
-                if (tsi != null)
-                {
-                    tsi.Invalidate();
-                }
-            }
-        }
-        */
+  
 		//選択範囲の情報
 		public string SelInfo
 		{
@@ -1274,7 +1258,7 @@ namespace AE_RemapExceed
             }
         }
         //----------------------------------------------------------------------------------------
-        public bool SaveToFile(string path)
+        public bool SaveToArdFile(string path)
 		{
             TSSaveFile sv = new TSSaveFile(tsd);
 			if (sv.SaveToFile(path) == true)
@@ -1293,31 +1277,45 @@ namespace AE_RemapExceed
         //----------------------------------------------------------------------------------------
         public void Load()
 		{
+            bool ardj = true;
             OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Title = "ard file load";
-			dlg.FileName = FileName;
-			dlg.Filter = "arf files(*.ard)|*.ard|all files(*.*)|*.*";
-			dlg.FilterIndex = 1;
-			dlg.DefaultExt = "ard";
-			if (dlg.ShowDialog() == DialogResult.OK)
-			{
-				LoadFromFile(dlg.FileName);
-			}
-		}
-        //----------------------------------------------------------------------------------------
-        public void SaveJson()
-        {
-            if (m_SaveFlag == false)
-                return;
-            if (System.IO.File.Exists(FileName) == true)
+			dlg.Title = "file load";
+            if (FileName != "")
             {
-                SaveToJsonFile(FileName);
+                dlg.FileName = Path.GetFileName(FileName);
+                dlg.InitialDirectory = Path.GetDirectoryName(FileName);
+                ardj = (Path.GetExtension(FileName).ToLower() == ".ardj");
             }
             else
             {
-                SaveAsJson();
+                dlg.FileName = "untite";
+                dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             }
-        }
+            dlg.Filter = "ardj files(*.ardj)|*.ardj|ard files(*.ard)|*.ard|all files(*.*)|*.*";
+
+            if (ardj)
+            {
+                dlg.FilterIndex = 1;
+                dlg.DefaultExt = "ardj";
+            }
+            else
+            {
+                dlg.FilterIndex = 2;
+                dlg.DefaultExt = "ard";
+            }
+            if (dlg.ShowDialog() == DialogResult.OK)
+			{
+                 ardj= (Path.GetExtension(dlg.FileName).ToLower() == ".ardj");
+                if (ardj)
+                {
+                    LoadFromJsonFile(dlg.FileName);
+                }
+                else
+                {
+                    LoadFromArdFile(dlg.FileName);
+                }
+            }
+		}
         //----------------------------------------------------------------------------------------
         public void Save()
 		{
@@ -1325,8 +1323,16 @@ namespace AE_RemapExceed
 				return;
 			if (System.IO.File.Exists(FileName) == true)
 			{
-				SaveToFile(FileName);
-			}
+                bool ardj = (Path.GetExtension(FileName).ToLower() == ".ardj");
+                if (ardj)
+                {
+                    SaveToArdFile(FileName);
+                }
+                else
+                {
+                    SaveToJsonFile(FileName);
+                }
+            }
 			else
 			{
 				SaveAs();
@@ -1336,31 +1342,45 @@ namespace AE_RemapExceed
 		//----------------------------------------------------------------------------------------
 		public void SaveAs()
 		{
+            bool ardj = true;
             SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Title = "ard file load";
-			dlg.FileName = FileName;
-			dlg.Filter = "ard files(*.ard)|*.ard|all files(*.*)|*.*";
-			dlg.FilterIndex = 1;
-			dlg.DefaultExt = "ard";
-			if (dlg.ShowDialog() == DialogResult.OK)
-			{
-				SaveToFile(dlg.FileName);
-			}
-		}
-        //----------------------------------------------------------------------------------------
-        public void SaveAsJson()
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Title = "ardj file load";
-            dlg.FileName = FileName;
-            dlg.Filter = "ardj files(*.ardj)|*.ardj|all files(*.*)|*.*";
-            dlg.FilterIndex = 1;
-            dlg.DefaultExt = "ardj";
-            if (dlg.ShowDialog() == DialogResult.OK)
+			dlg.Title = "file load";
+            if (FileName != "")
             {
-                SaveToJsonFile(dlg.FileName);
+                dlg.FileName = Path.GetFileName(FileName);
+                dlg.InitialDirectory = Path.GetDirectoryName(FileName);
+                ardj = (Path.GetExtension(FileName).ToLower() == ".ardj");
             }
-        }
+            else
+            {
+                dlg.FileName = "untite";
+                dlg.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            }
+
+            dlg.Filter = "ardj files(*.ardj)|*.ardj|ard files(*.ard)|*.ard|all files(*.*)|*.*";
+            if (ardj)
+            {
+                dlg.FilterIndex = 1;
+                dlg.DefaultExt = "ardj";
+            }
+            else
+            {
+                dlg.FilterIndex = 2;
+                dlg.DefaultExt = "ard";
+            }
+            if (dlg.ShowDialog() == DialogResult.OK)
+			{
+                ardj = (Path.GetExtension(dlg.FileName).ToLower() == ".ardj");
+                if (ardj)
+                {
+                    SaveToJsonFile(dlg.FileName);
+                }
+                else
+                {
+                    SaveToArdFile(dlg.FileName);
+                }
+            }
+		}
         //----------------------------------------------------------------------------------------
         public void SaveToClip( )
 		{
@@ -1370,7 +1390,7 @@ namespace AE_RemapExceed
 			sv.SaveToClipboard();
 		}
 		//----------------------------------------------------------------------------------------
-		public bool LoadFromFile(string path)
+		public bool LoadFromArdFile(string path)
 		{
 			TSSaveFile sv = new TSSaveFile(tsd);
 			int w = tsd.widthMax;
@@ -1389,8 +1409,28 @@ namespace AE_RemapExceed
 				return false;
 			}
 		}
-		//----------------------------------------------------------------------------------------
-		public void Quit( )
+        //----------------------------------------------------------------------------------------
+        public bool LoadFromJsonFile(string path)
+        {
+            TSJson sv = new TSJson(tsd);
+            int w = tsd.widthMax;
+            if (sv.LoadFromFile(path))
+            {
+                tsd.FileName = path;
+                m_SaveFlag = false;
+                if (w != tsd.widthMax) { base.OnSizeChanged(new EventArgs()); }
+                OnFileLoaded(new EventArgs());
+                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(FileName);
+                Sync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //----------------------------------------------------------------------------------------
+        public void Quit( )
 		{
 			Application.Exit();
 		}

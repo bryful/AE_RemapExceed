@@ -146,5 +146,71 @@ namespace AE_RemapExceed
             return ret;
         }
         //------------------------------------------------------------------------------------------
+        public bool LoadFromFile(string p)
+        {
+            bool ret = false;
+            try
+            {
+                if (File.Exists(p) == true)
+                {
+                    string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
+
+                    var json = DynamicJson.Parse(str);
+
+                    if (json.IsDefined(D_Header) == true) if (json[D_Header] != D_Header2) return ret;
+                    if (json.IsDefined(D_CellCount) == true) data.CellCount = (int)json[D_CellCount];
+                    if (json.IsDefined(D_FrameCount) == true) data.FrameCount = (int)json[D_FrameCount];
+
+                    data.SetSize(data.CellCount, data.FrameCount);
+
+                    if (json.IsDefined(D_PageSec) == true) data.PageSec = (TSPageSec)json[D_PageSec];
+                    if (json.IsDefined(D_FrameRate) == true) data.FrameRate = (TSFps)json[D_FrameRate];
+                    if (json.IsDefined(D_SheetName) == true) data.SheetName = json[D_SheetName];
+
+                    if (json.IsDefined(D_CREATE_USER) == true) data.CREATE_USER = json[D_CREATE_USER];
+                    if (json.IsDefined(D_UPDATE_USER) == true) data.UPDATE_USER = json[D_UPDATE_USER];
+
+
+                    if (json.IsDefined(D_CREATE_TIME) == true) data.CREATE_TIME = DateTime.Parse(json[D_CREATE_TIME]);
+                    if (json.IsDefined(D_UPDATE_TIME) == true) data.UPDATE_TIME = DateTime.Parse(json[D_UPDATE_TIME]);
+
+                    if (json.IsDefined(D_TITLE) == true) data.TITLE = json[D_TITLE];
+                    if (json.IsDefined(D_SUB_TITLE) == true) data.SUB_TITLE = json[D_SUB_TITLE];
+                    if (json.IsDefined(D_OPUS) == true) data.OPUS = json[D_OPUS];
+                    if (json.IsDefined(D_SCECNE) == true) data.OPUS = json[D_SCECNE];
+                    if (json.IsDefined(D_CUT) == true) data.CUT = json[D_CUT];
+                    if (json.IsDefined(D_CAMPANY_NAME) == true) data.CAMPANY_NAME = json[D_CAMPANY_NAME];
+
+                    if (json.IsDefined(D_Caption) == true)
+                    {
+                        var ary = json[D_Caption];
+                        data.SetCellCaption((string[])ary);
+                    }
+
+                    if (json.IsDefined(D_Cells) == true)
+                    {
+                        int c = data.CellCount;
+                        int f = data.FrameCount;
+                        var cells = json[D_Cells];
+                        for ( int j=0; j<c;j++)
+                        {
+                            var cell = cells[j];
+                            for (int i = 0; i < f; i++)
+                            {
+                                data.SetCellData(j, i, (int)cell[i]);
+                            }
+
+                        }
+                    }
+                }
+
+            }
+            catch
+            {
+                ret = false;
+            }
+            return ret;
+        }
+        //------------------------------------------------------------------------------------------
     }
 }

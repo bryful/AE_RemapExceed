@@ -40,7 +40,7 @@ namespace AE_RemapExceed
         public bool IsPrintComment = true;
 
         public string SheetName = "untitled_sheet";
-        public string FileName = "untitled_sheet";
+        public string FileName = "";
 
         //-------------------------------
         //CellNameブロック
