@@ -12,7 +12,7 @@ namespace AE_RemapExceed
 	public partial class PrintSettingDlg : Form
 	{
 		public TSHistory tsh = new TSHistory();
-        private MainForm mf;
+        private TSForm mf;
 		private TSData tsd;
 		public PrintSettingDlg()
 		{
@@ -75,7 +75,7 @@ namespace AE_RemapExceed
 			tsh.CombToData();
 		}
         //*************************************************************
-        public MainForm MainForm
+        public TSForm MainForm
         {
             get { return mf; }
             set 

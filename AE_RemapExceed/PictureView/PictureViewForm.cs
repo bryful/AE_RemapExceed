@@ -17,10 +17,9 @@ namespace AE_RemapExceed
 		private const string m_PrefFileName = "PicturePreview.pref";
 		public string m_UserPath = "";
 
-		private MainForm mf;
+		private TSForm mf;
 		private PictureFileList m_Plist = new PictureFileList();
 
-        private bool reFlag = false;
 
 		private Size orgSize = new Size(0, 0);
 		private pv_Mode pv_now = pv_Mode.view;
@@ -161,7 +160,7 @@ namespace AE_RemapExceed
 			}
 		}
 		//********************************************************************
-		public PictureViewForm(MainForm f)
+		public PictureViewForm(TSForm f)
         {
             InitializeComponent();
 			lbInfo.Text = "";
@@ -460,7 +459,7 @@ namespace AE_RemapExceed
 		}
 		//********************************************************************
 		//********************************************************************
-		public MainForm MainForm
+		public TSForm MainForm
 		{
 			get { return mf; }
 			set { mf = value; }
@@ -572,18 +571,7 @@ namespace AE_RemapExceed
         }
 
 
-        //********************************************************************
-        public bool DirectInput
-        {
-            get { return cbDirectInput.Checked; }
-            set 
-            {
-                reFlag = true;
-                cbDirectInput.Checked = value;
-                reFlag = false;
-            }
-        }
-
+ 
 
 		private void ModeMenu_Click(object sender, EventArgs e)
 		{

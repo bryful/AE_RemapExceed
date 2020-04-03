@@ -21,15 +21,8 @@ namespace AE_RemapExceed
 		public const string D_End = "*End";
 		public const string D_LayerCount = "LayerCount";
 		public const string D_FrameCount = "FrameCount";
-		public const string D_SrcWidth = "SrcWidth";
-		public const string D_SrcHeight = "SrcHeight";
 		public const string D_PageSec = "PageSec";
-		public const string D_CmpFps = "CmpFps";
-		public const string D_SrcAspect = "SrcAspect";
-		public const string D_CmpAspect = "CmpAspect";
-		public const string D_EmptyCell = "EmptyCell";
-		public const string D_AE_Version = "AE_Version";
-		public const string D_remaping = "remaping";
+		public const string D_FrameRate = "CmpFps";
 
 		public const string D_CREATE_USER = "CREATE_USER";
 		public const string D_UPDATE_USER = "UPDATE_USER";
@@ -90,8 +83,17 @@ namespace AE_RemapExceed
 				{
 					rd.Add(sr.ReadLine());
 				}
-				return GetSaveData(rd);
-			}
+                if (GetSaveData(rd))
+                {
+                    data.SheetName = Path.GetFileNameWithoutExtension(path);
+                    data.FileName = path;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
 			finally
 			{
 				sr.Close();
@@ -110,14 +112,16 @@ namespace AE_RemapExceed
 			System.IO.StreamWriter sw = new System.IO.StreamWriter(path);
 			try
 			{
-				List<string> data = SetSaveData();
-				if (data.Count > 2)
+				List<string> sdata = SetSaveData();
+				if (sdata.Count > 2)
 				{
-					foreach (string s in data)
+					foreach (string s in sdata)
 					{
 						sw.WriteLine(s);
 					}
-					return true;
+                    data.SheetName = Path.GetFileNameWithoutExtension(path);
+                    data.FileName = path;
+                    return true;
 				}
 				else
 				{
@@ -487,7 +491,6 @@ namespace AE_RemapExceed
 			data.FromParams();
 
 			data.SetCellCaption(cellName);
-			data.SetMemo(mm);
 			data.setFrameEnabled(frameEnabled);
 			data.SetCellData(cd);
 			return true;
@@ -534,18 +537,6 @@ namespace AE_RemapExceed
 			{
 				string s = i.ToString() + TAB + data.CellCaption(i);
 				lines.Add(s);
-			}
-			lines.Add("");
-			//Memo
-			lines.Add(D_Memo);
-			for (int i = 0; i < data.FrameCount; i++)
-			{
-				string s = data.Memo(i);
-				if (s != string.Empty)
-				{
-					s = FrameStr(i+1) + TAB + s;
-					lines.Add(s);
-				}
 			}
 			lines.Add("");
 			//FrameEnabled

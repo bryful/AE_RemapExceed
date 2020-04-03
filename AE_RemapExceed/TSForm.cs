@@ -17,12 +17,13 @@ namespace AE_RemapExceed
         IMPORT,
         EXPORT_LAYER,
         IMPORT_LAYER,
-        QUIT
+        LOAD,
+        SAVE
     }
-    public partial class MainForm : Form
+    public partial class TSForm : Form
 	{
 
-		public bool m_LayoutFlag = true;
+        public bool m_LayoutFlag = true;
         public PictureViewForm pvf = null;
         private NavBar m_NavBar = new NavBar();
         //-------------------------------------------------------------
@@ -34,14 +35,13 @@ namespace AE_RemapExceed
             m_NavBar.Show();
 
         }
-        private bool fristboot = false;
         //--------------------------------------------------------------------------------------
-        public MainForm()
+        public TSForm()
 		{
- 
             InitializeComponent();
-			this.Text = AE_RemapExceed.Properties.Resources.AppName + " " + AE_RemapExceed.Properties.Resources.VersionStr;
-            tsGrid1.MainForm = this;
+
+			this.Text = AE_RemapExceed.Properties.Resources.AppName;
+            tsGrid1.TSForm = this;
 			this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.m_MouseWheel);
 
 			
@@ -69,10 +69,17 @@ namespace AE_RemapExceed
             NavBarSetup();
             m_NavBar.LocSet();
 
-            string[] cmds;
-            cmds = System.Environment.GetCommandLineArgs();
-            GetCommand(cmds, "init");
-            fristboot = true;
+                string[] cmds;
+                cmds = System.Environment.GetCommandLineArgs();
+                GetCommand(cmds, String.Format("Constractor{0}",0));
+        }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+  
+        }
+        private void MainForm_Layout(object sender, LayoutEventArgs e)
+        {
+
         }
         //-------------------------------------------------------------
         /// <summary>
@@ -92,7 +99,6 @@ namespace AE_RemapExceed
              *  
              *  /layer
                 */
-            if (fristboot) return;
             EXEC_MODE mode = EXEC_MODE.NONE;
             bool layer = false;
             string filename = "";
@@ -107,17 +113,33 @@ namespace AE_RemapExceed
                         string s2 = s.Substring(1).ToLower();
                         switch(s2)
                         {
-                            case "export":
+                            case "s":
                             case "save":
+                                if (mode == EXEC_MODE.NONE)
+                                {
+                                    mode = EXEC_MODE.SAVE;
+                                }
+                                break;
+                            case "l":
+                            case "o":
+                            case "load":
+                            case "open":
+                                if (mode == EXEC_MODE.NONE)
+                                {
+                                    mode = EXEC_MODE.LOAD;
+                                }
+                                break;
+
+                            case "e":
+                            case "export":
                             case "output":
                                 if (mode == EXEC_MODE.NONE)
                                 {
                                     mode = EXEC_MODE.EXPORT;
                                 }
                                 break;
+                            case "i":
                             case "import":
-                            case "load":
-                            case "open":
                                 if (mode == EXEC_MODE.NONE)
                                 {
                                     mode = EXEC_MODE.IMPORT;
@@ -126,16 +148,6 @@ namespace AE_RemapExceed
                             case "layer":
                             case "cell":
                                 layer = true; ;
-                                break;
-                            case "quit":
-                            case "exit":
-                            case "close":
-                                if (mode == EXEC_MODE.NONE)
-                                {
-                                    mode = EXEC_MODE.QUIT;
-                                    filename = "";
-                                    break;
-                                }
                                 break;
                         }
 
@@ -158,35 +170,23 @@ namespace AE_RemapExceed
 
                     }
                 }
-                if (mode != EXEC_MODE.QUIT)
+                if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.IMPORT) || (mode == EXEC_MODE.SAVE) || (mode == EXEC_MODE.LOAD))
                 {
-                    if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.IMPORT))
-                    {
-                        if (filename == "") mode = EXEC_MODE.NONE;
-                    }
-                    if (filename != "") mode = EXEC_MODE.IMPORT;
-                    if (layer == true)
-                    {
-                        if (mode == EXEC_MODE.EXPORT) mode = EXEC_MODE.EXPORT_LAYER;
-                        else if (mode == EXEC_MODE.IMPORT) mode = EXEC_MODE.IMPORT_LAYER;
-                    }
+                    if (filename == "") mode = EXEC_MODE.NONE;
                 }
-                else
+                if ((filename != "")&& (mode == EXEC_MODE.NONE)) mode = EXEC_MODE.LOAD;
+                if (layer == true)
                 {
-                    filename = "";
+                    if (mode == EXEC_MODE.EXPORT) mode = EXEC_MODE.EXPORT_LAYER;
+                    else if (mode == EXEC_MODE.IMPORT) mode = EXEC_MODE.IMPORT_LAYER;
                 }
             }
             this.BringToFront();
             this.TopMost = true;
 
-            string[] modes = new string[] { "NONE", "EXPORT", "IMPORT", "EXPORT_LAYER", "IMPORT_LAYER", "QUIT" };
+            string[] modes = new string[] { "NONE", "EXPORT", "IMPORT", "EXPORT_LAYER", "IMPORT_LAYER", "LOAD","SAVE" };
             MessageBox.Show(String.Format("mode:{0} filename:{1} op:{2}", modes[(int)mode], filename,cp));
             this.TopMost = false;
-            if (mode == EXEC_MODE.QUIT)
-            {
-                this.Close();
-                Application.Exit();
-            }
         }
         //--------------------------------------------------------------------------------------
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -269,17 +269,6 @@ namespace AE_RemapExceed
 			tsFrame1.Top = tsGrid1.Top;
 			tsFrame1.Width = tsInput1.Width;
 			tsFrame1.Height = tsGrid1.Height;
-
-            /*
-			tsMemo1.Left = tsGrid1.Left + tsGrid1.Width +SP;
-			tsMemo1.Top = tsGrid1.Top;
-			tsMemo1.Height = tsGrid1.Height;
-			tsMemo1.Width = tsGrid1.tsd.MemoWidth;
-			tsInfo1.Left = tsMemo1.Left;
-			tsInfo1.Top = tsCellCaption1.Top;
-			tsInfo1.Width = tsMemo1.Width;
-			tsInfo1.Height = tsCellCaption1.Height;
-            */
 
             tsNav1.Top = tsGrid1.Top;
 			tsNav1.Left = tsGrid1.Left + tsGrid1.Width + SP/*tsMemo1.Left + tsMemo1.Width*/ + SP;
@@ -379,6 +368,7 @@ namespace AE_RemapExceed
 				setMenuItem(FileOpen, funcCmd.Open);
 				setMenuItem(FileSave, funcCmd.Save);
 				setMenuItem(FileSaveAs, funcCmd.SaveAs);
+                setMenuItem(ExportArdjMenu, funcCmd.ExportArdj);
                 setMenuItem(FilePrintPreview, funcCmd.PrintPreview);
                 setMenuItem(FilePrint, funcCmd.Print);
                 setMenuItem(FilePageSetup, funcCmd.PageSetup);
@@ -593,6 +583,7 @@ namespace AE_RemapExceed
 			get { return tsGrid1.tsd; }
 			//set { tsGrid1.tsd = value; }
 		}
- 
+
+
     }
 }

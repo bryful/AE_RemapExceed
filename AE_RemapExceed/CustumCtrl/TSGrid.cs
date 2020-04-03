@@ -44,7 +44,7 @@ namespace AE_RemapExceed
 		private TSFrame tsf;
 		private TSInput tsi;
 		private TSNav tsn;
-        private MainForm mf;
+        private TSForm tsfm;
  
 		
 		//新規イベント
@@ -55,8 +55,6 @@ namespace AE_RemapExceed
 
 		public bool SyncFlag = true;
 		private bool m_SaveFlag = false;
-        private string m_FileName = "";
-        public bool m_DirectInput = false;
 		//-----------------------------------------------------------------------
 		public TSGrid()
 		{
@@ -84,7 +82,8 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.Open, Load);
 			funcs.setFunc(funcCmd.Save, Save);
 			funcs.setFunc(funcCmd.SaveAs, SaveAs);
-			funcs.setFunc(funcCmd.Quit, Quit);
+            funcs.setFunc(funcCmd.ExportArdj, SaveAsJson);
+            funcs.setFunc(funcCmd.Quit, Quit);
 			funcs.setFunc(funcCmd.Copy, Copy);
 			funcs.setFunc(funcCmd.Cut, Cut);
 			funcs.setFunc(funcCmd.Paste, Paste);
@@ -299,17 +298,17 @@ namespace AE_RemapExceed
 		//-----------------
 		public string FileName
 		{
-			get { return m_FileName; }
+			get { return tsd.FileName; }
 		}
 		//-----------------
 		public bool SaveFlag
 		{
 			get { return m_SaveFlag; }
 		}
-        public MainForm MainForm
+        public TSForm TSForm
         {
-            get { return mf; }
-            set { mf = value; }
+            get { return tsfm; }
+            set { tsfm = value; }
         }
 		//***********************************************************************
 		//***********************************************************************
@@ -1255,19 +1254,32 @@ namespace AE_RemapExceed
 			GetStatus();
 			Sync();
 		}
-		//****************************************************************************************
-		/*
+        //****************************************************************************************
+        /*
 		 * ファイル入出力
-		 */ 
-		//****************************************************************************************
+		 */
+        //****************************************************************************************
         //----------------------------------------------------------------------------------------
-		public bool SaveToFile(string path)
+        public bool SaveToJsonFile(string path)
+        {
+            TSJson sv = new TSJson(tsd);
+            if (sv.SaveToFile(path) == true)
+            {
+                m_SaveFlag = false;
+                OnFileLoaded(new EventArgs());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //----------------------------------------------------------------------------------------
+        public bool SaveToFile(string path)
 		{
             TSSaveFile sv = new TSSaveFile(tsd);
 			if (sv.SaveToFile(path) == true)
 			{
-				m_FileName = path;
-                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(m_FileName);
                 m_SaveFlag = false;
 				OnFileLoaded(new EventArgs());
 				return true;
@@ -1277,13 +1289,14 @@ namespace AE_RemapExceed
 				return false;
 			}
 		}
+ 
 
-		//----------------------------------------------------------------------------------------
-		public void Load()
+        //----------------------------------------------------------------------------------------
+        public void Load()
 		{
             OpenFileDialog dlg = new OpenFileDialog();
 			dlg.Title = "ard file load";
-			dlg.FileName = m_FileName;
+			dlg.FileName = FileName;
 			dlg.Filter = "arf files(*.ard)|*.ard|all files(*.*)|*.*";
 			dlg.FilterIndex = 1;
 			dlg.DefaultExt = "ard";
@@ -1292,26 +1305,41 @@ namespace AE_RemapExceed
 				LoadFromFile(dlg.FileName);
 			}
 		}
-		//----------------------------------------------------------------------------------------
-		public void Save()
+        //----------------------------------------------------------------------------------------
+        public void SaveJson()
+        {
+            if (m_SaveFlag == false)
+                return;
+            if (System.IO.File.Exists(FileName) == true)
+            {
+                SaveToJsonFile(FileName);
+            }
+            else
+            {
+                SaveAsJson();
+            }
+        }
+        //----------------------------------------------------------------------------------------
+        public void Save()
 		{
 			if (m_SaveFlag == false)
 				return;
-			if (System.IO.File.Exists(m_FileName) == true)
+			if (System.IO.File.Exists(FileName) == true)
 			{
-				SaveToFile(m_FileName);
+				SaveToFile(FileName);
 			}
 			else
 			{
 				SaveAs();
 			}
 		}
+
 		//----------------------------------------------------------------------------------------
 		public void SaveAs()
 		{
             SaveFileDialog dlg = new SaveFileDialog();
 			dlg.Title = "ard file load";
-			dlg.FileName = m_FileName;
+			dlg.FileName = FileName;
 			dlg.Filter = "ard files(*.ard)|*.ard|all files(*.*)|*.*";
 			dlg.FilterIndex = 1;
 			dlg.DefaultExt = "ard";
@@ -1321,7 +1349,21 @@ namespace AE_RemapExceed
 			}
 		}
         //----------------------------------------------------------------------------------------
-		public void SaveToClip( )
+        public void SaveAsJson()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "ardj file load";
+            dlg.FileName = FileName;
+            dlg.Filter = "ardj files(*.ardj)|*.ardj|all files(*.*)|*.*";
+            dlg.FilterIndex = 1;
+            dlg.DefaultExt = "ardj";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                SaveToJsonFile(dlg.FileName);
+            }
+        }
+        //----------------------------------------------------------------------------------------
+        public void SaveToClip( )
 		{
 			if (m_SaveFlag == false)
 				return;
@@ -1335,11 +1377,11 @@ namespace AE_RemapExceed
 			int w = tsd.widthMax;
 			if (sv.LoadFromFile(path))
 			{
-				m_FileName = path;
+				tsd.FileName = path;
 				m_SaveFlag = false;
 				if (w != tsd.widthMax) { base.OnSizeChanged(new EventArgs()); }
 				OnFileLoaded(new EventArgs());
-                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(m_FileName);
+                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(FileName);
 				Sync();
 				return true;
 			}
@@ -1440,7 +1482,7 @@ namespace AE_RemapExceed
 			PrintSettingDlg psd = new PrintSettingDlg();
 			try
 			{
-                psd.MainForm = mf;
+                psd.MainForm = tsfm;
 				psd.Comment = tsd.CommentLines;
 				psd.IsPrintComment = tsd.IsPrintComment;
                 psd.IsPrintMemo = tsd.IsPrintMemo;
@@ -1720,26 +1762,6 @@ namespace AE_RemapExceed
 				ad.Dispose();
 			}
 		}
-        //****************************************************************************************
-        public void JsonToClip()
-        {
-            string js = tsd.ToJson();
-            if (js!="")
-            {
-                Clipboard.SetText(js);
-
-                string s = "";
-                s +=  "Jsonをクリップボードに！";
-                showOK(s, 200);
-            }
-            else
-            {
-                showOK("Error! ", 240);
-            }
-
-
-        }
-
         private void InitializeComponent()
         {
             this.SuspendLayout();

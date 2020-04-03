@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustumClass\Ard_prms.cs" />
+    <Compile Include="CustumClass\TSJson.cs" />
     <Compile Include="Dialog\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,11 +244,11 @@
     </Compile>
     <Compile Include="CustumClass\TSPref.cs" />
     <Compile Include="CustumClass\TSSaveFile.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="TSForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="TSForm.Designer.cs">
+      <DependentUpon>TSForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialog\OKDialog.cs">
       <SubType>Form</SubType>
@@ -305,8 +306,8 @@
     <EmbeddedResource Include="Dialog\LayoutSetteings.resx">
       <DependentUpon>LayoutSetteings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="TSForm.resx">
+      <DependentUpon>TSForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog\OKDialog.resx">
       <DependentUpon>OKDialog.cs</DependentUpon>

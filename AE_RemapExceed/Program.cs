@@ -8,6 +8,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 
 namespace AE_RemapExceed
 {
+    
     public class MyApp : WindowsFormsApplicationBase
     {
         public MyApp()
@@ -15,15 +16,14 @@ namespace AE_RemapExceed
         {
             this.EnableVisualStyles = true;
             this.IsSingleInstance = true;
-            this.MainForm = new MainForm();//スタートアップフォームを設定
+            this.MainForm = new TSForm();//スタートアップフォームを設定
             //this.StartupNextInstance += new StartupNextInstanceEventHandler(MyApplication_StartupNextInstance);
         }
         public void MyApplication_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
         {
             //ここに二重起動されたときの処理を書く
             //e.CommandLineでコマンドライン引数を取得出来る
-           // MainForm f = (MainForm)this.MainForm;
-           //f.GetCommand(e.CommandLine.ToArray<string>(),"Program.cs");
+            //((TSForm)this.MainForm).GetCommand(e.CommandLine.ToArray<string>(), "Program.cs");
         }
     }
     static class Program

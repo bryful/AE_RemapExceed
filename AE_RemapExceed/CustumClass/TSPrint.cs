@@ -405,30 +405,7 @@ namespace AE_RemapExceed
 			MessageBox.Show(s);
 			*/
 		}
-        //******************************************************
-        private void getMemo()
-        {
-            if (m_memo.Length != m_FrameCount) Array.Resize(ref m_memo, m_FrameCount);
-            if (m_IsFrameEnabled == true)
-            {
-                int p = 0;
-                for (int i = 0; i < tsd.FrameCount; i++)
-                {
-                    if (tsd.FrameEnabeld(i) >= 0)
-                    {
-                        m_memo[p] = tsd.Memo(i);
-                        p++;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < tsd.FrameCount; i++)
-                {
-                    m_memo[i] = tsd.Memo(i);
-                }
-            }
-        }
+ 
         //******************************************************
         private void ScaleSet()
         {
@@ -654,7 +631,6 @@ namespace AE_RemapExceed
             if (pdlg.ShowDialog() == DialogResult.OK)
             {
                 //OKがクリックされた時は印刷する
-                getMemo();
                 pd.Print();
                     
             }
@@ -678,7 +654,6 @@ namespace AE_RemapExceed
         public void Preview()
         {
             if (GetData() == false) return;
-            getMemo();
             PrintPreviewDialog ppd = new PrintPreviewDialog();
 
             //はじめの表示位置を指定する

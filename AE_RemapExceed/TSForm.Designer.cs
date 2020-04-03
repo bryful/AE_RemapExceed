@@ -1,6 +1,6 @@
 ﻿namespace AE_RemapExceed
 {
-	partial class MainForm
+	partial class TSForm
 	{
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TSForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.FileNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,6 +87,8 @@
             this.tsCellCaption1 = new AE_RemapExceed.TSCellCaption();
             this.tsFrame1 = new AE_RemapExceed.TSFrame();
             this.tsInput1 = new AE_RemapExceed.TSInput();
+            this.ExportArdjMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.cmSettings.SuspendLayout();
             this.cmLayer.SuspendLayout();
@@ -121,6 +123,8 @@
             this.FileSave,
             this.FileSaveAs,
             this.MenuSepa2,
+            this.ExportArdjMenu,
+            this.toolStripMenuItem1,
             this.FilePrint,
             this.FilePrintPreview,
             this.FilePageSetup,
@@ -135,71 +139,71 @@
             // FileNew
             // 
             this.FileNew.Name = "FileNew";
-            this.FileNew.Size = new System.Drawing.Size(146, 22);
+            this.FileNew.Size = new System.Drawing.Size(180, 22);
             this.FileNew.Text = "シート設定";
             this.FileNew.Click += new System.EventHandler(this.menu_Click);
             // 
             // MenuSepa1
             // 
             this.MenuSepa1.Name = "MenuSepa1";
-            this.MenuSepa1.Size = new System.Drawing.Size(143, 6);
+            this.MenuSepa1.Size = new System.Drawing.Size(177, 6);
             // 
             // FileOpen
             // 
             this.FileOpen.Name = "FileOpen";
-            this.FileOpen.Size = new System.Drawing.Size(146, 22);
+            this.FileOpen.Size = new System.Drawing.Size(180, 22);
             this.FileOpen.Text = "開く";
             this.FileOpen.Click += new System.EventHandler(this.menu_Click);
             // 
             // FileSave
             // 
             this.FileSave.Name = "FileSave";
-            this.FileSave.Size = new System.Drawing.Size(146, 22);
+            this.FileSave.Size = new System.Drawing.Size(180, 22);
             this.FileSave.Text = "保存";
             this.FileSave.Click += new System.EventHandler(this.menu_Click);
             // 
             // FileSaveAs
             // 
             this.FileSaveAs.Name = "FileSaveAs";
-            this.FileSaveAs.Size = new System.Drawing.Size(146, 22);
+            this.FileSaveAs.Size = new System.Drawing.Size(180, 22);
             this.FileSaveAs.Text = "別名で保存";
             this.FileSaveAs.Click += new System.EventHandler(this.menu_Click);
             // 
             // MenuSepa2
             // 
             this.MenuSepa2.Name = "MenuSepa2";
-            this.MenuSepa2.Size = new System.Drawing.Size(143, 6);
+            this.MenuSepa2.Size = new System.Drawing.Size(177, 6);
             // 
             // FilePrint
             // 
             this.FilePrint.Name = "FilePrint";
-            this.FilePrint.Size = new System.Drawing.Size(146, 22);
+            this.FilePrint.Size = new System.Drawing.Size(180, 22);
             this.FilePrint.Text = "Print";
             this.FilePrint.Click += new System.EventHandler(this.menu_Click);
             // 
             // FilePrintPreview
             // 
             this.FilePrintPreview.Name = "FilePrintPreview";
-            this.FilePrintPreview.Size = new System.Drawing.Size(146, 22);
+            this.FilePrintPreview.Size = new System.Drawing.Size(180, 22);
             this.FilePrintPreview.Text = "PrintPreview";
             this.FilePrintPreview.Click += new System.EventHandler(this.menu_Click);
             // 
             // FilePageSetup
             // 
             this.FilePageSetup.Name = "FilePageSetup";
-            this.FilePageSetup.Size = new System.Drawing.Size(146, 22);
+            this.FilePageSetup.Size = new System.Drawing.Size(180, 22);
             this.FilePageSetup.Text = "ページ設定";
             this.FilePageSetup.Click += new System.EventHandler(this.menu_Click);
             // 
             // MenuSepa4
             // 
             this.MenuSepa4.Name = "MenuSepa4";
-            this.MenuSepa4.Size = new System.Drawing.Size(143, 6);
+            this.MenuSepa4.Size = new System.Drawing.Size(177, 6);
             // 
             // FileQuit
             // 
             this.FileQuit.Name = "FileQuit";
-            this.FileQuit.Size = new System.Drawing.Size(146, 22);
+            this.FileQuit.Size = new System.Drawing.Size(180, 22);
             this.FileQuit.Text = "終了";
             this.FileQuit.Click += new System.EventHandler(this.menu_Click);
             // 
@@ -522,7 +526,6 @@
             this.tsGrid1.ContextMenuStrip = this.cmFrame;
             this.tsGrid1.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.tsGrid1.Location = new System.Drawing.Point(87, 51);
-            this.tsGrid1.MainForm = null;
             this.tsGrid1.Name = "tsGrid1";
             this.tsGrid1.OffsetY = 0;
             this.tsGrid1.Size = new System.Drawing.Size(280, 448);
@@ -530,8 +533,9 @@
             this.tsGrid1.TabStop = false;
             this.tsGrid1.Text = "tsGrid1";
             this.tsGrid1.TSCellCaption = this.tsCellCaption1;
+            this.tsGrid1.TSForm = null;
             this.tsGrid1.TSFrame = this.tsFrame1;
-            this.tsGrid1.TSInput = this.tsInput1;
+            this.tsGrid1.TSInput = null;
             this.tsGrid1.TSNav = this.tsNav1;
             this.tsGrid1.SelectionChanged += new System.EventHandler(this.tsGrid1_SelectionChanged);
             this.tsGrid1.KeyBindChanged += new System.EventHandler(this.tsGrid1_KeyBindChanged);
@@ -575,7 +579,19 @@
             this.tsInput1.Text = "tsInput1";
             this.tsInput1.TSGrid = this.tsGrid1;
             // 
-            // MainForm
+            // ExportArdjMenu
+            // 
+            this.ExportArdjMenu.Name = "ExportArdjMenu";
+            this.ExportArdjMenu.Size = new System.Drawing.Size(180, 22);
+            this.ExportArdjMenu.Text = "ExportArdj";
+            this.ExportArdjMenu.Click += new System.EventHandler(this.menu_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // TSForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 11F);
@@ -591,14 +607,16 @@
             this.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "MainForm";
+            this.Name = "TSForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "AE_Remap Exceed";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.Enter += new System.EventHandler(this.MainForm_Enter);
+            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.MainForm_Layout);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainForm_PreviewKeyDown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.menuStrip1.ResumeLayout(false);
@@ -673,6 +691,8 @@
 		private System.Windows.Forms.ToolStripMenuItem PrintSettings;
         private System.Windows.Forms.ToolStripMenuItem jsonToClipToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SettingMenu;
+        private System.Windows.Forms.ToolStripMenuItem ExportArdjMenu;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }
 

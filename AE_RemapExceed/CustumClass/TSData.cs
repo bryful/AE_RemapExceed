@@ -10,76 +10,8 @@ using Codeplex.Data;
 namespace AE_RemapExceed
 {
 	
-	//**************************************************************
-	public class memoData
-	{
-		public int Frame = 0;
-		public string Memo = "";
-		public memoData()
-		{
-			Frame = 0;
-			Memo = "";
-		}
-		public memoData(int frm, string mm)
-		{
-			Frame = frm;
-			if (mm != string.Empty)
-			Memo = mm.Trim();
-		}
-	}
 
-    //**************************************************************
-    public class CellItem
-    {
-        public double Time =0;
-        public double Num = 0;
-
-        public object ToJson()
-        {
-            var ret = new object[2];
-            ret[0] = Time;
-            ret[1] = Num;
-            return ret;
-        }
-    }
-    //**************************************************************
-    public class CellItems
-    {
-        public List<CellItem> Items = new List<CellItem>();
-        public string Caption = "";
-        public object [] ToJson()
-        {
-            var ret = new object[2];
-            ret[0] = Times();
-            ret[1] = Values();
-            return (object[])ret;
-        }
-        public double[] Times()
-        {
-            double[] ret = new double[Items.Count];
-            if (Items.Count > 0)
-            {
-                for (int i = 0; i < Items.Count; i++)
-                {
-                    ret[i] = Items[i].Time;
-                }
-            }
-            return ret;
-        }
-        public double[] Values()
-        {
-            double[] ret = new double[Items.Count];
-            if (Items.Count > 0)
-            {
-                for (int i = 0; i < Items.Count; i++)
-                {
-                    ret[i] = Items[i].Num;
-                }
-            }
-            return ret;
-        }
-
-    }
+ 
     //**************************************************************
     //タイムシートの基本データのクラス
     public class TSData
@@ -109,13 +41,13 @@ namespace AE_RemapExceed
         public bool IsPrintMemo = true;
 
         public string SheetName = "untitled_sheet";
-		//-------------------------------
-		//CellNameブロック
-		private string[] cellCaption = new string[TSdef.CellCount];
+        public string FileName = "untitled_sheet";
+
+        //-------------------------------
+        //CellNameブロック
+        private string[] cellCaption = new string[TSdef.CellCount];
 		//FrameEnabledブロック
 		private int[] frameEnabled = new int[TSdef.FrameCount];
-		//Memoブロック
-		private string[] memo = new string[TSdef.FrameCount];
 		//cellDataブロック
 		private int[][] cellData = new int[TSdef.CellCount][];
 		//-------------------------------
@@ -132,7 +64,6 @@ namespace AE_RemapExceed
 		public int CellWidth = TSdef.CellWidth;
 		public int CellHeight = TSdef.CellHeight;
 		public int FrameWidth = TSdef.FrameWidth;
-		//public int MemoWidth = TSdef.MemoWidth;
 		public int CaptionHeight = TSdef.CaptionHeight;
 		public int FrameOffset = TSdef.FrameOffset;
 		public TSFrameDisp FrameDisp = TSdef.FrameDisp;
@@ -193,7 +124,6 @@ namespace AE_RemapExceed
 					this.cellData[i][j] = TSdef.none;
 					this.cellDataBak[i][j] = TSdef.none;
 				}
-				memo[j] = string.Empty;
 				frameEnabled[j] = j; 
 			}
 			m_undoFlag = false;
@@ -262,7 +192,6 @@ namespace AE_RemapExceed
 
 				
 			}
-			Array.Resize(ref memo, frame);
 			Array.Resize(ref frameEnabled, frame);
 			checkFrameEnabed();
 
@@ -599,35 +528,13 @@ namespace AE_RemapExceed
 			}
 			return true;
 		}
-		//----------------------------------------------------------
-		public string Memo(int f)
-		{
-			string ret = "";
-			if ((f < 0) || (f >= m_FrameCount)) { return ret; }
-			if (memo[f] != null)
-			{
-				ret = memo[f];
-			}
-			return ret;
-		}
-		//----------------------------------------------------------
-		public void Memo(int f, string m)
-		{
-			if ((f < 0) || (f >= m_FrameCount))
-				return;
-			memo[f] = m;
-		}
-		//----------------------------------------------------------
-		public bool SetMemo(string [] ary)
-		{
-			if ((ary.Length != memo.Length))
-				return false;
-			for (var i = 0; i < memo.Length; i++)
-			{
-				memo[i] = ary[i];
-			}
-			return true;
-		}
+        //----------------------------------------------------------
+        public string[] GetCellCaption()
+        {
+            return cellCaption;
+        }
+ 
+
 		//----------------------------------------------------------
 		public int SetCellData(int c, int f, int v)
 		{
@@ -771,25 +678,6 @@ namespace AE_RemapExceed
 
 		}
 		//----------------------------------------------------------
-		public List<memoData> GetMemoDataTrue()
-		{
-			List<memoData> ll = new List<memoData>();
-
-			checkFrameEnabed();
-			for (int i = 0; i < m_FrameCount; i++)
-			{
-				if (frameEnabled[i] >= 0)
-				{
-					if ( (memo[i] != null)&&(memo[i] != string.Empty))
-					{
-						ll.Add(new memoData(frameEnabled[i],  memo[i]));
-					}
-				}
-			}
-
-			return ll;
-		}
-		//----------------------------------------------------------
 		public int[] GetCellData(TSSelection sel)
 		{
 			int c = sel.Index;
@@ -905,7 +793,7 @@ namespace AE_RemapExceed
 				{
 					m_FrameCount = Params[i].GetValueInt(TSdef.FrameCount);
 				}
-				else if (String.Compare(tag, TSSaveFile.D_CmpFps, true) == 0)
+				else if (String.Compare(tag, TSSaveFile.D_FrameRate, true) == 0)
 				{
 					SetFrameRate((TSFps)Params[i].GetValueInt((int)TSdef.FrameRate));
 				}
@@ -976,7 +864,7 @@ namespace AE_RemapExceed
 		{
 			toParam(TSSaveFile.D_LayerCount, m_CellCount.ToString());
 			toParam(TSSaveFile.D_FrameCount, m_FrameCount.ToString());
-			toParam(TSSaveFile.D_CmpFps, ((int)m_FrameRate).ToString());
+			toParam(TSSaveFile.D_FrameRate, ((int)m_FrameRate).ToString());
 			toParam(TSSaveFile.D_PageSec, ((int)PageSec).ToString());
 			toParam(TSSaveFile.D_CREATE_USER, CREATE_USER);
 			toParam(TSSaveFile.D_UPDATE_USER, UPDATE_USER);
@@ -1338,99 +1226,8 @@ namespace AE_RemapExceed
             }
         }
         //**************************************************************
-        //**************************************************************
-        //**************************************************************
-        public CellItems GetCellItems(int c)
-        {
-            CellItems ret = new CellItems();
-            if ((c < 0) || (c >= m_CellCount)) return ret;
-
-            int[] dat = new int[m_FrameCount];
-
-            dat[0] = cellData[c][0];
-            dat[m_FrameCount - 1] = cellData[c][m_FrameCount - 1];
-            for (int i = 1; i < m_FrameCount - 1; i++)
-            {
-                if (cellData[c][i - 1] == cellData[c][i])
-                {
-                    dat[i] = -1;
-                }
-                else
-                {
-                    dat[i] = cellData[c][i];
-                }
-            }
-            for (int i = 0; i < m_FrameCount; i++)
-            {
-                if (dat[i] >= 0)
-                {
-                    CellItem ci = new CellItem();
-                    ci.Time = (double)i / (double)m_FrameRate;
-                    ci.Num = ((double)dat[i] - 1) / (double)m_FrameRate;
-                    ret.Items.Add(ci);
-                }
-            }
-            if (ret.Items.Count == 2)
-            {
-                if ((ret.Items[0].Num == ret.Items[1].Num) && (ret.Items[0].Num < 0))
-                {
-                    ret.Items.Clear();
-                }
-            }
-            if (ret.Items.Count > 0)
-            {
-                ret.Caption = cellCaption[c];
-
-
-            }
-
-            return ret;
-        }
-        //**************************************************************
-        public string ToJson()
-        {
-            /*{"caption": ["A","B","C","D","E","F","G","H","I","J","K","L","M"],
-             * "cellCount": 13,"
-             * cells": [[[0,1],[4,2],[8,0]],[[0,1],[3,2],[6,3],[9,4],[12,5],[15,6],[18,7],[21,8],[24,9],[27,10],[30,11],[33,12],[36,13],[39,14],[42,15],[45,16],[48,17],[51,18],[54,19],[57,0]],[[0,0]],[[0,1]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]],[[0,0]]],
-             * "frameCount": 342,
-             * "frameRate": 24,
-             * "sheetName": "test"}*/
-            string ret = "";
-            dynamic json = new DynamicJson();
-
-            json["header"] = "ardjV2";
-            //json["memo"] = "clip data for AE. setValuesAtTimesに合わせたパラメータになってます。保存用ではありません";
-            json["sheetName"] = SheetName;
-            json["cellCount"] = (double)m_CellCount;
-            json["frameCount"] = (double)m_FrameCount;
-            json["frameRate"] = (double)m_FrameRate;
-
-            List<CellItems> dd = new List<CellItems>();
-            for (int i = 0; i < m_CellCount; i++)
-            {
-                CellItems cis = GetCellItems(i);
-                if (cis.Items.Count > 0)
-                {
-                    dd.Add(cis);
-                }
-            }
-
-            if (dd.Count > 0)
-            {
-                var ddd = new object[dd.Count];
-                List<string> ddc = new List<string>();
-                for (int i = 0; i < dd.Count; i++)
-                {
-                    ddd[i] = (object)dd[i].ToJson();
-                    ddc.Add(dd[i].Caption);
-                }
-                json["caption"] = ddc.ToArray();
-                json["cells"] = (object[])ddd;
-            }
-
-            ret = json.ToString();
-            return ret;
-        }
+ 
+ 
         //**************************************************************
     }
     //**************************************************************
