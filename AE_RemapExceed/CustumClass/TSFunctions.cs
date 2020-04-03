@@ -5,6 +5,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
+using Codeplex.Data;
+using BRY;
+
+
 namespace AE_RemapExceed
 {
 	public enum funcCmd
@@ -81,7 +85,6 @@ namespace AE_RemapExceed
 
 		About,
 
-        JsonToClip,
 
 		Count
 	}
@@ -165,7 +168,6 @@ namespace AE_RemapExceed
 
 			{"About","Aboutダイアログ"},
 
-            {"JsonToClip","セルデータをクリップボードへ"}
 
         };
 		//キーバインド関係
@@ -196,6 +198,35 @@ namespace AE_RemapExceed
 		}
 		//------------------------------------------------
 		private funcClass[] funcTable = new funcClass[(int)funcCmd.Count];
+
+        public int [] FuncTableAll
+        {
+            get
+            {
+                int[] ret = new int [(int)funcCmd.Count*2];
+
+                for ( int i=0; i< (int)funcCmd.Count; i++)
+                {
+                    ret[i * 2 + 0] = (int)funcTable[i].key;
+                    ret[i * 2 + 1] = (int)funcTable[i].keySub;
+                }
+                return ret;
+            }
+            set
+            {
+                if (value.Length < (int)funcCmd.Count * 2) return;
+                int idx = 0;
+                for (int i = 0; i < (int)funcCmd.Count; i++)
+                {
+                    funcTable[i].key = (Keys)value[idx];
+                    idx++;
+                    funcTable[i].keySub = (Keys)value[idx];
+                    idx++;
+
+                }
+            }
+        }
+
 		//キーコードを修正、テンキー対策
 		private int[] keyMap = new int[256];
 		//数字入力
@@ -299,7 +330,6 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.PrintSetting, Keys.None, Keys.None);
 
             setKeyTable(funcCmd.About, Keys.None, Keys.None);
-            setKeyTable(funcCmd.JsonToClip, Keys.Control | Keys.E, Keys.None);
         }
         //------------------------------------------------
         private void InitKeyMap()
@@ -446,6 +476,25 @@ namespace AE_RemapExceed
 
 			return true;
 		}
+        public bool SaveToFileJ(string path)
+        {
+            bool ret = false;
+            dynamic dat = new DynamicJson();
+            dat["Header"] = Header;
+            var dat2 = new object[funcTable.Length];
+            for (int i = 0; i < funcTable.Length; i++)
+            {
+                dynamic dat3 = new DynamicJson();
+                dat3["funcName"] = funcName[i, 0];
+                dat3["key"] = (double)funcTable[i].key;
+                dat3["keysub"] = (double)funcTable[i].keySub;
+                dat2[i] = dat3;
+            }
+            string js = dat.ToString();
+            File.WriteAllText(path, js, Encoding.GetEncoding("utf-8"));
+            ret = File.Exists(path);
+            return ret;
+        }
 		//----------------------------------------------------------------------------------------
 		public Keys toKeys(string s)
 		{

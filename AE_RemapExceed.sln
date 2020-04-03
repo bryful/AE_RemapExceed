@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE_RemapExceed", "AE_RemapExceed\AE_RemapExceed.csproj", "{731C86AD-012F-475D-9AE4-DCAE8A665CC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallAE_Remap", "CallAE_Remap\CallAE_Remap.csproj", "{2F2157B2-A8FE-4681-8784-EAF984DFD898}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{731C86AD-012F-475D-9AE4-DCAE8A665CC1}.Release|x64.Build.0 = Release|x64
 		{731C86AD-012F-475D-9AE4-DCAE8A665CC1}.Release|x86.ActiveCfg = Release|x86
 		{731C86AD-012F-475D-9AE4-DCAE8A665CC1}.Release|x86.Build.0 = Release|x86
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Debug|x64.Build.0 = Debug|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Debug|x86.Build.0 = Debug|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Release|x64.ActiveCfg = Release|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Release|x64.Build.0 = Release|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F2157B2-A8FE-4681-8784-EAF984DFD898}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

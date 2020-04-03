@@ -529,14 +529,6 @@ namespace AE_RemapExceed
                             DrawCellOne(e.Graphics, b, p, c, f);
                         }
                     }
-                    //メモの描画
-                    if (tsd.IsPrintMemo == true)
-                    {
-                        for (int f = startF; f < endF; f++)
-                        {
-                            DrawMemoOne(e.Graphics, b, f);
-                        }
-                    }
                 }
                 else
                 {
@@ -545,14 +537,6 @@ namespace AE_RemapExceed
                         for (int f = startF; f < endF; f++)
                         {
                             DrawCellTwo(e.Graphics, b, p, c, f);
-                        }
-                    }
-                    //メモの描画
-                    if (tsd.IsPrintMemo == true)
-                    {
-                        for (int f = startF; f < endF; f++)
-                        {
-                            DrawMemoTwo(e.Graphics, b, f);
                         }
                     }
                 }

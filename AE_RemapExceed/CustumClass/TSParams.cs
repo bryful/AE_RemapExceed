@@ -43,7 +43,6 @@ namespace AE_RemapExceed
             IsPrintUPDATE_USER,
             IsPrintCAMPANY_NAME,
             IsPrintComment,
-            IsPrintMemo,
             CommentAlign,
             Count
         }
@@ -91,7 +90,6 @@ namespace AE_RemapExceed
         "IsPrintUPDATE_USER",
         "IsPrintCAMPANY_NAME",
         "IsPrintComment",
-        "IsPrintMemo",
         "CommentAlign"
 
         };

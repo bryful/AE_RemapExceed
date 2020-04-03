@@ -149,7 +149,6 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.PrintSetting, PrintSetting);
 
             funcs.setFunc(funcCmd.About, About);
-            funcs.setFunc(funcCmd.JsonToClip, JsonToClip);
 
         }
         //***********************************************************************
@@ -1461,11 +1460,7 @@ namespace AE_RemapExceed
 					GetStatus();
 
 
-					TSPref p = new TSPref(this);
-					p.Left = this.Parent.Left;
-					p.Top = this.Parent.Top;
-					p.Height = this.Parent.Height;
-					p.PrefSave();
+					tsfm.PrefSave();
 					OnSizeChanged(new EventArgs());
 					Sync();
 				}
@@ -1485,13 +1480,11 @@ namespace AE_RemapExceed
                 psd.MainForm = tsfm;
 				psd.Comment = tsd.CommentLines;
 				psd.IsPrintComment = tsd.IsPrintComment;
-                psd.IsPrintMemo = tsd.IsPrintMemo;
 				psd.TSDataToComb(tsd);
                 psd.CommentAlign = tsd.CommentAlign;
 				if (psd.ShowDialog() == DialogResult.OK)
 				{
 					tsd.CommentLines = psd.Comment;
-                    tsd.IsPrintMemo = psd.IsPrintMemo;
 					psd.CombToTSData(tsd);
                     tsd.CommentAlign = psd.CommentAlign;
 	

@@ -38,7 +38,6 @@ namespace AE_RemapExceed
 		public string[] SheetInfoTbl = new string[(int)SheetInfo.Count];
 		public bool[] IsPrintSheetInfo = new bool[(int)SheetInfo.Count];
         public bool IsPrintComment = true;
-        public bool IsPrintMemo = true;
 
         public string SheetName = "untitled_sheet";
         public string FileName = "untitled_sheet";
@@ -66,6 +65,100 @@ namespace AE_RemapExceed
 		public int FrameWidth = TSdef.FrameWidth;
 		public int CaptionHeight = TSdef.CaptionHeight;
 		public int FrameOffset = TSdef.FrameOffset;
+
+        public int[] SizeParams
+        {
+            get
+            {
+                return new int[4] { CellWidth, CellHeight, FrameWidth, CaptionHeight };
+            }
+            set
+            {
+                if(value.Length>=4)
+                {
+                    CellWidth = value[0];
+                    CellHeight = value[1];
+                    FrameWidth = value[2];
+                    CaptionHeight = value[3];
+                    SetSize(CellWidth, CellHeight);
+                }
+            }
+        }
+        public int[] ParamsInt
+        {
+            get
+            {
+                return new int[12]
+                {
+                CellWidth,
+                CellHeight,
+                FrameWidth,
+                CaptionHeight,
+                FrameOffset,
+                (int)FrameDisp,
+                (int)PageSec,
+                AutoInputStart,
+                AutoInputLast,
+                AutoInputKoma,
+                LastFrame,
+                (int)CommentAlign
+                };
+            }
+            set
+            {
+                if (value.Length < 12) return;
+                CellWidth = value[0];
+                CellHeight = value[1];
+                FrameWidth = value[2];
+                CaptionHeight = value[3];
+                FrameOffset = value[4];
+                FrameDisp = (TSFrameDisp)value[5];
+                PageSec = (TSPageSec)value[6];
+                AutoInputStart = value[7];
+                AutoInputLast = value[8];
+                AutoInputKoma = value[9];
+                LastFrame = value[10];
+                CommentAlign = (CmtAligns)value[11];
+            }
+
+        }
+        public bool [] ParamsBool
+        {
+            get
+            {
+                return new bool[11]
+                {
+                    ZeroStart,
+                    SecInputMode,
+                    IsPrintSheetInfo[0],
+                    IsPrintSheetInfo[1],
+                    IsPrintSheetInfo[2],
+                    IsPrintSheetInfo[3],
+                    IsPrintSheetInfo[4],
+                    IsPrintSheetInfo[5],
+                    IsPrintSheetInfo[6],
+                    IsPrintSheetInfo[7],
+                    IsPrintComment
+               };
+            }
+            set
+            {
+                if (value.Length < 11) return;
+                ZeroStart = value[0];
+                SecInputMode = value[1];
+                IsPrintSheetInfo[0] = value[2];
+                IsPrintSheetInfo[1] = value[3];
+                IsPrintSheetInfo[2] = value[4];
+                IsPrintSheetInfo[3] = value[5];
+                IsPrintSheetInfo[4] = value[6];
+                IsPrintSheetInfo[5] = value[7];
+                IsPrintSheetInfo[6] = value[8];
+                IsPrintSheetInfo[7] = value[9];
+                IsPrintComment = value[10];
+            }
+        }
+
+
 		public TSFrameDisp FrameDisp = TSdef.FrameDisp;
 		public bool ZeroStart = TSdef.ZeroStart;
 
@@ -74,7 +167,6 @@ namespace AE_RemapExceed
 		public int AutoInputKoma = TSdef.AutoInputKoma;
 		public bool SecInputMode = TSdef.SecInputMode;
 		public int LastFrame = TSdef.LastFrame;
-        public bool IsLoadScriptFile = true;
 
         public ValueEditMode ValueEditMode = ValueEditMode.direct;
         public int ValueEditValue = 0;

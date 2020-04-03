@@ -54,20 +54,45 @@ namespace AE_RemapExceed
 			"無効フレーム",
 			"無効フレーム文字",
 		};
+        
 
-		public TSColors()
+
+
+        public TSColors()
 		{
 			Init();
 		}
 		public string[] CaptionStr
 		{
 			get { return captionStr;}
-		}
-		public Color[] Col
+            set { captionStr = value; }
+        }
+        public Color[] Col
 		{
 			get { return col; }
 			set { col = value; }
 		}
+        public int[] ColorInt
+        {
+            get
+            {
+                int[] ret = new int[(int)TSColorIndex.Count];
+                for(int i=0; i< (int)TSColorIndex.Count;i++)
+                {
+                    ret[i] = col[i].ToArgb();
+                }
+                return ret;
+            }
+            set
+            {
+                if (value.Length < (int)TSColorIndex.Count) return;
+                for (int i = 0; i < (int)TSColorIndex.Count; i++)
+                {
+                    col[i] = Color.FromArgb(value[i]);
+                }
+            }
+        }
+
 		public Color BaseLine
 		{
 			get { return col[(int)TSColorIndex.BaseLine]; }
@@ -183,70 +208,7 @@ namespace AE_RemapExceed
 				this.col[i] = tsc.col[i];
 			}
 		}
-		//------------------------------------------------------
-		public bool save(string path)
-		{
-			List<string> lst = new List<string>();
 
-			lst.Add("TSColors");
-			for (int i = 0; i < (int)TSColorIndex.Count; i++)
-			{
-				string s = "0x" + col[i].R.ToString("X") + ",0x" + col[i].G.ToString("X") + ",0x" + col[i].B.ToString("X") + "," + captionStr[i];
-				lst.Add(s);
-			}
-			System.IO.StreamWriter sw = new System.IO.StreamWriter(path);
-			try
-			{
-				foreach (string s in lst)
-				{
-					sw.WriteLine(s);
-				}
-			}
-			finally
-			{
-				sw.Close();
-			}
-			return true;
-		}
-		//------------------------------------------------------
-		public bool load(string path)
-		{
-			//ファイルがなければエラー
-			if (System.IO.File.Exists(path) == false)
-			{
-				return false;
-			}
-			System.IO.StreamReader sr = new System.IO.StreamReader(path);
-			try
-			{
-				List<string> lst = new List<string>();
-				lst.Clear();
-				while (sr.Peek() >= 0)
-				{
-					string s = sr.ReadLine().Trim();
-					if (s !="") lst.Add(s);
-				}
-				if (lst.Count != (int)TSColorIndex.Count +1)
-				{
-					return false;
-				}
-				if (lst[0] != "TSColors") return false;
-				for (int i=0; i < (int)TSColorIndex.Count; i++)
-				{
-					string [] sa = lst[i+1].Split(',');
-					if (sa.Length >= 3)
-					{
-						col[i] = Color.FromArgb(Convert.ToInt32(sa[0], 16), Convert.ToInt32(sa[1], 16), Convert.ToInt32(sa[2], 16));
-					}
-				}
-
-			}
-			finally
-			{
-				sr.Close();
-			}
-			return true;
-		}
 	}
 	//**************************************************************
 }

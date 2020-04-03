@@ -8,6 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
+
+using Codeplex.Data;
+using BRY;
+
 namespace AE_RemapExceed
 {
     public enum EXEC_MODE
@@ -45,22 +49,14 @@ namespace AE_RemapExceed
 			this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.m_MouseWheel);
 
 			
-			TSPref p = new TSPref(tsGrid1);
-			if (p.PrefLoad())
-			{
-				this.Left = p.Left;
-				this.Top = p.Top;
-				this.Height = p.Height;
-				tsGrid1.tsd.SetSize(p.CellCount, p.FrameCount);
-				tsGrid1.GetStatus();
-			}
-			else
+			if (PrefLoad()==false)
 			{
 				this.Left = 100;
 				this.Top = 100;
-				tsGrid1.GetStatus();
 			}
-			SetFrameDisp(tsGrid1.tsd.FrameDisp);
+            tsGrid1.GetStatus();
+
+            SetFrameDisp(tsGrid1.tsd.FrameDisp);
 			SetLayout();
 			toolStripStatusLabel1.Text = tsGrid1.SelInfo;
 			ShortCutPre();
@@ -69,9 +65,12 @@ namespace AE_RemapExceed
             NavBarSetup();
             m_NavBar.LocSet();
 
-                string[] cmds;
-                cmds = System.Environment.GetCommandLineArgs();
-                GetCommand(cmds, String.Format("Constractor{0}",0));
+
+            string[] cmds;
+            cmds = System.Environment.GetCommandLineArgs();
+            GetCommand(cmds, String.Format("Constractor{0}",0));
+
+            this.Invalidate();
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -90,12 +89,8 @@ namespace AE_RemapExceed
         {
             /*
              *  /export <path> セルデータを指定されたパスに保存
-             *  /save <path> セルデータを指定されたパスに保存
              *  
              *  /import <path> セルデータを読み込む。
-             *  /load <path> セルデータを読み込む。
-             *  
-             *  
              *  
              *  /layer
                 */
@@ -103,47 +98,36 @@ namespace AE_RemapExceed
             bool layer = false;
             string filename = "";
 
+            //引数の解析
             if (cmd.Length > 1)
             {
                 for(int i=1; i<cmd.Length;i++)
                 {
                     string s = cmd[i];
-                    if ((s[0]=='/')|| (s[0] == '-')) //option
+                    if ((s[0]=='/')||(s[0] == '-')) //option
                     {
                         string s2 = s.Substring(1).ToLower();
                         switch(s2)
                         {
                             case "s":
                             case "save":
-                                if (mode == EXEC_MODE.NONE)
-                                {
-                                    mode = EXEC_MODE.SAVE;
-                                }
+                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.SAVE;
                                 break;
                             case "l":
                             case "o":
                             case "load":
                             case "open":
-                                if (mode == EXEC_MODE.NONE)
-                                {
-                                    mode = EXEC_MODE.LOAD;
-                                }
+                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.LOAD;
                                 break;
 
                             case "e":
                             case "export":
                             case "output":
-                                if (mode == EXEC_MODE.NONE)
-                                {
-                                    mode = EXEC_MODE.EXPORT;
-                                }
+                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.EXPORT;
                                 break;
                             case "i":
                             case "import":
-                                if (mode == EXEC_MODE.NONE)
-                                {
-                                    mode = EXEC_MODE.IMPORT;
-                                }
+                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.IMPORT;
                                 break;
                             case "layer":
                             case "cell":
@@ -181,12 +165,26 @@ namespace AE_RemapExceed
                     else if (mode == EXEC_MODE.IMPORT) mode = EXEC_MODE.IMPORT_LAYER;
                 }
             }
-            this.BringToFront();
-            this.TopMost = true;
 
-            string[] modes = new string[] { "NONE", "EXPORT", "IMPORT", "EXPORT_LAYER", "IMPORT_LAYER", "LOAD","SAVE" };
-            MessageBox.Show(String.Format("mode:{0} filename:{1} op:{2}", modes[(int)mode], filename,cp));
-            this.TopMost = false;
+            //実際の動作
+            switch(mode)
+            {
+                case EXEC_MODE.EXPORT:
+                    tsGrid1.SaveToJsonFile(filename);
+                    SetActive();
+                    break;
+            }
+        }
+        //--------------------------------------------------------------------------------------
+        public void SetActive()
+        {
+            this.BringToFront();
+            if (this.TopMost == false)
+            {
+                this.TopMost = true;
+                this.TopMost = false;
+            }
+
         }
         //--------------------------------------------------------------------------------------
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -211,21 +209,63 @@ namespace AE_RemapExceed
 		//--------------------------------------------------------------------------------------
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			TSPref p = new TSPref(tsGrid1);
-			p.Left = this.Left;
-			p.Top = this.Top;
-			p.Height = this.Height;
-			p.PrefSave();
-		}
+            PrefSave();
+
+        }
 		//--------------------------------------------------------------------------------------
 		private void tsGrid1_SizeChanged(object sender, EventArgs e)
 		{
 			SetLayout();
 		}
-		//**********************************************************************************
-		//コントロールの配置
-		//**********************************************************************************
-		public void SetLayout()
+        //--------------------------------------------------------------------------------------
+        public void PrefSave()
+        {
+            //設定ファイルの保存
+            JsonPref pref = new JsonPref();
+
+            pref.SetPoint("Point", this.Location);
+            pref.SetInt("Height", this.Height);
+            pref.SetIntArray("ParamsInt", tsGrid1.tsd.ParamsInt);
+            pref.SetBoolArray("ParamsBool", tsGrid1.tsd.ParamsBool);
+            pref.SetIntArray("Colors", tsGrid1.cols.ColorInt);
+            pref.SetIntArray("Keys", tsGrid1.funcs.FuncTableAll);
+            pref.Save();
+
+        }
+        //--------------------------------------------------------------------------------------
+        public bool PrefLoad()
+        {
+            bool ret = false;
+            //設定ファイルの保存
+            JsonPref pref = new JsonPref();
+
+            if (pref.Load()==true)
+            {
+                bool ok = false;
+                Point p = pref.GetPoint("Point", out ok);
+                if (ok) this.Location = p;
+                int h = pref.GetInt("Height", out ok);
+                if (ok) this.Height = h;
+                int[] a = pref.GetIntArray("ParamsInt", out ok);
+                if (ok) tsGrid1.tsd.ParamsInt = a;
+                bool[] b = pref.GetBoolArray("ParamsBool", out ok);
+                if (ok) tsGrid1.tsd.ParamsBool = b;
+                int[] c = pref.GetIntArray("Colors", out ok);
+                if (ok) tsGrid1.cols.ColorInt = c;
+                int[] d = pref.GetIntArray("Keys", out ok);
+                if (ok) tsGrid1.funcs.FuncTableAll = d;
+                ret = true;
+
+            }
+            return ret;
+
+
+
+        }
+        //**********************************************************************************
+        //コントロールの配置
+        //**********************************************************************************
+        public void SetLayout()
 		{
 			if (m_LayoutFlag == false) return;
 			bool bak = m_LayoutFlag;
@@ -395,7 +435,6 @@ namespace AE_RemapExceed
                 setMenuItem(valueEdit, funcCmd.ValueEdit);
 
                 setMenuItem(HelpAbout, funcCmd.About);
-                setMenuItem(jsonToClipToolStripMenuItem, funcCmd.JsonToClip);
 
 
 

@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="CustumClass\TSHistory.cs" />
     <Compile Include="DynamicJson.cs" />
+    <Compile Include="JsonPref.cs" />
     <Compile Include="NavBar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,7 +243,6 @@
     <Compile Include="Dialog\TimeSheetSetting.Designer.cs">
       <DependentUpon>TimeSheetSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustumClass\TSPref.cs" />
     <Compile Include="CustumClass\TSSaveFile.cs" />
     <Compile Include="TSForm.cs">
       <SubType>Form</SubType>

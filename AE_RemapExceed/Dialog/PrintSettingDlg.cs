@@ -145,7 +145,6 @@ namespace AE_RemapExceed
 				CombToTSData(tsd);
 				tsd.CommentLines = tbComment.Lines;
 				tsd.IsPrintComment = cbComment.Checked;
-                tsd.IsPrintMemo = cbMemo.Checked;
                 tsd.CommentAlign = cmtAlign1.SelectedIndex;
                 mf.Exec(funcCmd.PageSetup);
             }
@@ -159,7 +158,6 @@ namespace AE_RemapExceed
 				CombToTSData(tsd);
 				tsd.CommentLines = tbComment.Lines;
 				tsd.IsPrintComment = cbComment.Checked;
-                tsd.IsPrintMemo = cbMemo.Checked;
                 tsd.CommentAlign = cmtAlign1.SelectedIndex;
                 mf.Exec(funcCmd.PrintPreview);
             }
@@ -173,7 +171,6 @@ namespace AE_RemapExceed
 				CombToTSData(tsd);
 				tsd.CommentLines = tbComment.Lines;
 				tsd.IsPrintComment = cbComment.Checked;
-                tsd.IsPrintMemo = cbMemo.Checked;
                 tsd.CommentAlign = cmtAlign1.SelectedIndex;
                 mf.Exec(funcCmd.Print);
             }

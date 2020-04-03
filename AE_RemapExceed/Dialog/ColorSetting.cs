@@ -71,7 +71,7 @@ namespace AE_RemapExceed
 		{
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				tsc.save(saveFileDialog1.FileName);
+				//tsc.save(saveFileDialog1.FileName);
 			}
 		}
 		//-----------------------------------------------------------------------
@@ -79,10 +79,10 @@ namespace AE_RemapExceed
 		{
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				if (tsc.load(openFileDialog1.FileName))
-				{
-					toCaption();
-				}
+				//if (tsc.load(openFileDialog1.FileName))
+				//{
+				//	toCaption();
+				//}
 			}
 		}
 

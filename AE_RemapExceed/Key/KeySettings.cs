@@ -25,8 +25,6 @@ namespace AE_RemapExceed
 		{
 			InitializeComponent();
 
-			TSPref pf = new TSPref(null);
-			m_UserPath = pf.m_UserPath;
 
 			tsfunc.Assign(f);
 			tsfuncBak.Assign(f);
