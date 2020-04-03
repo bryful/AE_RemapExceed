@@ -14,15 +14,16 @@ namespace CallAE_Remap
         enum MODE
         {
             NONE = 0,
-            CALL,
-            EXENOW,
-            EXPORT,
-            IMPORT,
-            EXPORT_LAYER,
-            IMPORT_LAYER,
-            HELP
+            CALL,           //AEを起動させる
+            EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
+            EXPORT,         //現在のシートをjsonで保存させる。ファイルのパスが戻る
+            IMPORT,         //指定したファイルを読み込む
+            EXPORT_LAYER,   //1レイヤー分のEXPORT
+            IMPORT_LAYER,   //1レイヤー分のIMPORT
+            HELP            //実装していない
 
         }
+        //
         static string ToJSP(string p)
         {
             p = p.Replace('\\', '/');
@@ -37,6 +38,7 @@ namespace CallAE_Remap
             }
             return p;
         }
+        //
         static private async void SleepAsync()
         {
             await Task.Delay(1000);
