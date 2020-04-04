@@ -50,8 +50,63 @@ namespace AE_RemapExceed
 		//cellDataブロック
 		private int[][] cellData = new int[TSdef.CellCount][];
 		//-------------------------------
+		public int[] CellLayer(int idx)
+		{
+			int[] ret = new int[0];
+
+			if ((idx >= 0) && (idx < m_CellCount))
+			{
+				ret = new int[m_FrameCount];
+
+				for (int i=0; i < m_FrameCount; i++)
+				{
+					ret[i] = cellData[idx][i];
+				}
+
+			}
+			return ret;
+		}
+		//-------------------------------
+		public void SetCellLayer(int idx,int [] lyr)
+		{
+			if ((idx >= 0) && (idx < m_CellCount))
+			{
+				int cnt = lyr.Length;
+				if (cnt > m_FrameCount) cnt = m_FrameCount;
+				for (int i = 0; i < cnt; i++)
+				{
+					cellData[idx][i] =lyr[i];
+				}
 
 
+			}
+		}
+		//-------------------------------
+		public  List<List<int>> CellLayerT(int idx)
+		{
+			List<List<int>> ret = new List<List<int>>();
+			if ((idx >= 0) && (idx < m_CellCount))
+			{
+				for(int i=0; i<m_FrameCount;i++)
+				{
+					List<int> a = new List<int>();
+					a.Add(i);
+					a.Add(cellData[idx][i]);
+					ret.Add(a);
+				}
+
+				for (int i=m_FrameCount-1; i>=1;i--)
+				{
+					if (ret[i-1][1]== ret[i][1])
+					{
+						ret.RemoveAt(i);
+					}
+				}
+
+			}
+			return ret;
+		}
+		//-------------------------------
 		//Undo用
 		private int[][] cellDataBak = new int[TSdef.FrameCount][];
 

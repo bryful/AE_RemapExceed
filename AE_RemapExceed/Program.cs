@@ -3,30 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Microsoft.VisualBasic.ApplicationServices;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace AE_RemapExceed
 {
-    
-    public class MyApp : WindowsFormsApplicationBase
-    {
-        public MyApp()
-        : base()
-        {
-            this.EnableVisualStyles = true;
-            this.IsSingleInstance = true;
-            this.MainForm = new TSForm();//スタートアップフォームを設定
-            //this.StartupNextInstance += new StartupNextInstanceEventHandler(MyApplication_StartupNextInstance);
-        }
-        public void MyApplication_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
-        {
-            //ここに二重起動されたときの処理を書く
-            //e.CommandLineでコマンドライン引数を取得出来る
-            //((TSForm)this.MainForm).GetCommand(e.CommandLine.ToArray<string>(), "Program.cs");
-        }
-    }
-    static class Program
+
+	public class MyProcess
+	{
+		[DllImport("USER32.DLL", CharSet = CharSet.Auto)]
+		private static extern int ShowWindow(
+			System.IntPtr hWnd,
+			int nCmdShow
+		);
+
+
+		[DllImport("USER32.DLL", CharSet = CharSet.Auto)]
+		private static extern bool SetForegroundWindow(
+			System.IntPtr hWnd
+		);
+
+
+		private const int SW_NORMAL = 1;
+
+
+		/// ------------------------------------------------------------------------------------
+		/// <summary>
+		///     同名のプロセスが起動中の場合、メイン ウィンドウをアクティブにします。</summary>
+		/// <returns>
+		///     既に起動中であれば true。それ以外は false。</returns>
+		/// ------------------------------------------------------------------------------------
+		public static bool ShowPrevProcess()
+		{
+			Process hThisProcess = Process.GetCurrentProcess();
+			Process[] hProcesses = Process.GetProcessesByName(hThisProcess.ProcessName);
+			int iThisProcessId = hThisProcess.Id;
+
+			foreach (Process hProcess in hProcesses)
+			{
+				if (hProcess.Id != iThisProcessId)
+				{
+					ShowWindow(hProcess.MainWindowHandle, SW_NORMAL);
+					SetForegroundWindow(hProcess.MainWindowHandle);
+					return true;
+				}
+			}
+
+			return false;
+		}
+	}
+	static class Program
     {
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
@@ -34,13 +61,12 @@ namespace AE_RemapExceed
         [STAThread]
         static void Main(string[] args)
         {
-            //下の3行を復活させれば多重起動ができる
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainForm());
-
-            MyApp winAppBase = new MyApp();
-            winAppBase.Run(args);
-        }
+			if (!MyProcess.ShowPrevProcess())
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new TSForm());
+			}
+		}
     }
 }

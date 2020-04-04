@@ -4,213 +4,292 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using System.IO;
 
 using Codeplex.Data;
 
 namespace AE_RemapExceed
 {
-    public class TSJson
-    {
-        //ardに使う文字定数
-        public const string D_Header = "Header";
-        public const string D_Header2= "ardjV2";
-        public const string D_CellCount = "cellCount";
-        public const string D_FrameCount = "frameCount";
-        public const string D_PageSec = "pageSec";
-        public const string D_FrameRate = "frameRate";
-        public const string D_Caption = "caption";
-        public const string D_Cells = "cells";
-        public const string D_SheetName = "sheetName";
+	public class Ardj
+	{
+		public string header { get; set; }
+		public int cellCount { get; set; }
+		public int frameCount { get; set; }
+		public int pageSec { get; set; }
+		public int frameRate { get; set; }
+		public string sheetName { get; set; }
+		public string CREATE_USER { get; set; }
+		public string UPDATE_USER { get; set; }
+		public DateTime CREATE_TIME { get; set; }
+		public DateTime UPDATE_TIME { get; set; }
 
-        public const string D_CREATE_USER = "CREATE_USER";
-        public const string D_UPDATE_USER = "UPDATE_USER";
-        public const string D_CREATE_TIME = "CREATE_TIME";
-        public const string D_UPDATE_TIME = "UPDATE_TIME";
-        public const string D_TITLE = "TITLE";
-        public const string D_SUB_TITLE = "SUB_TITLE";
-        public const string D_OPUS = "OPUS";
-        public const string D_SCECNE = "SCECNE";
-        public const string D_CUT = "CUT";
-        public const string D_CAMPANY_NAME = "CAMPANY_NAME";
+		public string TITLE { get; set; }
+		public string SUB_TITLE { get; set; }
+		public string OPUS { get; set; }
+		public string SCECNE { get; set; }
+		public string CUT { get; set; }
+		public string CAMPANY_NAME { get; set; }
 
-        //データクラス
-        private TSData data = null;
-        public TSJson(TSData d = null)
-        {
-            data = d;
-        }
-        //------------------------------------------------------------------------------------------
-        public string ToJson()
-        {
-            string ret = "";
-            if (data == null) return ret;
-            dynamic d = new DynamicJson();
-            d[D_Header] = D_Header2;
-            d[D_CellCount] = (double)data.CellCount;
-            d[D_FrameCount] = (double)data.FrameCount;
-            d[D_PageSec] = (double)data.PageSec;
-            d[D_FrameRate] = (double)data.FrameRate;
-            d[D_SheetName] = data.SheetName;
+		public string[] caption { get; set; }
+		public int[][][] cell { get; set; }
+	}
+	public class Ardj_layer
+	{
+		public string header { get; set; }
+		public int frameCount { get; set; }
+		public int frameRate { get; set; }
+		public int[][] cell { get; set; }
+	}
 
-            d[D_CREATE_USER] = data.CREATE_USER;
-            d[D_UPDATE_USER] = data.UPDATE_USER;
+	public class TSJson
+	{
+		//ardに使う文字定数
+		public const string D_Header = "ardjV2";
 
-            d[D_CREATE_TIME] = data.CREATE_TIME.ToString();
-            d[D_UPDATE_TIME] = data.UPDATE_TIME.ToString();
-            d[D_TITLE] = data.TITLE;
-            d[D_SUB_TITLE] = data.SUB_TITLE;
-            d[D_OPUS] = data.OPUS;
-            d[D_SCECNE] = data.SCECNE;
-            d[D_CUT] = data.CUT;
-            d[D_CAMPANY_NAME] = data.CAMPANY_NAME;
+		//データクラス
+		private TSData data = null;
+		public TSJson(TSData d = null)
+		{
+			data = d;
+		}
+		//
+		public string ToJson()
+		{
+			Ardj ardj = new Ardj();
+			ardj.header = D_Header;
+			ardj.cellCount = data.CellCount;
+			ardj.frameCount = data.FrameCount;
+			ardj.pageSec = (int)data.PageSec;
+			ardj.frameRate = (int)data.FrameRate;
+			ardj.sheetName = data.SheetName;
 
-            d[D_Caption] = data.GetCellCaption();
-
-            d[D_Cells] = GetLayeDataAll();
-
-            ret = d.ToString();
-
-            return ret;
-        }
-        //------------------------------------------------------------------------------------------
-        private object[] GetLayeData(int idx)
-        {
-            var ret = new object[0];
-            if ((data == null) || (data.FrameCount <= 0)) return ret;
-            if ((idx < 0) || (idx >= data.CellCount)) return ret;
-
-            if (data.IsCellData(idx) == false)
-            {
-                ret = new object[1];
-
-                ret[0] = new int[2] { 0, 0 };
-                return ret;
-            }
-            int[] c = data.GetCellData(idx);
-
-            //とりあえず2次元配列に
-            List<List<int>> ary = new List<List<int>>();
-            for ( int i=0; i<c.Length; i++)
-            {
-                List<int> a = new List<int>();
-                a.Add(i);
-                a.Add(data.GetCellData(idx, i));
-                ary.Add(a);
-            }
-            //同じ値を消す
-            for(int i = ary.Count-1; i >= 1; i--)
-            {
-                if (ary[i][1]== ary[i - 1][1]){
-                    ary.RemoveAt(i);
-                }
-            }
-            ret = new object[ary.Count];
-            for ( int i=0; i< ary.Count;i++)
-            {
-                ret[i] = new int[2] { ary[i][0], ary[i][1] };
-            }
-            return ret;
-        }
-        //------------------------------------------------------------------------------------------
-        private object[] GetLayeDataAll()
-        {
-            var ret = new object[0];
-            if ((data == null) || (data.FrameCount <= 0)) return ret;
-            ret = new object[data.CellCount];
-            for ( int i=0; i<data.CellCount;i++)
-            {
-                ret[i] = GetLayeData(i);
-            }
-            return ret;
-        }
-        //------------------------------------------------------------------------------------------
-        public bool SaveToFile(string p)
-        {
-            bool ret = false;
-            try
-            {
-                if (File.Exists(p)) File.Delete(p);
-                File.WriteAllText(p, ToJson(), Encoding.GetEncoding("utf-8"));
-                ret = File.Exists(p);
-                if (ret)
-                {
-                    data.SheetName = Path.GetFileNameWithoutExtension(p);
-                    data.FileName = p;
-                }
-            }
-            catch
-            {
-                ret = false;
-            }
-            return ret;
-        }
-        //------------------------------------------------------------------------------------------
-        public bool LoadFromFile(string p)
-        {
-            bool ret = false;
-            try
-            {
-                if (File.Exists(p) == true)
-                {
-                    string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
-
-                    var json = DynamicJson.Parse(str);
-
-                    if (json.IsDefined(D_Header) == true) if (json[D_Header] != D_Header2) return ret;
-                    if (json.IsDefined(D_CellCount) == true) data.CellCount = (int)json[D_CellCount];
-                    if (json.IsDefined(D_FrameCount) == true) data.FrameCount = (int)json[D_FrameCount];
-
-                    data.SetSize(data.CellCount, data.FrameCount);
-
-                    if (json.IsDefined(D_PageSec) == true) data.PageSec = (TSPageSec)json[D_PageSec];
-                    if (json.IsDefined(D_FrameRate) == true) data.FrameRate = (TSFps)json[D_FrameRate];
-                    if (json.IsDefined(D_SheetName) == true) data.SheetName = json[D_SheetName];
-
-                    if (json.IsDefined(D_CREATE_USER) == true) data.CREATE_USER = json[D_CREATE_USER];
-                    if (json.IsDefined(D_UPDATE_USER) == true) data.UPDATE_USER = json[D_UPDATE_USER];
+			ardj.CREATE_USER = data.CREATE_USER;
+			ardj.UPDATE_USER = data.UPDATE_USER;
+			ardj.CREATE_TIME = data.CREATE_TIME;
+			ardj.UPDATE_TIME = data.UPDATE_TIME;
+			ardj.TITLE = data.TITLE;
+			ardj.SUB_TITLE = data.SUB_TITLE;
+			ardj.OPUS = data.OPUS;
+			ardj.SCECNE = data.SCECNE;
+			ardj.CUT = data.CUT;
+			ardj.CAMPANY_NAME = data.CAMPANY_NAME;
+			ardj.caption = data.GetCellCaption();
 
 
-                    if (json.IsDefined(D_CREATE_TIME) == true) data.CREATE_TIME = DateTime.Parse(json[D_CREATE_TIME]);
-                    if (json.IsDefined(D_UPDATE_TIME) == true) data.UPDATE_TIME = DateTime.Parse(json[D_UPDATE_TIME]);
+			int[][][] cc = new int[data.CellCount][][];
 
-                    if (json.IsDefined(D_TITLE) == true) data.TITLE = json[D_TITLE];
-                    if (json.IsDefined(D_SUB_TITLE) == true) data.SUB_TITLE = json[D_SUB_TITLE];
-                    if (json.IsDefined(D_OPUS) == true) data.OPUS = json[D_OPUS];
-                    if (json.IsDefined(D_SCECNE) == true) data.OPUS = json[D_SCECNE];
-                    if (json.IsDefined(D_CUT) == true) data.CUT = json[D_CUT];
-                    if (json.IsDefined(D_CAMPANY_NAME) == true) data.CAMPANY_NAME = json[D_CAMPANY_NAME];
+			for (int i = 0; i < data.CellCount; i++)
+			{
+				List<List<int>> a = data.CellLayerT(i);
+				cc[i] = new int[a.Count][];
+				for (int j = 0; j < a.Count; j++)
+				{
+					cc[i][j] = new int[2];
+					cc[i][j][0] = a[j][0];
+					cc[i][j][1] = a[j][1];
 
-                    if (json.IsDefined(D_Caption) == true)
-                    {
-                        var ary = json[D_Caption];
-                        data.SetCellCaption((string[])ary);
-                    }
+				}
+			}
+			ardj.cell = cc;
 
-                    if (json.IsDefined(D_Cells) == true)
-                    {
-                        int c = data.CellCount;
-                        int f = data.FrameCount;
-                        var cells = json[D_Cells];
-                        for ( int j=0; j<c;j++)
-                        {
-                            var cell = cells[j];
-                            for (int i = 0; i < f; i++)
-                            {
-                                data.SetCellData(j, i, (int)cell[i]);
-                            }
+			return JsonSerializer.Serialize(ardj);
 
-                        }
-                    }
-                }
 
-            }
-            catch
-            {
-                ret = false;
-            }
-            return ret;
-        }
-        //------------------------------------------------------------------------------------------
-    }
+		}
+		//------------------------------------------------------------------------------------------
+		public string ToJson_Layer(int idx)
+		{
+			Ardj_layer ardj = new Ardj_layer();
+			ardj.header = D_Header;
+			ardj.frameCount = data.FrameCount;
+			ardj.frameRate = (int)data.FrameRate;
+
+			int[][] cc = new int[data.FrameCount][];
+
+			List<List<int>> a = data.CellLayerT(idx);
+			cc = new int[a.Count][];
+			for (int j = 0; j < a.Count; j++)
+			{
+				cc[j] = new int[2];
+				cc[j][0] = a[j][0];
+				cc[j][1] = a[j][1];
+
+			}
+			ardj.cell = cc;
+
+			return JsonSerializer.Serialize(ardj);
+
+
+		}
+		//------------------------------------------------------------------------------------------
+		public bool SaveToFile(string p)
+		{
+			bool ret = false;
+			try
+			{
+				if (File.Exists(p)) File.Delete(p);
+				File.WriteAllText(p, ToJson(), Encoding.GetEncoding("utf-8"));
+				ret = File.Exists(p);
+				if (ret)
+				{
+					data.SheetName = Path.GetFileNameWithoutExtension(p);
+					data.FileName = p;
+				}
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		//------------------------------------------------------------------------------------------
+		public bool LayerSaveToFile(string p,int idx)
+		{
+			bool ret = false;
+			try
+			{
+				if (File.Exists(p)) File.Delete(p);
+				File.WriteAllText(p, ToJson_Layer(idx), Encoding.GetEncoding("utf-8"));
+				ret = File.Exists(p);
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		//------------------------------------------------------------------------------------------
+		public bool LoadFromFile(string p)
+		{
+			bool ret = false;
+			if (data == null) { return false; }
+			try
+			{
+				if (File.Exists(p) == true)
+				{
+					string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
+
+
+					Ardj ardj = JsonSerializer.Deserialize<Ardj>(str);
+
+					if (ardj.header != D_Header) return ret;
+					if (ardj.cellCount < 6) return ret;
+					if (ardj.frameCount < 6) return ret;
+					if (ardj.caption.Length != ardj.cellCount) return ret;
+					if (ardj.cell.Length != ardj.cellCount) return ret;
+
+					data.ClearDellData();
+
+					int c = ardj.cellCount;
+					int f = ardj.frameCount;
+					data.SetSize(c, f);
+					data.PageSec = (TSPageSec)ardj.pageSec;
+					data.FrameRate = (TSFps)ardj.frameRate;
+					data.SheetName = ardj.sheetName;
+
+					data.CREATE_USER = ardj.CREATE_USER;
+					data.UPDATE_USER = ardj.UPDATE_USER;
+					data.CREATE_TIME = ardj.CREATE_TIME;
+					data.UPDATE_TIME = ardj.UPDATE_TIME;
+					data.TITLE = ardj.TITLE;
+					data.SUB_TITLE = ardj.SUB_TITLE;
+					data.OPUS = ardj.OPUS;
+					data.SCECNE = ardj.SCECNE;
+					data.CUT = ardj.CUT;
+					data.CAMPANY_NAME = ardj.CAMPANY_NAME;
+
+					data.SetCellCaption(ardj.caption);
+
+					for (int i = 0; i < c; i++)
+					{
+						int[] ary = new int[f];
+						for (int j = 0; j < f; j++) ary[j] = -100;
+						int ll = ardj.cell[i].Length;
+						for (int j = 0; j < ll; j++)
+						{
+							ary[ardj.cell[i][j][0]] = ardj.cell[i][j][1];
+						}
+
+						if (ary[0] <= -100) ary[0] = 0;
+						for (int j = 1; j < f; j++)
+						{
+							if (ary[j] <= -100)
+							{
+								ary[j] = ary[j - 1];
+							}
+						}
+						data.SetCellLayer(i, ary);
+
+					}
+
+					ret = true;
+				}
+
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		//------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------
+		public bool LayerLoadFromFile(string p, int idx)
+		{
+			bool ret = false;
+			if (data == null) { return false; }
+			try
+			{
+				if (File.Exists(p) == true)
+				{
+					string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
+
+
+					Ardj_layer ardj = JsonSerializer.Deserialize<Ardj_layer>(str);
+
+					if (ardj.header != D_Header) return ret;
+					if (ardj.frameCount < 6) return ret;
+
+					int f = ardj.frameCount;
+
+
+					if (data.FrameCount < f)
+					{
+						data.SetSize(data.CellCount, f);
+					}
+
+					int[] ary = new int[f];
+					for (int j = 0; j < f; j++) ary[j] = -100;
+					int ll = ardj.cell.Length;
+					for (int j = 0; j < ll; j++)
+					{
+						ary[ardj.cell[j][0]] = ardj.cell[j][1];
+					}
+
+					if (ary[0] <= -100) ary[0] = 0;
+					for (int j = 1; j < f; j++)
+					{
+						if (ary[j] <= -100)
+						{
+							ary[j] = ary[j - 1];
+						}
+					}
+					data.SetCellLayer(idx, ary);
+
+
+					ret = true;
+				}
+
+			}
+			catch
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		//------------------------------------------------------------------------------------------   }
+	}
 }

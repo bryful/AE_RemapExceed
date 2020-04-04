@@ -8,6 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
+using System.Runtime.Remoting.Channels.Ipc;
+using System.Runtime.Remoting.Channels;
+using System.Runtime.Remoting;
+using AE_Remote;
 
 using Codeplex.Data;
 using BRY;
@@ -18,16 +22,16 @@ namespace AE_RemapExceed
     {
         NONE = 0,
         EXPORT,
-        IMPORT,
         EXPORT_LAYER,
         IMPORT_LAYER,
-        LOAD,
-        SAVE
+        LOAD
     }
     public partial class TSForm : Form
 	{
+		private AE_RemoteInfo m_msg;
 
-        public bool m_LayoutFlag = true;
+
+		public bool m_LayoutFlag = true;
         public PictureViewForm pvf = null;
         private NavBar m_NavBar = new NavBar();
         //-------------------------------------------------------------
@@ -41,7 +45,8 @@ namespace AE_RemapExceed
         //--------------------------------------------------------------------------------------
         public TSForm()
 		{
-            InitializeComponent();
+			m_NavBar.Form = this;
+			InitializeComponent();
 
 			this.Text = AE_RemapExceed.Properties.Resources.AppName;
             tsGrid1.TSForm = this;
@@ -61,124 +66,104 @@ namespace AE_RemapExceed
 			ShortCutPre();
 
            
-            NavBarSetup();
+
+			string[] cmds;
+			cmds = System.Environment.GetCommandLineArgs();
+			GetCommand(cmds);
+
+
+			IpcServerChannel servChannel = new IpcServerChannel("processtrancetest");
+			ChannelServices.RegisterChannel(servChannel, true);
+
+			// イベントを登録
+			m_msg = new AE_RemoteInfo();
+
+			m_msg.OnTrance += new AE_RemoteInfo.CallEventHandler(m_msg_OnTrance);
+			RemotingServices.Marshal(m_msg, "message", typeof(AE_RemoteInfo));
+
+
+			NavBarSetup();
+			this.Invalidate();
+        }
+		 void m_msg_OnTrance(AE_RemoteInfo.AE_RemoteInfoEventArg e)
+        {
+            string st = e.FileName;
+            switch((EXEC_MODE)e.Mode)
+            {
+                case EXEC_MODE.EXPORT:
+					tsGrid1.ExportJson(st);
+					break;
+				case EXEC_MODE.EXPORT_LAYER:
+					tsGrid1.ExportJsonLayer(st);
+					break;
+				case EXEC_MODE.IMPORT_LAYER:
+					tsGrid1.ImportLayerJson(st);
+					SetActive();
+					break;
+            }
  
-
-            string[] cmds;
-            cmds = System.Environment.GetCommandLineArgs();
-            GetCommand(cmds, String.Format("Constractor{0}",0));
-
-            this.Invalidate();
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-  
-        }
+			m_NavBar.LocSet();
+		}
         private void MainForm_Layout(object sender, LayoutEventArgs e)
         {
-
-        }
+			m_NavBar.LocSet();
+		}
         //-------------------------------------------------------------
         /// <summary>
         /// ダミー関数
         /// </summary>
         /// <param name="cmd"></param>
-        public void GetCommand(string[] cmd,string cp="")
+        public void GetCommand(string[] cmd)
         {
-            /*
-             *  /export <path> セルデータを指定されたパスに保存
-             *  
-             *  /import <path> セルデータを読み込む。
-             *  
-             *  /layer
-                */
-            EXEC_MODE mode = EXEC_MODE.NONE;
-            bool layer = false;
+				
             string filename = "";
 
             //引数の解析
-            if (cmd.Length > 1)
+            if (cmd.Length > 0)
             {
-                for(int i=1; i<cmd.Length;i++)
+                for(int i=0; i<cmd.Length;i++)
                 {
                     string s = cmd[i];
-                    if ((s[0]=='/')||(s[0] == '-')) //option
+                    s = s.Trim();
+                    if (s.Length >= 2)
                     {
-                        string s2 = s.Substring(1).ToLower();
-                        switch(s2)
+                        if ((s[0]=='"')&& (s[s.Length-1] == '"'))
                         {
-                            case "s":
-                            case "save":
-                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.SAVE;
-                                break;
-                            case "l":
-                            case "o":
-                            case "load":
-                            case "open":
-                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.LOAD;
-                                break;
-
-                            case "e":
-                            case "export":
-                            case "output":
-                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.EXPORT;
-                                break;
-                            case "i":
-                            case "import":
-                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.IMPORT;
-                                break;
-                            case "layer":
-                            case "cell":
-                                layer = true; ;
-                                break;
+                            s = s.Substring(1, s.Length - 2);
                         }
-
                     }
-                    else
+                    s = s.Trim();
+                    if (s != "")
                     {
-                        s = s.Trim();
-                        if (s.Length >= 2)
-                        {
-                            if ((s[0]=='"')&& (s[s.Length-1] == '"'))
-                            {
-                                s = s.Substring(1, s.Length - 2);
-                            }
-                        }
-                        s = s.Trim();
-                        if (s != "")
-                        {
-                            if (filename == "") filename = s;
-                        }
+						if (filename == "")
+						{
+							if (File.Exists(s) == true)
+							{
+								string e = Path.GetExtension(s).ToLower();
+								if ((e==".ard")|| (e == ".ardj") || (e == ".json"))
+								{
+									filename = s;
+									break;
+								}
 
+							}
+						}
                     }
-                }
-                if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.IMPORT) || (mode == EXEC_MODE.SAVE) || (mode == EXEC_MODE.LOAD))
-                {
-                    if (filename == "") mode = EXEC_MODE.NONE;
-                }
-                if ((filename != "")&& (mode == EXEC_MODE.NONE)) mode = EXEC_MODE.LOAD;
-                if (layer == true)
-                {
-                    if (mode == EXEC_MODE.EXPORT) mode = EXEC_MODE.EXPORT_LAYER;
-                    else if (mode == EXEC_MODE.IMPORT) mode = EXEC_MODE.IMPORT_LAYER;
+
                 }
             }
-
-            //実際の動作
-            switch(mode)
-            {
-                case EXEC_MODE.EXPORT:
-                    tsGrid1.SaveToJsonFile(filename);
-                    SetActive();
-                    break;
-                case EXEC_MODE.SAVE:
-                    tsGrid1.SaveToArdFile(filename);
-                    SetActive();
-                    break;
-            }
-        }
-        //--------------------------------------------------------------------------------------
-        public void SetActive()
+			if(filename!="")
+			{
+				tsGrid1.LoadFromFile(filename);
+				SetActive();
+			}
+		}
+		//--------------------------------------------------------------------------------------
+		public delegate void DelegateSetActive();
+		public void SetActiveSub()
         {
             this.BringToFront();
             if (this.TopMost == false)
@@ -188,8 +173,20 @@ namespace AE_RemapExceed
             }
 
         }
-        //--------------------------------------------------------------------------------------
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		public void SetActive()
+		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new DelegateSetActive(this.SetActive));
+				return;
+			}
+			else
+			{
+				SetActiveSub();
+			}
+		}
+		//--------------------------------------------------------------------------------------
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (tsGrid1.SaveFlag)
 			{

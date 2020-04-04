@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE_RemapExceed", "AE_RemapExceed\AE_RemapExceed.csproj", "{731C86AD-012F-475D-9AE4-DCAE8A665CC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallAE_Remap", "CallAE_Remap\CallAE_Remap.csproj", "{2F2157B2-A8FE-4681-8784-EAF984DFD898}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AE_RemapCall", "AE_RemapCall\AE_RemapCall.csproj", "{2F2157B2-A8FE-4681-8784-EAF984DFD898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
