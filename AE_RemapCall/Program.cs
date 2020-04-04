@@ -57,11 +57,6 @@ namespace AE_RemapExceed
 			//最初に起動しているか調べる
 			bool IsExecAE = (Process.GetProcessesByName("AE_RemapExceed").Length > 0);
 
-			if (IsExecAE == false)
-			{
-				Console.Write("errer AE_remap execute");
-				return;
-			}
 
 			if (args.Length > 0)
             {
@@ -109,7 +104,6 @@ namespace AE_RemapExceed
 			{
 				return;
 			}
-			
 
 
 			if (mode == EXEC_MODE.HELP)
@@ -140,6 +134,12 @@ namespace AE_RemapExceed
 			}
 			else
 			{
+				if (IsExecAE == false)
+				{
+					Console.Write("errer AE_remap execute");
+					return;
+				}
+
 				//プロセスで制御
 				AE_RemoteInfo m_msg = null;
 				

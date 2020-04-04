@@ -58,6 +58,47 @@ namespace AE_RemapExceed
 		//
 		public string ToJson()
 		{
+			dynamic ardj = new DynamicJson();
+			ardj.header = D_Header;
+			ardj.cellCount = data.CellCount;
+			ardj.frameCount = data.FrameCount;
+			ardj.pageSec = (int)data.PageSec;
+			ardj.frameRate = (int)data.FrameRate;
+			ardj.sheetName = data.SheetName;
+
+			ardj.CREATE_USER = data.CREATE_USER;
+			ardj.UPDATE_USER = data.UPDATE_USER;
+			ardj.CREATE_TIME = data.CREATE_TIME;
+			ardj.UPDATE_TIME = data.UPDATE_TIME;
+			ardj.TITLE = data.TITLE;
+			ardj.SUB_TITLE = data.SUB_TITLE;
+			ardj.OPUS = data.OPUS;
+			ardj.SCECNE = data.SCECNE;
+			ardj.CUT = data.CUT;
+			ardj.CAMPANY_NAME = data.CAMPANY_NAME;
+			ardj.caption = data.GetCellCaption();
+
+			int[][][] cc = new int[data.CellCount][][];
+
+			for (int i = 0; i < data.CellCount; i++)
+			{
+				List<List<int>> a = data.CellLayerT(i);
+				cc[i] = new int[a.Count][];
+				for (int j = 0; j < a.Count; j++)
+				{
+					cc[i][j] = new int[2];
+					cc[i][j][0] = a[j][0];
+					cc[i][j][1] = a[j][1];
+
+				}
+			}
+			ardj.cell = cc;
+			//return DynamicJson.Serialize(ardj);
+			return ardj.ToString();
+
+		}
+		public string ToJson2()
+		{
 			Ardj ardj = new Ardj();
 			ardj.header = D_Header;
 			ardj.cellCount = data.CellCount;
@@ -101,6 +142,30 @@ namespace AE_RemapExceed
 		}
 		//------------------------------------------------------------------------------------------
 		public string ToJson_Layer(int idx)
+		{
+			dynamic ardj = new DynamicJson();
+			ardj.header = D_Header;
+			ardj.frameCount = data.FrameCount;
+			ardj.frameRate = (int)data.FrameRate;
+
+			int[][] cc = new int[data.FrameCount][];
+
+			List<List<int>> a = data.CellLayerT(idx);
+			cc = new int[a.Count][];
+			for (int j = 0; j < a.Count; j++)
+			{
+				cc[j] = new int[2];
+				cc[j][0] = a[j][0];
+				cc[j][1] = a[j][1];
+
+			}
+			ardj.cell = cc;
+
+			return ardj.ToSting();
+
+
+		}       //------------------------------------------------------------------------------------------
+		public string ToJson_Layer2(int idx)
 		{
 			Ardj_layer ardj = new Ardj_layer();
 			ardj.header = D_Header;
