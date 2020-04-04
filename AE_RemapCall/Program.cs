@@ -23,8 +23,8 @@ namespace AE_RemapExceed
 			EXPORT,
 			EXPORT_LAYER,
 			IMPORT_LAYER,
-			LOAD,
 			EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
+			CALL,
 			HELP            //実装していない
 		}
         //Path文字をJavScript形式へ
@@ -76,7 +76,10 @@ namespace AE_RemapExceed
                             case "EXENOW":
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.EXENOW;
                                 break;
-                            case "EXPORT":
+							case "CALL":
+								if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.CALL;
+								break;
+							case "EXPORT":
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.EXPORT;
                                 break;
                             case "EXPORT_LAYER":
@@ -118,8 +121,25 @@ namespace AE_RemapExceed
                 Console.Write(String.Format("{0}", IsExecAE).ToLower());
                 return;
             }
-            else
-            {
+			else if (mode == EXEC_MODE.CALL)
+			{
+				if (IsExecAE == false)
+				{
+					string p = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "AE_RemapExceed.exe");
+					if (File.Exists(p) == false)
+					{
+						Console.Write("errer no AE_RemapExceed.exe");
+						return;
+					}
+					else
+					{
+						Process.Start(p);
+					}
+				}
+				return;
+			}
+			else
+			{
 				//プロセスで制御
 				AE_RemoteInfo m_msg = null;
 				
