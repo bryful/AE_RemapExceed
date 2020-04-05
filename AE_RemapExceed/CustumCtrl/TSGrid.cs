@@ -1243,13 +1243,13 @@ namespace AE_RemapExceed
 		 */
         //****************************************************************************************
         //----------------------------------------------------------------------------------------
-        public bool SaveToJsonFile(string path)
+        public bool SaveToJsonFile(string path,bool IsName = true)
         {
             TSJson sv = new TSJson(tsd);
-            if (sv.SaveToFile(path) == true)
+            if (sv.SaveToFile(path,true) == true)
             {
                 m_SaveFlag = false;
-                OnFileLoaded(new EventArgs());
+				if(IsName) OnFileLoaded(new EventArgs());
                 return true;
             }
             else
@@ -1261,7 +1261,7 @@ namespace AE_RemapExceed
 		public bool ExportJson(string path)
 		{
 			TSJson sv = new TSJson(tsd);
-			if (sv.SaveToFile(path) == true)
+			if (sv.SaveToFile(path,false) == true)
 			{
 				m_SaveFlag = false;
 				return true;
@@ -1285,13 +1285,13 @@ namespace AE_RemapExceed
 			}
 		}
 		//----------------------------------------------------------------------------------------
-		public bool SaveToArdFile(string path)
+		public bool SaveToArdFile(string path, bool IsName = true)
 		{
             TSSaveFile sv = new TSSaveFile(tsd);
 			if (sv.SaveToFile(path) == true)
 			{
                 m_SaveFlag = false;
-				OnFileLoaded(new EventArgs());
+				if (IsName) OnFileLoaded(new EventArgs());
 				return true;
 			}
 			else
@@ -1439,7 +1439,7 @@ namespace AE_RemapExceed
 			sv.SaveToClipboard();
 		}
 		//----------------------------------------------------------------------------------------
-		public bool LoadFromFile(string path)
+		public bool LoadFromFile(string path, bool IsName = true)
 		{
 			bool ret = false;
 
@@ -1448,28 +1448,28 @@ namespace AE_RemapExceed
 
 			if (isJson)
 			{
-				ret = LoadFromJsonFile(path);
+				ret = LoadFromJsonFile(path,IsName);
 			}
 			else
 			{
-				ret = LoadFromArdFile(path);
+				ret = LoadFromArdFile(path, IsName);
 			}
 
 
 			return ret;
 		}
 		//----------------------------------------------------------------------------------------
-		public bool LoadFromArdFile(string path)
+		public bool LoadFromArdFile(string path, bool IsName = true)
 		{
 			TSSaveFile sv = new TSSaveFile(tsd);
 			int w = tsd.widthMax;
 			if (sv.LoadFromFile(path))
 			{
-				tsd.FileName = path;
+				if(IsName)tsd.FileName = path;
 				m_SaveFlag = false;
 				if (w != tsd.widthMax) { base.OnSizeChanged(new EventArgs()); }
-				OnFileLoaded(new EventArgs());
-                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(FileName);
+				if (IsName) OnFileLoaded(new EventArgs());
+				if (IsName) tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(FileName);
 				Sync();
 				return true;
 			}
@@ -1479,17 +1479,17 @@ namespace AE_RemapExceed
 			}
 		}
         //----------------------------------------------------------------------------------------
-        public bool LoadFromJsonFile(string path)
+        public bool LoadFromJsonFile(string path, bool IsName = true)
         {
             TSJson sv = new TSJson(tsd);
             int w = tsd.widthMax;
             if (sv.LoadFromFile(path))
             {
-                tsd.FileName = path;
+				if (IsName) tsd.FileName = path;
                 m_SaveFlag = false;
                 if (w != tsd.widthMax) { base.OnSizeChanged(new EventArgs()); }
-                OnFileLoaded(new EventArgs());
-                tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(FileName);
+				if (IsName) OnFileLoaded(new EventArgs());
+				if (IsName) tsd.SheetName = System.IO.Path.GetFileNameWithoutExtension(FileName);
                 Sync();
                 return true;
             }

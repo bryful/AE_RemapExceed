@@ -102,7 +102,7 @@ namespace AE_RemapExceed
 		//****************************************************************************
 		//****************************************************************************
 		//-------------------------------------------------------------------
-		public bool SaveToFile(string path)
+		public bool SaveToFile(string path, bool IsName = true)
 		{
 
 			if (Directory.Exists(Path.GetDirectoryName(path)) == false)
@@ -119,8 +119,11 @@ namespace AE_RemapExceed
 					{
 						sw.WriteLine(s);
 					}
-                    data.SheetName = Path.GetFileNameWithoutExtension(path);
-                    data.FileName = path;
+					if (IsName)
+					{
+						data.SheetName = Path.GetFileNameWithoutExtension(path);
+						data.FileName = path;
+					}
                     return true;
 				}
 				else

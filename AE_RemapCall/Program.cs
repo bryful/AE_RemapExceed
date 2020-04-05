@@ -23,12 +23,14 @@ namespace AE_RemapExceed
 			EXPORT,
 			EXPORT_LAYER,
 			IMPORT_LAYER,
-			EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
+			LOAD,
+			ACTIVE,
 			CALL,
+			EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
 			HELP            //実装していない
 		}
-        //Path文字をJavScript形式へ
-        static string ToJSP(string p)
+		//Path文字をJavScript形式へ
+		static string ToJSP(string p)
         {
             p = p.Replace('\\', '/');
             if (p.Length > 2)
@@ -73,6 +75,9 @@ namespace AE_RemapExceed
                                 break;
 							case "CALL":
 								if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.CALL;
+								break;
+							case "ACTIVE":
+								if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.ACTIVE;
 								break;
 							case "EXPORT":
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.EXPORT;
@@ -148,6 +153,7 @@ namespace AE_RemapExceed
 				m_msg = (AE_RemoteInfo)Activator.GetObject(typeof(AE_RemoteInfo), "ipc://processtrancetest/message");
 
 
+
 				if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.EXPORT_LAYER))
                 {
                     //予め書き出すファイルがあったら消しておく
@@ -166,7 +172,10 @@ namespace AE_RemapExceed
                 //オプションを選ぶ
                 switch (mode)
                 {
-                    case EXEC_MODE.EXPORT:
+					case EXEC_MODE.ACTIVE:
+						m_msg.DataTrance((int)mode, filename);
+						break;
+					case EXEC_MODE.EXPORT:
 						m_msg.DataTrance((int)mode, filename); 
                         break;
                     case EXEC_MODE.EXPORT_LAYER:

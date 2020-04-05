@@ -8,14 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
+using BRY;
+
 namespace AE_RemapExceed
 {
     public partial class PictureViewForm : Form
     {
-		private const string Header = "PicturePreview";
-		private const string UserFolderName = "Prefs";
-		private const string m_PrefFileName = "PicturePreview.pref";
-		public string m_UserPath = "";
 
 		private TSForm mf;
 		private PictureFileList m_Plist = new PictureFileList();
@@ -24,140 +22,29 @@ namespace AE_RemapExceed
 		private Size orgSize = new Size(0, 0);
 		private pv_Mode pv_now = pv_Mode.view;
 		//********************************************************************
-		private void PrefPath()
-		{
-			m_UserPath = "";
-			string s = Path.GetDirectoryName(Application.ExecutablePath);
-			string up = Path.Combine(s, UserFolderName);
-			if (Directory.Exists(up) == false)
-			{
-				try
-				{
-					Directory.CreateDirectory(up);
-				}
-				catch
-				{
-					return ;
-				}
-			}
-			m_UserPath = Path.Combine(up, Environment.UserName);
-			if (Directory.Exists(m_UserPath) == false)
-			{
-				try
-				{
-					Directory.CreateDirectory(m_UserPath);
-				}
-				catch
-				{
-					return;
-				}
-			}
-			
-		}
-		//********************************************************************
 		public void SavePref()
 		{
-			PrefPath();
-			string p = Path.Combine(m_UserPath, m_PrefFileName);
-			string s = "";
-			s += Header +"\n";
-			s += "Width = " + this.Width.ToString()+"\n";
-			s += "Height = " + this.Height.ToString() + "\n";
-			s += "Left = " + this.Left.ToString() + "\n";
-			s += "Top = " + this.Top.ToString() + "\n";
-			s += "pv_now = "  + ((int)pv_now).ToString() + "\n";
-			try
-			{
-				File.WriteAllText(p, s, Encoding.GetEncoding("utf-8"));
-				return;
-			}
-			catch
-			{
-				return;
-			}
+			JsonPref pref = new JsonPref("pf");
+
+			pref.SetSize("Size", this.Size);
+			pref.SetPoint("Point", this.Location);
+			pref.SetInt("pv_now", (int)pv_now);
+
+			pref.Save();
 		}
 		//********************************************************************
 		public void LoadPref()
 		{
-			PrefPath();
-			string p = Path.Combine(m_UserPath, m_PrefFileName);
-			int w = -1;
-			int h = -1;
-			int t = -99999;
-			int l = -99999;
-			int m = -1;
-			try
-			{
-				if (File.Exists(p) == true)
-				{
-					string[] lines = File.ReadAllLines(p, Encoding.GetEncoding("utf-8"));
-					if (lines[0].Trim() == Header)
-					{
+			JsonPref pref = new JsonPref("pf");
 
-						foreach (string s in lines)
-						{
-							if (s != "")
-							{
-								int v = -99999;
-								string[] line = s.Split('=');
-								if (line.Length >= 2)
-								{
-									if (string.Compare(line[0].Trim(), "Width") == 0)
-									{
-										if (int.TryParse(line[1].Trim(), out v)) w = v;
-									}
-									else if (string.Compare(line[0].Trim(), "Height") == 0)
-									{
-										if (int.TryParse(line[1].Trim(), out v)) h = v;
-									}
-									else if (string.Compare(line[0].Trim(), "Left") == 0)
-									{
-										if (int.TryParse(line[1].Trim(), out v)) l = v;
-									}
-									else if (string.Compare(line[0].Trim(), "Top") == 0)
-									{
-										if (int.TryParse(line[1].Trim(), out v)) t = v;
-									}
-									else if (string.Compare(line[0].Trim(), "pv_now") == 0)
-									{
-										if (int.TryParse(line[1].Trim(), out v)) m = v;
-									}
-								}
-							}
-						}
+			bool ok = false;
+			Point p = pref.GetPoint("Point", out ok);
+			if (ok) this.Location = p;
+			Size sz = pref.GetSize("Size", out ok);
+			if (ok) this.Size = sz;
+			int pn = pref.GetInt("pv_now",out ok);
+			if (ok) pv_now = (pv_Mode)pn;
 
-					}
-				}
-				if ((w > 0) && (h > 0))
-				{
-					this.Width = w;
-					this.Height = h;
-				}
-				if ((t != -99999) && (l != -99999))
-				{
-					this.Top = t;
-					this.Left = l;
-				}
-				else
-				{
-					this.Top = this.Owner.Top + 25;
-					this.Left = this.Owner.Left + this.Owner.Width + 4;
-
-				}
-				if ((m >= 0) && (m < (int)pv_Mode.Count))
-				{
-					pv_now = (pv_Mode)m;
-				}
-				else
-				{
-					pv_now = pv_Mode.view;
-				}
-
-			}
-			catch
-			{
-				return;
-			}
 		}
 		//********************************************************************
 		public PictureViewForm(TSForm f)

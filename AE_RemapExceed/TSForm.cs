@@ -20,13 +20,17 @@ namespace AE_RemapExceed
 {
     public enum EXEC_MODE
     {
-        NONE = 0,
-        EXPORT,
-        EXPORT_LAYER,
-        IMPORT_LAYER,
-        LOAD
-    }
-    public partial class TSForm : Form
+		NONE = 0,
+		EXPORT,
+		EXPORT_LAYER,
+		IMPORT_LAYER,
+		LOAD,
+		ACTIVE,
+		CALL,
+		EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
+		HELP            //実装していない
+	}
+	public partial class TSForm : Form
 	{
 		private AE_RemoteInfo m_msg;
 
@@ -53,11 +57,6 @@ namespace AE_RemapExceed
 			this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.m_MouseWheel);
 
 			
-			if (PrefLoad()==false)
-			{
-				this.Left = 100;
-				this.Top = 100;
-			}
             tsGrid1.GetStatus();
 
             SetFrameDisp(tsGrid1.tsd.FrameDisp);
@@ -65,7 +64,15 @@ namespace AE_RemapExceed
 			toolStripStatusLabel1.Text = tsGrid1.SelInfo;
 			ShortCutPre();
 
-           
+
+
+			if (PrefLoad() == false)
+			{
+				this.Left = 100;
+				this.Top = 100;
+			}
+
+			BackLoad();
 
 			string[] cmds;
 			cmds = System.Environment.GetCommandLineArgs();
@@ -91,18 +98,23 @@ namespace AE_RemapExceed
             switch((EXEC_MODE)e.Mode)
             {
                 case EXEC_MODE.EXPORT:
+					if (tsGrid1.tsd.SheetName == "") NameDialogShow();
 					tsGrid1.ExportJson(st);
 					break;
 				case EXEC_MODE.EXPORT_LAYER:
+					if (tsGrid1.tsd.SheetName == "") NameDialogShow();
 					tsGrid1.ExportJsonLayer(st);
 					break;
 				case EXEC_MODE.IMPORT_LAYER:
 					tsGrid1.ImportLayerJson(st);
 					SetActive();
 					break;
-            }
- 
-        }
+				case EXEC_MODE.ACTIVE:
+					SetActive();
+					break;
+			}
+
+		}
         private void MainForm_Load(object sender, EventArgs e)
         {
 			m_NavBar.LocSet();
@@ -186,6 +198,38 @@ namespace AE_RemapExceed
 			}
 		}
 		//--------------------------------------------------------------------------------------
+		public delegate void DelegateNameDialogShow();
+		public void NameDialogShowSub()
+		{
+			NameDialg dlg = new NameDialg();
+			try
+			{
+				dlg.SheetName = tsGrid1.tsd.SheetName;
+
+				if( dlg.ShowDialog()==DialogResult.OK)
+				{
+					tsGrid1.tsd.SheetName = dlg.SheetName;
+				}
+			}
+			finally
+			{
+				dlg.Dispose();
+			}
+
+		}
+		public void NameDialogShow()
+		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new DelegateNameDialogShow(this.NameDialogShowSub));
+				return;
+			}
+			else
+			{
+				NameDialogShowSub();
+			}
+		}
+		//--------------------------------------------------------------------------------------
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (tsGrid1.SaveFlag)
@@ -208,6 +252,7 @@ namespace AE_RemapExceed
 		//--------------------------------------------------------------------------------------
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			BackSave();
             PrefSave();
 
         }
@@ -231,8 +276,21 @@ namespace AE_RemapExceed
             pref.Save();
 
         }
-        //--------------------------------------------------------------------------------------
-        public bool PrefLoad()
+		//--------------------------------------------------------------------------------------
+		public void BackSave()
+		{
+			string p = Path.Combine(Application.UserAppDataPath, "backup.json");
+			tsGrid1.SaveToJsonFile(p, false);
+		}
+		public void BackLoad()
+		{
+			string p = Path.Combine(Application.UserAppDataPath, "backup.json");
+			tsGrid1.LoadFromJsonFile(p, false);
+		}
+
+
+		//--------------------------------------------------------------------------------------
+		public bool PrefLoad()
         {
             bool ret = false;
             //設定ファイルの保存

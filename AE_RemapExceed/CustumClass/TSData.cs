@@ -39,7 +39,7 @@ namespace AE_RemapExceed
 		public bool[] IsPrintSheetInfo = new bool[(int)SheetInfo.Count];
         public bool IsPrintComment = true;
 
-        public string SheetName = "untitled_sheet";
+        public string SheetName = "";
         public string FileName = "";
 
         //-------------------------------

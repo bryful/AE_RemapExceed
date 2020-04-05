@@ -122,7 +122,7 @@ namespace AE_RemapExceed
 		}       //------------------------------------------------------------------------------------------
 		
 		//------------------------------------------------------------------------------------------
-		public bool SaveToFile(string p)
+		public bool SaveToFile(string p,bool IsFlag = true)
 		{
 			bool ret = false;
 			try
@@ -130,7 +130,7 @@ namespace AE_RemapExceed
 				if (File.Exists(p)) File.Delete(p);
 				File.WriteAllText(p, ToJson(), Encoding.GetEncoding("utf-8"));
 				ret = File.Exists(p);
-				if (ret)
+				if ((ret)&&(IsFlag))
 				{
 					data.SheetName = Path.GetFileNameWithoutExtension(p);
 					data.FileName = p;
