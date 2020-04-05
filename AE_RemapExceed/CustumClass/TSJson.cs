@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
 using System.IO;
 
 using Codeplex.Data;
@@ -97,49 +94,7 @@ namespace AE_RemapExceed
 			return ardj.ToString();
 
 		}
-		public string ToJson2()
-		{
-			Ardj ardj = new Ardj();
-			ardj.header = D_Header;
-			ardj.cellCount = data.CellCount;
-			ardj.frameCount = data.FrameCount;
-			ardj.pageSec = (int)data.PageSec;
-			ardj.frameRate = (int)data.FrameRate;
-			ardj.sheetName = data.SheetName;
 
-			ardj.CREATE_USER = data.CREATE_USER;
-			ardj.UPDATE_USER = data.UPDATE_USER;
-			ardj.CREATE_TIME = data.CREATE_TIME;
-			ardj.UPDATE_TIME = data.UPDATE_TIME;
-			ardj.TITLE = data.TITLE;
-			ardj.SUB_TITLE = data.SUB_TITLE;
-			ardj.OPUS = data.OPUS;
-			ardj.SCECNE = data.SCECNE;
-			ardj.CUT = data.CUT;
-			ardj.CAMPANY_NAME = data.CAMPANY_NAME;
-			ardj.caption = data.GetCellCaption();
-
-
-			int[][][] cc = new int[data.CellCount][][];
-
-			for (int i = 0; i < data.CellCount; i++)
-			{
-				List<List<int>> a = data.CellLayerT(i);
-				cc[i] = new int[a.Count][];
-				for (int j = 0; j < a.Count; j++)
-				{
-					cc[i][j] = new int[2];
-					cc[i][j][0] = a[j][0];
-					cc[i][j][1] = a[j][1];
-
-				}
-			}
-			ardj.cell = cc;
-
-			return JsonSerializer.Serialize(ardj);
-
-
-		}
 		//------------------------------------------------------------------------------------------
 		public string ToJson_Layer(int idx)
 		{
@@ -165,30 +120,7 @@ namespace AE_RemapExceed
 
 
 		}       //------------------------------------------------------------------------------------------
-		public string ToJson_Layer2(int idx)
-		{
-			Ardj_layer ardj = new Ardj_layer();
-			ardj.header = D_Header;
-			ardj.frameCount = data.FrameCount;
-			ardj.frameRate = (int)data.FrameRate;
-
-			int[][] cc = new int[data.FrameCount][];
-
-			List<List<int>> a = data.CellLayerT(idx);
-			cc = new int[a.Count][];
-			for (int j = 0; j < a.Count; j++)
-			{
-				cc[j] = new int[2];
-				cc[j][0] = a[j][0];
-				cc[j][1] = a[j][1];
-
-			}
-			ardj.cell = cc;
-
-			return JsonSerializer.Serialize(ardj);
-
-
-		}
+		
 		//------------------------------------------------------------------------------------------
 		public bool SaveToFile(string p)
 		{
@@ -238,18 +170,23 @@ namespace AE_RemapExceed
 					string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
 
 
-					Ardj ardj = JsonSerializer.Deserialize<Ardj>(str);
+					dynamic ardj = DynamicJson.Parse(str);
 
 					if (ardj.header != D_Header) return ret;
 					if (ardj.cellCount < 6) return ret;
 					if (ardj.frameCount < 6) return ret;
-					if (ardj.caption.Length != ardj.cellCount) return ret;
-					if (ardj.cell.Length != ardj.cellCount) return ret;
+					int c = (int)ardj.cellCount;
+					int f = (int)ardj.frameCount;
+
+					string[] cap = (string[])ardj.caption;
+
+					double[][][] cell = (double[][][])ardj.cell;
+
+					if (cap.Length != c) return ret;
+					if (cell.Length != c) return ret;
 
 					data.ClearDellData();
 
-					int c = ardj.cellCount;
-					int f = ardj.frameCount;
 					data.SetSize(c, f);
 					data.PageSec = (TSPageSec)ardj.pageSec;
 					data.FrameRate = (TSFps)ardj.frameRate;
@@ -257,8 +194,8 @@ namespace AE_RemapExceed
 
 					data.CREATE_USER = ardj.CREATE_USER;
 					data.UPDATE_USER = ardj.UPDATE_USER;
-					data.CREATE_TIME = ardj.CREATE_TIME;
-					data.UPDATE_TIME = ardj.UPDATE_TIME;
+					data.CREATE_TIME = DateTime.Parse( ardj.CREATE_TIME);
+					data.UPDATE_TIME = DateTime.Parse( ardj.UPDATE_TIME);
 					data.TITLE = ardj.TITLE;
 					data.SUB_TITLE = ardj.SUB_TITLE;
 					data.OPUS = ardj.OPUS;
@@ -266,16 +203,17 @@ namespace AE_RemapExceed
 					data.CUT = ardj.CUT;
 					data.CAMPANY_NAME = ardj.CAMPANY_NAME;
 
-					data.SetCellCaption(ardj.caption);
+					data.SetCellCaption(cap);
 
-					for (int i = 0; i < c; i++)
+					
+					for (int i = 0; i < cell.Length; i++)
 					{
 						int[] ary = new int[f];
 						for (int j = 0; j < f; j++) ary[j] = -100;
-						int ll = ardj.cell[i].Length;
+						int ll = cell[i].Length;
 						for (int j = 0; j < ll; j++)
 						{
-							ary[ardj.cell[i][j][0]] = ardj.cell[i][j][1];
+							ary[(int)cell[i][j][0]] =(int)cell[i][j][1];
 						}
 
 						if (ary[0] <= -100) ary[0] = 0;
@@ -287,7 +225,6 @@ namespace AE_RemapExceed
 							}
 						}
 						data.SetCellLayer(i, ary);
-
 					}
 
 					ret = true;
@@ -300,6 +237,7 @@ namespace AE_RemapExceed
 			}
 			return ret;
 		}
+
 		//------------------------------------------------------------------------------------------
 		//------------------------------------------------------------------------------------------
 		public bool LayerLoadFromFile(string p, int idx)
@@ -313,13 +251,15 @@ namespace AE_RemapExceed
 					string str = File.ReadAllText(p, Encoding.GetEncoding("utf-8"));
 
 
-					Ardj_layer ardj = JsonSerializer.Deserialize<Ardj_layer>(str);
+					dynamic ardj = DynamicJson.Parse(str);
 
 					if (ardj.header != D_Header) return ret;
-					if (ardj.frameCount < 6) return ret;
 
-					int f = ardj.frameCount;
+					double[][] cell = (double[][])ardj.cell;
 
+					int f = (int)ardj.frameCount;
+
+					if (f < 6) return ret;
 
 					if (data.FrameCount < f)
 					{
@@ -328,10 +268,11 @@ namespace AE_RemapExceed
 
 					int[] ary = new int[f];
 					for (int j = 0; j < f; j++) ary[j] = -100;
-					int ll = ardj.cell.Length;
+
+					int ll = cell.Length;
 					for (int j = 0; j < ll; j++)
 					{
-						ary[ardj.cell[j][0]] = ardj.cell[j][1];
+						ary[(int)cell[j][0]] = (int)cell[j][1];
 					}
 
 					if (ary[0] <= -100) ary[0] = 0;
@@ -354,7 +295,8 @@ namespace AE_RemapExceed
 				ret = false;
 			}
 			return ret;
-		}
+		}//------------------------------------------------------------------------------------------
+		
 		//------------------------------------------------------------------------------------------   }
 	}
 }
