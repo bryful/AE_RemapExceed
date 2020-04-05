@@ -2,7 +2,9 @@
 For After Effects Timeremap support  
 アニメ撮影でコマ打ちを行うアプリです。昔作ったやつですが、Windows10とCC2020の組み合わせでで動かなくなってしまったので、作り直しています。  
  
-今はとりあえず対応させただけなものです。   
+今はとりあえず最低限の事を実装した段階です。  
+ベータ版の１となります。   
+[AE_RemapExceed_b01.zip](https://bit.ly/3bT6vxX)  
 
 # Usage
 * スクリプトのインストール  
