@@ -606,7 +606,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 
             applySub(lyrs[i],times,values,emptys,emptyTimes);
             lyrs[i].inPoint = 0;
-            lyrs[i].outPoint = ddu;
+            lyrs[i].outPoint = duration;
         }
         app.endUndoGroup();
     }
