@@ -79,25 +79,25 @@ namespace AE_RemapExceed
 			funcs.setNumFunc(ValueAdd);
 			funcs.setSelMoveFunc(SelMoveFunc);
 
-			funcs.setFunc(funcCmd.New, SheetSetting);
-			funcs.setFunc(funcCmd.Open, Load);
-			funcs.setFunc(funcCmd.Save, Save);
-			funcs.setFunc(funcCmd.SaveAs, SaveAs);
-            funcs.setFunc(funcCmd.Quit, Quit);
+			/*00*/funcs.setFunc(funcCmd.New, SheetSetting);
+			/*01*/funcs.setFunc(funcCmd.Open, Load);
+			/*02*/funcs.setFunc(funcCmd.Save, Save);
+			/*03*/funcs.setFunc(funcCmd.SaveAs, SaveAs);
+            /*04*/funcs.setFunc(funcCmd.Quit, Quit);
 
-			funcs.setFunc(funcCmd.Copy, Copy);
-			funcs.setFunc(funcCmd.Cut, Cut);
-			funcs.setFunc(funcCmd.Paste, Paste);
-			funcs.setFunc(funcCmd.ColorSetting, ColorSetting);
-			funcs.setFunc(funcCmd.LayoutSetting, LayoutSetting);
-			funcs.setFunc(funcCmd.KeySetting, KeySetting);
+			/*05*/funcs.setFunc(funcCmd.Copy, Copy);
+			/*06*/funcs.setFunc(funcCmd.Cut, Cut);
+			/*07*/funcs.setFunc(funcCmd.Paste, Paste);
+			/*08*/funcs.setFunc(funcCmd.ColorSetting, ColorSetting);
+			/*09*/funcs.setFunc(funcCmd.LayoutSetting, LayoutSetting);
+			/*10*/funcs.setFunc(funcCmd.KeySetting, KeySetting);
 
-			funcs.setFunc(funcCmd.ValueInput, ValueEnter);
-			funcs.setFunc(funcCmd.ValueAutoInc, ValueAutoInc);
-			funcs.setFunc(funcCmd.ValueAutoDec, ValueAutoDec);
-			funcs.setFunc(funcCmd.ValueAutoSame, ValueAutoSame);
-			funcs.setFunc(funcCmd.ValueBack, ValueBackSpace);
-			funcs.setFunc(funcCmd.ValueDelete, ValueDelete);
+			/*11*/funcs.setFunc(funcCmd.ValueInput, ValueEnter);
+			/*12*/funcs.setFunc(funcCmd.ValueAutoInc, ValueAutoInc);
+			/*13*/funcs.setFunc(funcCmd.ValueAutoDec, ValueAutoDec);
+			/*14*/funcs.setFunc(funcCmd.ValueAutoSame, ValueAutoSame);
+			/*15*/funcs.setFunc(funcCmd.ValueBack, ValueBackSpace);
+			/*16*/funcs.setFunc(funcCmd.ValueDelete, ValueDelete);
 
 			funcs.setFunc(funcCmd.SelectionALL, SelectedAll);
 			funcs.setFunc(funcCmd.SelectionToEND, SelectedToEND);
@@ -122,8 +122,6 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.FrameInsert, FrameInsert);
 			funcs.setFunc(funcCmd.FrameDelete, FrameDelete);
 			funcs.setFunc(funcCmd.AutoInput, AutoInput);
-
-
             funcs.setFunc(funcCmd.ValueEdit, ValueEdit);
 
             funcs.setFunc(funcCmd.Selecton1, Selected1);

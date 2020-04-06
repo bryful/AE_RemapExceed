@@ -302,26 +302,26 @@
             this.LayerRename});
 			this.cmLayer.Name = "cmLayer";
 			this.cmLayer.OwnerItem = this.LayerMenu;
-			this.cmLayer.Size = new System.Drawing.Size(181, 92);
+			this.cmLayer.Size = new System.Drawing.Size(145, 70);
 			// 
 			// layerInsert
 			// 
 			this.layerInsert.Name = "layerInsert";
-			this.layerInsert.Size = new System.Drawing.Size(180, 22);
+			this.layerInsert.Size = new System.Drawing.Size(144, 22);
 			this.layerInsert.Text = "LayerInsert";
 			this.layerInsert.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// layerRemove
 			// 
 			this.layerRemove.Name = "layerRemove";
-			this.layerRemove.Size = new System.Drawing.Size(180, 22);
+			this.layerRemove.Size = new System.Drawing.Size(144, 22);
 			this.layerRemove.Text = "LayerRemove";
 			this.layerRemove.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// LayerRename
 			// 
 			this.LayerRename.Name = "LayerRename";
-			this.LayerRename.Size = new System.Drawing.Size(180, 22);
+			this.LayerRename.Size = new System.Drawing.Size(144, 22);
 			this.LayerRename.Text = "LayerRename";
 			this.LayerRename.Click += new System.EventHandler(this.menu_Click);
 			// 
@@ -342,6 +342,7 @@
             this.autoInput,
             this.valueEdit});
 			this.cmFrame.Name = "contextMenuStrip1";
+			this.cmFrame.OwnerItem = this.FrameMenu;
 			this.cmFrame.Size = new System.Drawing.Size(139, 120);
 			// 
 			// FrameDisp
@@ -507,7 +508,7 @@
 			this.tsGrid1.TSCellCaption = this.tsCellCaption1;
 			this.tsGrid1.TSForm = null;
 			this.tsGrid1.TSFrame = this.tsFrame1;
-			this.tsGrid1.TSInput = null;
+			this.tsGrid1.TSInput = this.tsInput1;
 			this.tsGrid1.TSNav = this.tsNav1;
 			this.tsGrid1.SelectionChanged += new System.EventHandler(this.tsGrid1_SelectionChanged);
 			this.tsGrid1.KeyBindChanged += new System.EventHandler(this.tsGrid1_KeyBindChanged);
