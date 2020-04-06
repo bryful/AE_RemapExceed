@@ -197,12 +197,51 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
          return ret;
     }
     //-------------------------------------------------------------------------
+    var fontSet = function(prop,str)
+    {
+        var td = prop.value;
+        td.resetCharStyle(); 
+        td.fontSize = 30;
+        td.fillColor = [1, 1, 1];
+        td.font = "System"; 
+        //if ((str!=undefined)||(str!=null)&&(str!="")) td.text = str;
+        prop.setValue(td);
+    }
+     //-------------------------------------------------------------------------
+    var newTD = function(str)
+    {
+        var td = new TextDocument(str);
+        td.resetCharStyle(); 
+        td.fontSize = 30;
+        td.fillColor = [1, 1, 1];
+        td.font = "System"; 
+        return td;
+    }
+    //-------------------------------------------------------------------------
     var findComp = function(op)
     {
+        function makeComp()
+        {
+            var ret = app.project.items.addComp(compName,1600,900,1,1,24);
+            if(ret!=null) {
+
+                var str ="このコンポはAE_Remap.jsxによって作られたものです。\r\n"
+                +"テキストレイヤーにはシート情報が保存されています。\r\n"
+                +"一番上にあるレイヤが読みこまれます。必要に応じて順番を変えてください。\r\n"
+                var txt = ret.layers.addBoxText([1600,900],str);
+                txt.name = "説明";
+            }
+            return ret;
+        }
         var compName = "ae_remap_data";
         var ret = null;
         var cnt = app.project.numItems;
-        if(cnt<=0) return ret;
+        if(cnt<=0) {
+            if(op==true) {
+                ret = makeComp();
+            }
+            return ret;
+        }
         for ( var i=1; i<=cnt; i++)
         {
             var a = app.project.items[i];
@@ -216,15 +255,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
         }
         if (ret ==null){
             if(op==true) {
-                ret = app.project.items.addComp(compName,1600,900,1,1,24);
-                if(ret!=null) {
-                    var str ="このコンポはAE_Remap.jsxによって作られたものです。\r\n"
-                    +"テキストレイヤーにはシート情報が保存されています。\r\n"
-                    +"一番上にあるレイヤが読みこまれます。必要に応じて順番を変えてください。\r\n"
-                    var txt = ret.layers.addBoxText([1600,900],str);
-                    txt.name = "説明";
-                }
-    
+                ret = makeComp();
             }
         }
         return ret;
@@ -239,10 +270,9 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
         try{
             var cmp = findComp(true);
             var js = FsJSON.toJSON(cellData);
-            var jsTxt = new TextDocument(js); 
-
             var txt = cmp.layers.addBoxText([1600,900],js);
-            txt.enabled = false;
+
+             txt.enabled = false;
             txt.name = cellData.sheetName;
             alert(cmp.name + "に保存しました");
         }catch(e){
