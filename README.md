@@ -4,8 +4,7 @@ For After Effects Timeremap support
  
 今はとりあえず最低限の事を実装した段階です。  
 ベータ版の２となります。  
-[AE_RemapExceed_b01.zip](https://bit.ly/3bT6vxX)  
-  
+[AE_RemapExceed_b02.zip](https://bit.ly/2yGW9mJ)  
 スクリプトのバグ。セル番号の表示がおかしいのを修正。
 
 # Usage
