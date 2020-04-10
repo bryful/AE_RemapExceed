@@ -4,6 +4,7 @@ For After Effects Timeremap support
  
 今はとりあえず最低限の事を実装した段階ですが、いろいろ差し迫った事情があってリリースします。
  
+[AE_RemapExceed2nd_01.zip](https://bit.ly/34xnDqI)
 
 # Usage
 * スクリプトのインストール  
