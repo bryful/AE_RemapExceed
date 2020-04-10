@@ -2,15 +2,18 @@
 For After Effects Timeremap support  
 アニメ撮影でコマ打ちを行うアプリです。昔作ったやつですが、Windows10とCC2020の組み合わせでで動かなくなってしまったので、作り直しています。  
  
-今はとりあえず最低限の事を実装した段階です。  
-ベータ版の２となります。  
-[AE_RemapExceed_b02.zip](https://bit.ly/2yGW9mJ)  
-スクリプトのバグ。セル番号の表示がおかしいのを修正。
+今はとりあえず最低限の事を実装した段階ですが、いろいろ差し迫った事情があってリリースします。
+ 
 
 # Usage
 * スクリプトのインストール  
 C:\Users\(User Nmae)\AppData\Roaming\Adobe\After Effects\17.0\Scripts\ScriptUI Panels  
 へスクリプトのAE_RemapExceed.jsxとAE_RemapExceed.exeとAE_RemapCall.exeの三つをコピーしてください。  
+
+CS6の場合は、  
+C:\Program Files\Adobe\Adobe After Effects CS6\Support Files\Scripts\ScriptUI Panels  
+にコピーしてください。
+
 
 * AE_RemapExceed.jsx
 After Effectsを起動して「ウィンドウ」メニューからAE_RemapExceed.jsxを選んでください。  
