@@ -41,12 +41,12 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     FootageItem.prototype.nameTrue = function(){ var b=this.name;this.name=""; var ret=this.name;this.name=b;return ret;}
 
     String.prototype.replaceAll=function(s,d){ return this.split(s).join(d);}
-	
-    
+
+
     //グローバルな変数
 	var scriptName = File.decode($.fileName.getName().changeExt(""));
 	var aeremapCallPath = File.decode($.fileName.getParent()+"/AE_RemapCall.exe");
-	
+
     //読み込む出るデータ
     var cellData = null;
     var cellDataV = null;
@@ -54,9 +54,11 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     var rbtns = [];
     //選ばれたラジオボタン
     var selectedIndex = -1;
+    // 空セル
+    var isNoUseBD = true;
 	//------------------------
 	//-------------------------------------------------------------------------
-    //json utils 
+    //json utils
 	function toJSON(obj)
 	{
 		var ret = "";
@@ -80,7 +82,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 				ret += "\""+a + "\":" + toJSON(obj[a]);
 			}
 			ret = "{" + ret + "}";
-			
+
 		}
 		if ( (ret[0] === "(")&&(ret[ret.length-1]===")"))
 		{
@@ -100,7 +102,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 		s = s.replace(/[\r\n]+$|^\s+|\s+$/g, "");
 		s = s.split("\r").join("").split("\n").join("");
 		if ( s.length<=0) return ret;
-		
+
 		var ss = "";
 		var idx1 =0;
 		var len = s.length;
@@ -139,7 +141,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 	{
 		var ret = null;
 		ret = app.project.activeItem;
-		
+
 		if ( (ret instanceof CompItem)===false)
 		{
 			ret = null;
@@ -163,7 +165,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
             ret = lyrs;
         }
 		return ret;
-	}	
+	}
     //-------------------------------------------------------------------------
     var anlysisCellData = function(obj)
     {
@@ -200,10 +202,10 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     var fontSet = function(prop,str)
     {
         var td = prop.value;
-        td.resetCharStyle(); 
+        td.resetCharStyle();
         td.fontSize = 30;
         td.fillColor = [1, 1, 1];
-        td.font = "System"; 
+        td.font = "System";
         //if ((str!=undefined)||(str!=null)&&(str!="")) td.text = str;
         prop.setValue(td);
     }
@@ -211,10 +213,10 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     var newTD = function(str)
     {
         var td = new TextDocument(str);
-        td.resetCharStyle(); 
+        td.resetCharStyle();
         td.fontSize = 30;
         td.fillColor = [1, 1, 1];
-        td.font = "System"; 
+        td.font = "System";
         return td;
     }
     //-------------------------------------------------------------------------
@@ -401,10 +403,10 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 		}
         return ret;
     }
-    
+
  	//-------------------------------------------------------------------------
  	//-------------------------------------------------------------------------
-	var winObj = ( me instanceof Panel) ? me : new Window("palette", "AE_RemapExceed", [ 0,  0,  250,  220]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
+	var winObj = ( me instanceof Panel) ? me : new Window("palette", "AE_RemapExceed", [ 0,  0,  250,  250]  ,{resizeable:true, maximizeButton:true, minimizeButton:true});
 	//-------------------------------------------------------------------------
 	var px = 10;
     var py = 10;
@@ -421,12 +423,15 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 	var btnFromComp = winObj.add("button", [px,py,px+btnW, py+btnH], "読み込み");
     py+=30;
 	var btnClear = winObj.add("button", [px,py,px+btnW, py+btnH], "Clear");
+    py+=30;
+	var cbIsNoUseBD = winObj.add("checkbox", [px,py,px+btnW, py+btnH], "NO!ブロックディゾルブ");
+    cbIsNoUseBD.value = isNoUseBD;
     py+=60;
     px = 110;
     py = 40;
 	var edInfo = winObj.add("edittext", [  px,   py,   px+ 150,   py+  25], "", { readonly:true });
 	py +=30;
-	var btnApply = winObj.add("button", [px,py,px+150, py+25], "適応" ); 
+	var btnApply = winObj.add("button", [px,py,px+150, py+25], "適応" );
     py +=25;
 	var gp = winObj.add("panel", [  px,   py,   px+ 150,   py+ 100],"Cells" );
     //-------------------------------------------------------------------------
@@ -434,6 +439,10 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     btnGetClip.onClick = execAE_Export;
     btnToComp.onClick = objToComp;
     btnFromComp.onClick = compToObj;
+    cbIsNoUseBD.onClick = function()
+    {
+        isNoUseBD = cbIsNoUseBD.value;
+    }
 	//-------------------------------------------------------------------------
     var clearRbtns = function()
     {
@@ -485,7 +494,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     }
 
     //-------------------------------------------------------------------------
-  
+
 	//-------------------------------------------------------------------------
     var applyCells = function()
     {
@@ -529,21 +538,23 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 		        for (var i=1 ; i<=rp.numKeys ; i++) {
                     rp.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
                 }
-                var eg = lyr.property("ADBE Effect Parade");
-                var mn = "ADBE Block Dissolve";
-                var na = "EmptyCell";
-                if (eg.canAddProperty(mn)==true)
-                {
-                    var bp = findProp(eg,mn,na); 
-                    if (bp==null){
-                        bp = eg.addProperty(mn);
-                        bp.name = na;
-                    }
-                    var bpv = bp.property(1);
-                    if (bpv.numKeys>0) for ( var i=bpv.numKeys; i>=1;i--) bpv.removeKey(i);
-                    bpv.setValuesAtTimes(emptyTimes,emptys);
-                    for (var i=1 ; i<=bpv.numKeys ; i++) {
-                        bpv.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
+                if (isNoUseBD == false) {
+                    var eg = lyr.property("ADBE Effect Parade");
+                    var mn = "ADBE Block Dissolve";
+                    var na = "EmptyCell";
+                    if (eg.canAddProperty(mn)==true)
+                    {
+                        var bp = findProp(eg,mn,na);
+                        if (bp==null){
+                            bp = eg.addProperty(mn);
+                            bp.name = na;
+                        }
+                        var bpv = bp.property(1);
+                        if (bpv.numKeys>0) for ( var i=bpv.numKeys; i>=1;i--) bpv.removeKey(i);
+                        bpv.setValuesAtTimes(emptyTimes,emptys);
+                        for (var i=1 ; i<=bpv.numKeys ; i++) {
+                            bpv.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
+                        }
                     }
                 }
                 lyr.outPoint = lyr.containingComp.duration;
@@ -553,6 +564,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
                 alert(e.toString());
             }
         }
+
         if(selectedIndex<0){
             alert("セルを選んでください");
             return;
@@ -562,11 +574,11 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
             return;
         }
         app.beginUndoGroup("AE_Remap");
-        
+
         //コンポの長さを設定
         var cmp = lyrs[0].containingComp;
         var duration = cellDataV.duration;
-        if (cmp.duration != duration) cmp.duration = duration; 
+        if (cmp.duration != duration) cmp.duration = duration;
 
        for (var i=0; i<lyrs.length;i++)
         {
@@ -639,7 +651,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
         applyb[3] = 70 + 25;
         btnApply.bounds = applyb;
 
-    
+
         var gpb = gp.bounds;
         gpb[0] = 110;
         gpb[1] = 100;
@@ -649,13 +661,13 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
         //edInfo.visible = true;
         //lbCells.visible = true;
         //winObj.text = winb.toString() +"/" + edInfo.bounds.toString();
-        
+
     }
     resizeLayout();
     winObj.onResize = resizeLayout;
     //-------------------------------------------------------------------------
 	if ( ( me instanceof Panel) == false){
-		winObj.center(); 
+		winObj.center();
 		winObj.show();
 	}
 	//-------------------------------------------------------------------------
