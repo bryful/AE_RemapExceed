@@ -10,10 +10,7 @@ For After Effects Timeremap support<br>
 色々あって併用していました。<br>
 
 
-
-
-
-[AE_RemapExceed2nd_02.zip](https://bit.ly/34xnDqI)
+[AE_RemapExceed2nd_02.zip](https://bit.ly/3zGQ7fu)
 
 # Usage
 * スクリプトのインストール
