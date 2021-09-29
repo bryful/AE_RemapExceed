@@ -8,9 +8,15 @@ For After Effects Timeremap support<br>
 チェックボックスで使用・不使用を選べます。<br>
 もともと空セル部分のリマップは最大値を使用しているので、ブロックディゾルブ（EmptyCell）を無効化しても大丈夫です。<br>
 色々あって併用していました。<br>
+<br>
+バグフィックス<br>
+
+* helpキーを押すとハングするのに対処
+* たまに獲得出来なくなることに対処。（まだ不完全）
+* レイヤのクリア・全クリア機能の追加
 
 
-[AE_RemapExceed2nd_02.zip](https://bit.ly/3zGQ7fu)
+[AE_RemapExceed2nd_03.zip]()
 
 # Usage
 * スクリプトのインストール

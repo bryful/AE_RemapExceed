@@ -27,6 +27,7 @@ namespace AE_RemapExceed
 			ACTIVE,
 			CALL,
 			EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
+            SCREEN_CENTER,
 			HELP            //実装していない
 		}
 		//Path文字をJavScript形式へ
@@ -88,6 +89,9 @@ namespace AE_RemapExceed
                             case "IMPORT_LAYER":
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.IMPORT_LAYER;
                                 break;
+                            case "SCREEN_CENTER":
+                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.SCREEN_CENTER;
+                                break;
                             default:
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.HELP;
                                 break;
@@ -120,7 +124,7 @@ namespace AE_RemapExceed
                 Console.Write(String.Format("{0}", IsExecAE).ToLower());
                 return;
             }
-			else if (mode == EXEC_MODE.CALL)
+            else if (mode == EXEC_MODE.CALL)
 			{
 				if (IsExecAE == false)
 				{
@@ -147,11 +151,17 @@ namespace AE_RemapExceed
 
 				//プロセスで制御
 				AE_RemoteInfo m_msg = null;
-				
-				IpcClientChannel clientChannel = new IpcClientChannel();
-				ChannelServices.RegisterChannel(clientChannel, true);
-				m_msg = (AE_RemoteInfo)Activator.GetObject(typeof(AE_RemoteInfo), "ipc://processtrancetest/message");
-
+                try
+                {
+                    IpcClientChannel clientChannel = new IpcClientChannel();
+                    ChannelServices.RegisterChannel(clientChannel, true);
+                    m_msg = (AE_RemoteInfo)Activator.GetObject(typeof(AE_RemoteInfo), "ipc://processtrancetest/message");
+				}
+				catch
+				{
+                    Console.Write("errer process");
+                    return;
+                }
 
 
 				if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.EXPORT_LAYER))
@@ -175,7 +185,10 @@ namespace AE_RemapExceed
 					case EXEC_MODE.ACTIVE:
 						m_msg.DataTrance((int)mode, filename);
 						break;
-					case EXEC_MODE.EXPORT:
+                    case EXEC_MODE.SCREEN_CENTER:
+                        m_msg.DataTrance((int)mode, filename);
+                        break;
+                    case EXEC_MODE.EXPORT:
 						m_msg.DataTrance((int)mode, filename); 
                         break;
                     case EXEC_MODE.EXPORT_LAYER:

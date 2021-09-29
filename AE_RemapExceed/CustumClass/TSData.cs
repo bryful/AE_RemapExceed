@@ -546,6 +546,7 @@ namespace AE_RemapExceed
 		//----------------------------------------------------------
 		public void setFrameEnabled(int f, bool sw)
 		{
+			/*
 			if ((f < 0) || (f >= m_FrameCount))
 				return;
 			if (sw)
@@ -556,11 +557,13 @@ namespace AE_RemapExceed
 			{
 				frameEnabled[f] = -1;
 			}
+			*/
 			checkFrameEnabed();
 		}
 		//----------------------------------------------------------
 		public void setFrameEnabled(int f0, int f1, bool sw)
 		{
+			/*
 			int ff0 = f0;
 			int ff1 = f1;
 			if (ff1 > ff0)
@@ -594,30 +597,36 @@ namespace AE_RemapExceed
 				frameEnabled[i] = v;
 			}
 			checkFrameEnabed();
+			*/
 		}
 		//----------------------------------------------------------
 		public bool setFrameEnabled(int [] ary)
 		{
+			/*
 			if ( frameEnabled.Length != ary.Length) { return false; }
 			for (int i = 0; i < frameEnabled.Length; i++)
 			{
 				frameEnabled[i] = ary[i];
 			}
 			checkFrameEnabed();
+			*/
 			return true;
 		}
 		//----------------------------------------------------------
 		public int[] getFrameEnabled()
 		{
 			int[] ret = new int[m_FrameCount];
-			checkFrameEnabed();
-			for (int i = 0; i < m_FrameCount; i++) { ret[i] = frameEnabled[i]; }
+			//checkFrameEnabed();
+			//for (int i = 0; i < m_FrameCount; i++) { ret[i] = frameEnabled[i]; }
+			for (int i = 0; i < m_FrameCount; i++) { ret[i] = 0; }
 
 			return ret;
 		}
 		//----------------------------------------------------------
 		public int FrameEnabeld(int f)
 		{
+			return 0;
+			/*
 			int ret = 0;
 			if (f < 0)
 			{
@@ -633,11 +642,12 @@ namespace AE_RemapExceed
 				ret = frameEnabled[f];
 			}
 			return ret;
-
+			*/
 		}
 		//----------------------------------------------------------
 		public void FrameEnabeld(TSSelection sel, bool sw)
 		{
+			/*
 			int y0 = sel.Start;
 			if (y0 < 0) y0 = 0;
 			int y1 = sel.Last;
@@ -649,7 +659,7 @@ namespace AE_RemapExceed
 				frameEnabled[i] = v;
 			}
 			checkFrameEnabed();
-
+			*/
 		}
 		//----------------------------------------------------------
 		public string CellCaption(int c)
@@ -1373,9 +1383,27 @@ namespace AE_RemapExceed
             }
         }
         //**************************************************************
- 
- 
-        //**************************************************************
-    }
+		public void ClearAll()
+		{
+			for (int i = 0; i < this.m_CellCount; i++)
+			{
+				ClearLayer(i);
+			}
+			for (int j = 0; j < this.m_FrameCount; j++)
+			{
+				frameEnabled[j] = j;
+			}
+		}
+		//**************************************************************
+		public void ClearLayer(int idx)
+		{
+			if ((idx < 0) || (idx >= m_CellCount)) return;
+			for (int j = 0; j < this.m_FrameCount; j++)
+			{
+				this.cellData[idx][j] = TSdef.none;
+			}
+		}
+		//**************************************************************
+	}
     //**************************************************************
 }

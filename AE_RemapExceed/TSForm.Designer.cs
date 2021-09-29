@@ -47,6 +47,9 @@
 			this.EditCopyMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.EditCutMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.EditPasteMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.ClearALLMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.ClearLayerMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuSepa5 = new System.Windows.Forms.ToolStripSeparator();
 			this.SettingMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.cmSettings = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -83,9 +86,6 @@
 			this.tsCellCaption1 = new AE_RemapExceed.TSCellCaption();
 			this.tsFrame1 = new AE_RemapExceed.TSFrame();
 			this.tsInput1 = new AE_RemapExceed.TSInput();
-			this.ClearALLMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-			this.ClearLayerMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.cmSettings.SuspendLayout();
 			this.cmLayer.SuspendLayout();
@@ -222,34 +222,53 @@
 			// EditCopyMenu
 			// 
 			this.EditCopyMenu.Name = "EditCopyMenu";
-			this.EditCopyMenu.Size = new System.Drawing.Size(180, 22);
+			this.EditCopyMenu.Size = new System.Drawing.Size(152, 22);
 			this.EditCopyMenu.Text = "コピー";
 			this.EditCopyMenu.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// EditCutMenu
 			// 
 			this.EditCutMenu.Name = "EditCutMenu";
-			this.EditCutMenu.Size = new System.Drawing.Size(180, 22);
+			this.EditCutMenu.Size = new System.Drawing.Size(152, 22);
 			this.EditCutMenu.Text = "カット";
 			this.EditCutMenu.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// EditPasteMenu
 			// 
 			this.EditPasteMenu.Name = "EditPasteMenu";
-			this.EditPasteMenu.Size = new System.Drawing.Size(180, 22);
+			this.EditPasteMenu.Size = new System.Drawing.Size(152, 22);
 			this.EditPasteMenu.Text = "貼り付け";
 			this.EditPasteMenu.Click += new System.EventHandler(this.menu_Click);
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+			// 
+			// ClearALLMenu
+			// 
+			this.ClearALLMenu.Name = "ClearALLMenu";
+			this.ClearALLMenu.Size = new System.Drawing.Size(152, 22);
+			this.ClearALLMenu.Text = "全クリア";
+			this.ClearALLMenu.Click += new System.EventHandler(this.menu_Click);
+			// 
+			// ClearLayerMenu
+			// 
+			this.ClearLayerMenu.Name = "ClearLayerMenu";
+			this.ClearLayerMenu.Size = new System.Drawing.Size(152, 22);
+			this.ClearLayerMenu.Text = "レイヤーをクリア";
+			this.ClearLayerMenu.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// MenuSepa5
 			// 
 			this.MenuSepa5.Name = "MenuSepa5";
-			this.MenuSepa5.Size = new System.Drawing.Size(177, 6);
+			this.MenuSepa5.Size = new System.Drawing.Size(149, 6);
 			// 
 			// SettingMenu
 			// 
 			this.SettingMenu.DropDown = this.cmSettings;
 			this.SettingMenu.Name = "SettingMenu";
-			this.SettingMenu.Size = new System.Drawing.Size(180, 22);
+			this.SettingMenu.Size = new System.Drawing.Size(152, 22);
 			this.SettingMenu.Text = "設定...";
 			// 
 			// cmSettings
@@ -259,6 +278,7 @@
             this.ColorSettingDlg,
             this.PrintSettings});
 			this.cmSettings.Name = "cmSettings";
+			this.cmSettings.OwnerItem = this.SettingMenu;
 			this.cmSettings.Size = new System.Drawing.Size(142, 70);
 			// 
 			// LayoutSettingDlg
@@ -547,23 +567,6 @@
 			this.tsInput1.TabStop = false;
 			this.tsInput1.Text = "tsInput1";
 			this.tsInput1.TSGrid = this.tsGrid1;
-			// 
-			// ClearALLMenu
-			// 
-			this.ClearALLMenu.Name = "ClearALLMenu";
-			this.ClearALLMenu.Size = new System.Drawing.Size(180, 22);
-			this.ClearALLMenu.Text = "全クリア";
-			// 
-			// toolStripMenuItem2
-			// 
-			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
-			// 
-			// ClearLayerMenu
-			// 
-			this.ClearLayerMenu.Name = "ClearLayerMenu";
-			this.ClearLayerMenu.Size = new System.Drawing.Size(180, 22);
-			this.ClearLayerMenu.Text = "レイヤーをクリア";
 			// 
 			// TSForm
 			// 

@@ -148,13 +148,15 @@ namespace AE_RemapExceed
 			funcs.setFunc(funcCmd.PrintSetting, PrintSetting);
 
             funcs.setFunc(funcCmd.About, About);
+			funcs.setFunc(funcCmd.ClearAll, ClearAll);
+			funcs.setFunc(funcCmd.ClearLayer, ClearLayer);
 
-        }
-        //***********************************************************************
-        //新規イベント定義
-        //***********************************************************************
-        //-----------------------------------------------------------------------
-        protected virtual void OnSelectionChanged(EventArgs e) 
+		}
+		//***********************************************************************
+		//新規イベント定義
+		//***********************************************************************
+		//-----------------------------------------------------------------------
+		protected virtual void OnSelectionChanged(EventArgs e) 
 		{
 			if (SelectionChanged != null)
 			{
@@ -1074,6 +1076,20 @@ namespace AE_RemapExceed
 				}
 				return ret;
 			}
+		}
+		//****************************************************************************************
+		//
+		//****************************************************************************************
+		public void ClearAll()
+		{
+			tsd.ClearAll();
+			Sync();
+
+		}
+		public void ClearLayer()
+		{
+			tsd.ClearLayer(sel.Index);
+			Sync();
 		}
 		//****************************************************************************************
 		//レイヤ

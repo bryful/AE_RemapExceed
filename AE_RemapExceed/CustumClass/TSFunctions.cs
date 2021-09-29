@@ -83,6 +83,8 @@ namespace AE_RemapExceed
 		PrintSetting,
 
 		About,
+		ClearAll,
+		ClearLayer,
 
 
 		Count
@@ -166,8 +168,10 @@ namespace AE_RemapExceed
 
 			{"About","Aboutダイアログ"},
 
+			{"ClaerAll","全クリア"},
+			{"ClaerLayer","レイヤクリア"},
 
-        };
+		};
 		//キーバインド関係
 		//------------------------------------------------
 		public class funcClass
@@ -327,9 +331,11 @@ namespace AE_RemapExceed
 			setKeyTable(funcCmd.PrintSetting, Keys.None, Keys.None);
 
             setKeyTable(funcCmd.About, Keys.None, Keys.None);
-        }
-        //------------------------------------------------
-        private void InitKeyMap()
+			setKeyTable(funcCmd.ClearAll, Keys.Control| Keys.Shift | Keys.Delete , Keys.None);
+			setKeyTable(funcCmd.ClearLayer, Keys.Control | Keys.Delete, Keys.None);
+		}
+		//------------------------------------------------
+		private void InitKeyMap()
 		{
 			for (int i = 0; i < 256; i++)
 			{
@@ -361,6 +367,7 @@ namespace AE_RemapExceed
 		public void exec(Keys k)
 		{
 			if (k == Keys.None) return;
+			if (k == Keys.Help) return;
 			Keys k2 = GetKeyMap(k);
 			Keys kc = (Keys)((int)k2 & 0xFF);
 			if ((kc >= Keys.D0) && (k2 <= Keys.D9))

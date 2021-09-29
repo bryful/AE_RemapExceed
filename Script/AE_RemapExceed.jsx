@@ -351,6 +351,29 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 		}
         return ret;
     }
+       //-------------------------------------------------------------------------
+    //AEを起動させる
+	var cenertAE_Reamp = function()
+	{
+       var ret = false;
+		var aeremapCall = new File(aeremapCallPath);
+        var cmd =  "\"" + aeremapCall.fsName +"\"";
+		if (aeremapCall.exists==true){
+			try{
+                var r = system.callSystem(cmd + " /exenow");
+                r = r.trim().toLowerCase();
+                if (r=="false") {
+                    alert("no process");
+                    return ret;
+                }
+                r = system.callSystem(cmd + " /screen_center");
+
+			}catch(e){
+				alert("execAE_Reamp\r\n" + e.toString());
+                ret = false;
+			}
+        }
+    }
     //-------------------------------------------------------------------------
 	var execAE_Export = function()
 	{
@@ -424,6 +447,8 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     py+=30;
 	var btnClear = winObj.add("button", [px,py,px+btnW, py+btnH], "Clear");
     py+=30;
+	var btnCenter = winObj.add("button", [px,py,px+btnW, py+btnH], "Center");
+    py+=30;
 	var cbIsNoUseBD = winObj.add("checkbox", [px,py,px+btnW, py+btnH], "NO!ブロックディゾルブ");
     cbIsNoUseBD.value = isNoUseBD;
     py+=60;
@@ -443,6 +468,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
     {
         isNoUseBD = cbIsNoUseBD.value;
     }
+    btnCenter.onClick = cenertAE_Reamp;
 	//-------------------------------------------------------------------------
     var clearRbtns = function()
     {

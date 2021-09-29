@@ -28,6 +28,7 @@ namespace AE_RemapExceed
 		ACTIVE,
 		CALL,
 		EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
+		SCREEN_CENTER,
 		HELP            //実装していない
 	}
 	public partial class TSForm : Form
@@ -110,6 +111,10 @@ namespace AE_RemapExceed
 					SetActive();
 					break;
 				case EXEC_MODE.ACTIVE:
+					SetActive();
+					break;
+				case EXEC_MODE.SCREEN_CENTER:
+					ScreenCenter();
 					SetActive();
 					break;
 			}
@@ -491,12 +496,14 @@ namespace AE_RemapExceed
                 setMenuItem(valueEdit, funcCmd.ValueEdit);
 
                 setMenuItem(HelpAbout, funcCmd.About);
+				setMenuItem(ClearALLMenu, funcCmd.ClearAll);
+				setMenuItem(ClearLayerMenu, funcCmd.ClearLayer);
 
 
 
 
-            }
-        }
+			}
+		}
 		//----------------------------------------------------------------------------------
 		private void menu_Click(object sender, EventArgs e)
 		{
@@ -668,6 +675,18 @@ namespace AE_RemapExceed
 			//set { tsGrid1.tsd = value; }
 		}
 
+		public void ScreenCenter()
+		{
+			Rectangle b = Screen.PrimaryScreen.Bounds;
+			int cx = b.X + b.Width / 2;
 
-    }
+			this.Location = new Point(cx - this.Width / 2, 30);
+
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			ScreenCenter();
+		}
+	}
 }

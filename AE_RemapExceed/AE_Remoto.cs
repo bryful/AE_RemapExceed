@@ -35,6 +35,9 @@ namespace AE_Remote
 				OnTrance(new AE_RemoteInfoEventArg(tmpmode, tmpfname));
 			}
 		}
-
+		public override object InitializeLifetimeService()
+		{
+			return null;
+		}
 	}
 }
