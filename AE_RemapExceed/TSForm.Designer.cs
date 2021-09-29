@@ -50,7 +50,6 @@
 			this.MenuSepa5 = new System.Windows.Forms.ToolStripSeparator();
 			this.SettingMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.cmSettings = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.KeySettingDlg = new System.Windows.Forms.ToolStripMenuItem();
 			this.LayoutSettingDlg = new System.Windows.Forms.ToolStripMenuItem();
 			this.ColorSettingDlg = new System.Windows.Forms.ToolStripMenuItem();
 			this.PrintSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +83,9 @@
 			this.tsCellCaption1 = new AE_RemapExceed.TSCellCaption();
 			this.tsFrame1 = new AE_RemapExceed.TSFrame();
 			this.tsInput1 = new AE_RemapExceed.TSInput();
+			this.ClearALLMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.ClearLayerMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.cmSettings.SuspendLayout();
 			this.cmLayer.SuspendLayout();
@@ -206,6 +208,9 @@
             this.EditCopyMenu,
             this.EditCutMenu,
             this.EditPasteMenu,
+            this.toolStripMenuItem2,
+            this.ClearALLMenu,
+            this.ClearLayerMenu,
             this.MenuSepa5,
             this.SettingMenu});
 			this.EditMenu.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -217,72 +222,63 @@
 			// EditCopyMenu
 			// 
 			this.EditCopyMenu.Name = "EditCopyMenu";
-			this.EditCopyMenu.Size = new System.Drawing.Size(119, 22);
+			this.EditCopyMenu.Size = new System.Drawing.Size(180, 22);
 			this.EditCopyMenu.Text = "コピー";
 			this.EditCopyMenu.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// EditCutMenu
 			// 
 			this.EditCutMenu.Name = "EditCutMenu";
-			this.EditCutMenu.Size = new System.Drawing.Size(119, 22);
+			this.EditCutMenu.Size = new System.Drawing.Size(180, 22);
 			this.EditCutMenu.Text = "カット";
 			this.EditCutMenu.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// EditPasteMenu
 			// 
 			this.EditPasteMenu.Name = "EditPasteMenu";
-			this.EditPasteMenu.Size = new System.Drawing.Size(119, 22);
+			this.EditPasteMenu.Size = new System.Drawing.Size(180, 22);
 			this.EditPasteMenu.Text = "貼り付け";
 			this.EditPasteMenu.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// MenuSepa5
 			// 
 			this.MenuSepa5.Name = "MenuSepa5";
-			this.MenuSepa5.Size = new System.Drawing.Size(116, 6);
+			this.MenuSepa5.Size = new System.Drawing.Size(177, 6);
 			// 
 			// SettingMenu
 			// 
 			this.SettingMenu.DropDown = this.cmSettings;
 			this.SettingMenu.Name = "SettingMenu";
-			this.SettingMenu.Size = new System.Drawing.Size(119, 22);
+			this.SettingMenu.Size = new System.Drawing.Size(180, 22);
 			this.SettingMenu.Text = "設定...";
 			// 
 			// cmSettings
 			// 
 			this.cmSettings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.KeySettingDlg,
             this.LayoutSettingDlg,
             this.ColorSettingDlg,
             this.PrintSettings});
 			this.cmSettings.Name = "cmSettings";
-			this.cmSettings.OwnerItem = this.SettingMenu;
-			this.cmSettings.Size = new System.Drawing.Size(151, 92);
-			// 
-			// KeySettingDlg
-			// 
-			this.KeySettingDlg.Name = "KeySettingDlg";
-			this.KeySettingDlg.Size = new System.Drawing.Size(150, 22);
-			this.KeySettingDlg.Text = "キーボード設定...";
-			this.KeySettingDlg.Click += new System.EventHandler(this.menu_Click);
+			this.cmSettings.Size = new System.Drawing.Size(142, 70);
 			// 
 			// LayoutSettingDlg
 			// 
 			this.LayoutSettingDlg.Name = "LayoutSettingDlg";
-			this.LayoutSettingDlg.Size = new System.Drawing.Size(150, 22);
+			this.LayoutSettingDlg.Size = new System.Drawing.Size(141, 22);
 			this.LayoutSettingDlg.Text = "グリッド";
 			this.LayoutSettingDlg.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// ColorSettingDlg
 			// 
 			this.ColorSettingDlg.Name = "ColorSettingDlg";
-			this.ColorSettingDlg.Size = new System.Drawing.Size(150, 22);
+			this.ColorSettingDlg.Size = new System.Drawing.Size(141, 22);
 			this.ColorSettingDlg.Text = "カラー設定...";
 			this.ColorSettingDlg.Click += new System.EventHandler(this.menu_Click);
 			// 
 			// PrintSettings
 			// 
 			this.PrintSettings.Name = "PrintSettings";
-			this.PrintSettings.Size = new System.Drawing.Size(150, 22);
+			this.PrintSettings.Size = new System.Drawing.Size(141, 22);
 			this.PrintSettings.Text = "PrintSettings";
 			this.PrintSettings.Click += new System.EventHandler(this.menu_Click);
 			// 
@@ -552,6 +548,23 @@
 			this.tsInput1.Text = "tsInput1";
 			this.tsInput1.TSGrid = this.tsGrid1;
 			// 
+			// ClearALLMenu
+			// 
+			this.ClearALLMenu.Name = "ClearALLMenu";
+			this.ClearALLMenu.Size = new System.Drawing.Size(180, 22);
+			this.ClearALLMenu.Text = "全クリア";
+			// 
+			// toolStripMenuItem2
+			// 
+			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+			// 
+			// ClearLayerMenu
+			// 
+			this.ClearLayerMenu.Name = "ClearLayerMenu";
+			this.ClearLayerMenu.Size = new System.Drawing.Size(180, 22);
+			this.ClearLayerMenu.Text = "レイヤーをクリア";
+			// 
 			// TSForm
 			// 
 			this.AllowDrop = true;
@@ -623,7 +636,6 @@
 		private System.Windows.Forms.ContextMenuStrip cmSettings;
 		private System.Windows.Forms.ToolStripMenuItem ColorSettingDlg;
 		private System.Windows.Forms.ToolStripMenuItem LayoutSettingDlg;
-		private System.Windows.Forms.ToolStripMenuItem KeySettingDlg;
 		private System.Windows.Forms.ContextMenuStrip cmLayer;
 		private System.Windows.Forms.ToolStripMenuItem layerInsert;
 		private System.Windows.Forms.ToolStripMenuItem layerRemove;
@@ -649,6 +661,9 @@
 		private System.Windows.Forms.ToolStripMenuItem PrintSettings;
         private System.Windows.Forms.ToolStripMenuItem SettingMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-    }
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem ClearALLMenu;
+		private System.Windows.Forms.ToolStripMenuItem ClearLayerMenu;
+	}
 }
 

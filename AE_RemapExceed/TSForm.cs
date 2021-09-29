@@ -477,7 +477,7 @@ namespace AE_RemapExceed
 				setMenuItem(EditPasteMenu, funcCmd.Paste);
 				setMenuItem(ColorSettingDlg, funcCmd.ColorSetting);
 				setMenuItem(LayoutSettingDlg, funcCmd.LayoutSetting);
-				setMenuItem(KeySettingDlg, funcCmd.KeySetting);
+				//setMenuItem(KeySettingDlg, funcCmd.KeySetting);
 				setMenuItem(PrintSettings, funcCmd.PrintSetting);
 
 				//Layer
