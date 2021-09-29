@@ -16,7 +16,7 @@ For After Effects Timeremap support<br>
 * レイヤのクリア・全クリア機能の追加
 
 
-[AE_RemapExceed2nd_03.zip]()
+[AE_RemapExceed2nd_03.zip](https://bit.ly/3zPgpfB)
 
 # Usage
 * スクリプトのインストール
