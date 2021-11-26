@@ -28,8 +28,9 @@ namespace AE_RemapExceed
 			CALL,
 			EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
             SCREEN_CENTER,
-			HELP            //実装していない
-		}
+            SAVE_TO_PATH,
+            HELP            //実装していない
+        }
 		//Path文字をJavScript形式へ
 		static string ToJSP(string p)
         {
@@ -51,6 +52,7 @@ namespace AE_RemapExceed
             await Task.Delay(1000);
         }
         //
+        [STAThread]
         static void Main(string[] args)
         {
 			EXEC_MODE mode = EXEC_MODE.NONE;
@@ -92,6 +94,9 @@ namespace AE_RemapExceed
                             case "SCREEN_CENTER":
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.SCREEN_CENTER;
                                 break;
+                            case "SAVE_TO_PATH":
+                                if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.SAVE_TO_PATH;
+                                break;
                             default:
                                 if (mode == EXEC_MODE.NONE) mode = EXEC_MODE.HELP;
                                 break;
@@ -99,10 +104,23 @@ namespace AE_RemapExceed
                     }
                     else
                     {
-                        if (filename == "") {
-                            if (File.Exists(args[i])==true)
-                            {
-                                filename = args[i];
+                        if (filename == "") 
+                        {
+                            if (mode == EXEC_MODE.SAVE_TO_PATH)
+							{
+                                string p = Path.GetDirectoryName(args[i]);
+                                if (Directory.Exists(p) == true)
+								{
+                                    filename = args[i];
+								}
+							}
+							else
+							{
+                                if (File.Exists(args[i]) == true)
+                                {
+                                    filename = args[i];
+                                }
+
                             }
                         }
                     }
@@ -197,6 +215,9 @@ namespace AE_RemapExceed
                     case EXEC_MODE.IMPORT_LAYER:
 						m_msg.DataTrance((int)mode, filename);
 						break;
+                    case EXEC_MODE.SAVE_TO_PATH:
+                        m_msg.DataTrance((int)mode, filename);
+                        break;
                 }
                 //エキスポート時はファイル作成されるまで待つ
                 if ((mode == EXEC_MODE.EXPORT) || (mode == EXEC_MODE.EXPORT_LAYER))

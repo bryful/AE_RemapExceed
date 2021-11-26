@@ -1393,6 +1393,23 @@ namespace AE_RemapExceed
 		}
 
 		//----------------------------------------------------------------------------------------
+		public void SaveToPath(string p)
+		{
+			tsd.FileName = p;
+			//SaveAs();
+
+			bool ard = (Path.GetExtension(FileName).ToLower() == ".ard");
+			if (ard)
+			{
+				SaveToArdFile(FileName,false);
+			}
+			else
+			{
+				SaveToJsonFile(FileName, false);
+			}
+
+		}
+		//----------------------------------------------------------------------------------------
 		public void SaveAs()
 		{
 			int fileType = 1;

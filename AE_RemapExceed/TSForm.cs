@@ -29,6 +29,7 @@ namespace AE_RemapExceed
 		CALL,
 		EXENOW,         //AEが起動しているか確認する。True/Falseの文字が戻る
 		SCREEN_CENTER,
+		SAVE_TO_PATH,
 		HELP            //実装していない
 	}
 	public partial class TSForm : Form
@@ -116,6 +117,10 @@ namespace AE_RemapExceed
 				case EXEC_MODE.SCREEN_CENTER:
 					ScreenCenter();
 					SetActive();
+					break;
+				case EXEC_MODE.SAVE_TO_PATH:
+					//MessageBox.Show(st);
+					tsGrid1.SaveToPath(st);
 					break;
 			}
 
