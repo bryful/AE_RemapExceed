@@ -26,8 +26,7 @@ For After Effects Timeremap support<br>
 
 
 Download<br>
-
-[AE_RemapExceed2nd_04.zip](https://bit.ly/3DVWMVV)
+[AE_RemapExceed2nd_06.zip](https://bit.ly/3xxxEUB)<br>
 
 # Usage
 * スクリプトのインストール
