@@ -1624,8 +1624,8 @@ namespace AE_RemapExceed
 
 
 				tss.TSDataToComb(tsd);
-
-				if (tss.ShowDialog() == DialogResult.OK)
+				tss.SetEDSec();
+				if (tss.ShowDialog(this) == DialogResult.OK)
 				{
 
 					tsd.SecInputMode = tss.SecInputMode;

@@ -7,11 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace AE_RemapExceed
 {
 	public partial class TimeSheetSetting : Form
 	{
+		[DllImport("user32.dll")]
+		public static extern IntPtr SetFocus(IntPtr hWnd);
+
 		private bool m_IsSecInput = false;
 		public TSHistory tsh = new TSHistory();
 
@@ -42,8 +47,14 @@ namespace AE_RemapExceed
 			tsh.SetComboBox(SheetInfo.CAMPANY_NAME, cmbCAMPANY_NAME);
 
 			tsh.LoadHistory();
+			SetFocus(edSec.Handle);
 		}
-        //---------------------------------------------------------------------
+		//---------------------------------------------------------------------
+		public void SetEDSec()
+		{
+			SetFocus(edSec.Handle);
+		}
+		//---------------------------------------------------------------------
 		public void SetSecInput()
 		{
 			edSec.Enabled = edKoma.Enabled = lbSec.Enabled = lbKoma.Enabled = m_IsSecInput;

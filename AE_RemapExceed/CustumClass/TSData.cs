@@ -730,6 +730,7 @@ namespace AE_RemapExceed
 			if ((c < 0) || (c >= m_CellCount))
 				return;
 
+			sel.Length = lst.Count;
 			int f0 = sel.Start;
 			if (f0 >= m_FrameCount)
 				return;
