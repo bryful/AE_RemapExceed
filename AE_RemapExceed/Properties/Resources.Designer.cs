@@ -19,7 +19,7 @@ namespace AE_RemapExceed.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -70,7 +70,7 @@ namespace AE_RemapExceed.Properties {
         }
         
         /// <summary>
-        ///   v2.00 に類似しているローカライズされた文字列を検索します。
+        ///   v2.10 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string VersionStr {
             get {

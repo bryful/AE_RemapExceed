@@ -703,15 +703,25 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
                         if (eg.canAddProperty(mn)==true)
                         {
                             var bp = findProp(eg,mn,na);
-                            if (bp==null){
-                                bp = eg.addProperty(mn);
-                                bp.name = na;
-                            }
-                            var bpv = bp.property(1);
-                            if (bpv.numKeys>0) for ( var i=bpv.numKeys; i>=1;i--) bpv.removeKey(i);
-                            bpv.setValuesAtTimes(emptyTimes,emptys);
-                            for (var i=1 ; i<=bpv.numKeys ; i++) {
-                                bpv.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
+
+                            if ( (emptys.length==1)&&(emptys[0]==0))
+                            {
+                                if (bp!=null) {
+                                    bp.remove();
+                                    bp=null;
+                                }
+                            }else{
+
+                                if (bp==null){
+                                    bp = eg.addProperty(mn);
+                                    bp.name = na;
+                                }
+                                var bpv = bp.property(1);
+                                if (bpv.numKeys>0) for ( var i=bpv.numKeys; i>=1;i--) bpv.removeKey(i);
+                                bpv.setValuesAtTimes(emptyTimes,emptys);
+                                for (var i=1 ; i<=bpv.numKeys ; i++) {
+                                    bpv.setInterpolationTypeAtKey(i,KeyframeInterpolationType.HOLD,KeyframeInterpolationType.HOLD);
+                                }
                             }
                         }
                         break;
@@ -755,7 +765,7 @@ if ( typeof (FsJSON) !== "object"){//デバッグ時はコメントアウトす�
 
                     }
                 }else{
-                lyr.outPoint = lyr.containingComp.duration;
+                    lyr.outPoint = lyr.containingComp.duration;
                 }
 
 
